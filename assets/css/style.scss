@@ -1,25 +1,138 @@
+---
+---
+
+$__ignore_this: "";
+$light-peach: #DBCECE;
 $peach: #E19898;
 $purplish: #A2678A;
 $navyish: #4D3C77;
 $dark-purplish: #3F1D38;
 
 $chelsea-cucumber: $peach;
-$body-foreground: $peach;
+$body-foreground: $light-peach;
 $header: $purplish;
-
----
----
 
 @import "{{ site.theme }}";
 
-body {
-    font-family: "Comic Sans", Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace;
+// @font-face {
+//     font-family: "Comic Neue Regular";
+//     src: url("../assets/fonts/ComicNeue-Regular.ttf");
+// }
+
+// body {
+//     font-family: "Comic Neue Regular", Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace;
+// }
+
+// header h1 {
+//     font-family: "Comic Neue Regular", Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace;
+// }
+
+// h1, h2, h3, h4, h5, h6 {
+//     font-family: "Comic Neue Regular", Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace;
+// }
+
+$body-background: $cod-grey !default;
+$body-foreground: $gallery !default;
+$header: $conifer !default;
+$blockquote-color: $silver-chalice !default;
+$blockquote-border: $dove-grey !default;
+$container-max-width: 1000px;
+
+/* Header, <header>
+   header   - container
+   h1       - project name
+   h2       - project description
+*/
+
+header {
+  background: rgba(0, 0, 0, 0.1);
+  border-bottom: 1px dashed $header;
 }
 
 header h1 {
-    font-family: "Comic Sans", Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace;
+  color: $header;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1),
+               0 0 5px rgba(181, 232, 83, 0.1),
+               0 0 10px rgba(181, 232, 83, 0.1);
 }
 
+
+header h1:before {
+  content: "> ";
+}
+
+header h2 {
+  color: #666;
+}
+
+/* Main Content
+*/
+
 h1, h2, h3, h4, h5, h6 {
-    font-family: "Comic Sans", Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace;
+  color: $header;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1),
+               0 0 5px rgba(181, 232, 83, 0.1),
+               0 0 10px rgba(181, 232, 83, 0.1);
+}
+#main_content h6 {
+  color: #999;
+}
+
+blockquote {
+  color: $blockquote-color;
+  border-left: 1px dotted $blockquote-border;
+}
+
+pre {
+  background: rgba(0, 0, 0, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: $header;
+}
+
+code.highlighter-rouge {
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #aa759f;
+}
+
+
+th {
+  border-bottom: 1px dashed $header;
+}
+
+hr {
+  border-bottom: 1px dashed $header;
+  color: $header;
+}
+
+/* Buttons
+*/
+
+.btn {
+  background: -webkit-linear-gradient(top, rgba(40, 40, 40, 0.3), rgba(35, 35, 35, 0.3) 50%, rgba(10, 10, 10, 0.3) 50%, rgba(0, 0, 0, 0.3));
+  border: 2px solid rgba(0, 0, 0, 0.7);
+  border-bottom: 2px solid rgba(0, 0, 0, 0.7);
+  border-top: 2px solid rgba(0, 0, 0, 1);
+  color: rgba(255, 255, 255, 0.8);
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.75);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.btn:hover {
+  background: -webkit-linear-gradient(top, rgba(40, 40, 40, 0.6), rgba(35, 35, 35, 0.6) 50%, rgba(10, 10, 10, 0.8) 50%, rgba(0, 0, 0, 0.8));
+}
+
+.btn-github {
+    display: none !important;
+}
+
+/* Links
+   a, a:hover, a:visited
+*/
+
+.current-link {
+    color: $purplish;
+}
+
+a {
+  color: $peach;
 }
