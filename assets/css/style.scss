@@ -11,3 +11,15 @@ $header: $purplish;
 ---
 
 @import "{{ site.theme }}";
+
+body {
+    font-family: "Comic Sans", Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace;
+}
+
+header h1 {
+    font-family: "Comic Sans", Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Comic Sans", Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace;
+}
