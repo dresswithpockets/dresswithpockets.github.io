@@ -14,29 +14,24 @@ $header: $purplish;
 
 @import "{{ site.theme }}";
 
-// @font-face {
-//     font-family: "Comic Neue Regular";
-//     src: url("../assets/fonts/ComicNeue-Regular.ttf");
-// }
+body {
+  font-family: "Comic Sans MS", ui-rounded;
+}
 
-// body {
-//     font-family: "Comic Neue Regular", Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace;
-// }
+header h1 {
+  font-family: "Comic Sans MS", ui-rounded;
+}
 
-// header h1 {
-//     font-family: "Comic Neue Regular", Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace;
-// }
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Comic Sans MS", ui-rounded;
+}
 
-// h1, h2, h3, h4, h5, h6 {
-//     font-family: "Comic Neue Regular", Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace;
-// }
-
-$body-background: $cod-grey !default;
-$body-foreground: $gallery !default;
-$header: $conifer !default;
-$blockquote-color: $silver-chalice !default;
-$blockquote-border: $dove-grey !default;
-$container-max-width: 1000px;
+// $body-background: $cod-grey !default;
+// $body-foreground: $gallery !default;
+// $header: $conifer !default;
+// $blockquote-color: $silver-chalice !default;
+// $blockquote-border: $dove-grey !default;
+// $container-max-width: 1000px;
 
 /* Header, <header>
    header   - container
@@ -89,11 +84,10 @@ pre {
   color: $header;
 }
 
-code.highlighter-rouge {
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  color: #aa759f;
-}
-
+// code.highlighter-rouge {
+//   border: 1px solid rgba(255, 255, 255, 0.15);
+//   color: #aa759f;
+// }
 
 th {
   border-bottom: 1px dashed $header;
