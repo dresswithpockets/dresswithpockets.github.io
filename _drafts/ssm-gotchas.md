@@ -121,11 +121,11 @@ data "aws_iam_policy_document" "allow_ssm_sessions_for_users" {
 
 ### Problem: Federated users don't get a userid
 
-Unfourtunately, federated users [do not get a userid](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_variables.html#policy-vars-infotouse). I recommend giving [_How to integrate AWS STS SourceIdentity with your identity provider_](https://aws.amazon.com/blogs/security/how-to-integrate-aws-sts-sourceidentity-with-your-identity-provider/) a read.
+Unfortunately, federated users [do not get a userid](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_variables.html#policy-vars-infotouse). I recommend giving [_How to integrate AWS STS SourceIdentity with your identity provider_](https://aws.amazon.com/blogs/security/how-to-integrate-aws-sts-sourceidentity-with-your-identity-provider/) a read.
 
-For Okta-federated users, the username used in the session ID is likely the email or username the user uses to log into Okta. Following the instructions in the aforementioned article, you should be able to map the user's Okta Email to the AWS Username.
+For Okta-federated users, the username used in the session ID is likely the email or username the user uses to log into Okta. Following the instructions in the article mentioned above, you should be able to map the user's Okta Email to the AWS Username.
 
-As of Sept 1st, 2023, we havent implemented this approach yet. I expect it to look something like:
+As of Sept 2nd, 2023, we still need to implement this approach. I expect it to look something like this:
 
 ```terraform
 data "aws_iam_policy_document" "allow_ssm_sessions_for_users" {
@@ -142,7 +142,7 @@ data "aws_iam_policy_document" "allow_ssm_sessions_for_users" {
 
 ## SSH over SSM kind of sucks
 
-Like us, you may have some tooling which depends on being able to ssh to many hosts in a fleet. If thats the case, AWS provides support for using SSM as a proxy command for SSH. Say you want to be able to do something like:
+Like us, you may have some tooling that depends on being able to ssh to many hosts in a fleet. If that's the case, AWS supports using SSM as a proxy command for SSH. Say you want to be able to do something like:
 
 ```sh
 ssh user@i-abcd1234
@@ -180,13 +180,13 @@ However, I urge you to read the contents of the managed documents you end up usi
 
 ## SCP over SSM also sucks
 
-If you've configured support for SSH-over-SSM, then SCP should "just work". I do not recommend relying on this stop-gap configuration for file transfers, especially if you plan on eventually phasing out general SSH use.
+If you've configured support for SSH-over-SSM, then SCP should "just work." I recommend relying on something other than this stop-gap configuration for file transfers, especially if you plan on eventually phasing out general SSH use.
 
-There is no SSM-native way to transfer files between hosts. You will need to share files remotely via S3 or another service, and then download them from the target machine. My information here is a bit lacking though since someone else implemented SSM-based file transfers.
+There is no SSM-native way to transfer files between hosts. You must share files remotely via S3 or another service and then download them on the target machine. My information here is lacking since someone else implemented SSM-based file transfers.
 
 ## Stop Using AWS-Managed Documents
 
-You've probably setup permissions along these lines for AWS documents:
+You've probably set permissions along these lines for AWS documents:
 
 ```terraform
 data "aws_iam_policy_document" "allow_ssm_documents" {
@@ -229,9 +229,9 @@ If we take a look at the contents of one of those documents, something seems a b
 }
 ```
 
-`AWS-StartPortForwardingSession`'s `portNumber` parameter takes an arbitrary port. This is akin to federating access to a VPN, and then exposing every port on the instance to the VPN. No good.
+`AWS-StartPortForwardingSession`'s `portNumber` parameter takes an arbitrary port. This is akin to federating access to a VPN and then exposing every port on the instance to the VPN. No good.
 
-Instead, lets create our own documents with a specific list of allowed ports.
+Instead, create your own documents with a specific list of allowed ports.
 
 ```terraform
 locals {
