@@ -31,7 +31,7 @@ These two authentication mechanisms are disparate and often at odds with each ot
 
 ### ABAC-based IAM
 
-In our case, every federated user can access roles with a `team` Principal Tag. The `team` tag is a single string value indicating the team the role belongs to. When authenticated into that role, the user will generally have access to every AWS resource that the team owns.
+In our case, every federated user can access roles tagged with a `team` Principal Tag. The `team` tag is a single string value indicating the team the role belongs to. When authenticated into that role, the user will generally have access to every AWS resource that the team owns.
 
 Taggable resources are tagged by the teams that own them and additional teams that can access them. Most of our IAM policies for user roles have Condition rules for these tags. You'll see an example of that later.
 
