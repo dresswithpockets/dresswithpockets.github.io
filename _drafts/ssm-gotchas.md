@@ -98,11 +98,13 @@ data "aws_iam_policy_document" "allow_ssm_for_teams" {
 }
 ```
 
-### Problem: Sessions and Commands cant be tagged
+With a policy like this, users can only `StartSession` on or `SendCommand` to EC2 instances tagged with a matching team tag.
 
-As a result, there isn't a tag-based approach to permissioning that applies to `ssm:ResumeSession`, `ssm:TerminateSession`, `ssm:*CommandInvocation`, `ssm:CancelCommand`.
+### Problem: Sessions and Commands can't be tagged
 
-You might notice that Sessions you create have an ID with a format along the lines of `{username}-abcd1234`. We can take advantage of this, since `ResumeSession` and `TerminateSession` provide `aws:resourceTag/aws:ssmmessages:session-id` as a condition key. AWS [recommends](https://docs.aws.amazon.com/systems-manager/latest/userguide/getting-started-restrict-access-examples.html#restrict-access-example-instance-tags) a policy like this:
+As a result, there isn't a tag-based approach to permissions that applies to `ssm:ResumeSession`, `ssm:TerminateSession`, `ssm:*CommandInvocation`, `ssm:CancelCommand`.
+
+You might notice that the Sessions you create have an ID with a format like `{username}-abcd1234`. We can take advantage of this, since `ResumeSession` and `TerminateSession` provide `aws:resourceTag/aws:ssmmessages:session-id` as a condition key. AWS [recommends](https://docs.aws.amazon.com/systems-manager/latest/userguide/getting-started-restrict-access-examples.html#restrict-access-example-instance-tags) a policy like this:
 
 ```terraform
 data "aws_iam_policy_document" "allow_ssm_sessions_for_users" {
