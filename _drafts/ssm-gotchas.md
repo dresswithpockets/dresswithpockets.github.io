@@ -25,13 +25,13 @@ If you are new to SSM, then I recommend doing the following to get acquainted wi
 
 We have a fleet of thousands of servers. SSH keys for every engineer are distributed to these servers based on the access they should have. We also have some scripts that remotely execute many SSH commands across many instances.
 
-Outside of SSH, we manage permissions to AWS resources via AWS IAM. We generally follow least-privilege practices, and use tags to automate access. All of our engineers' IAM users are federated through an AWS IdP like Okta.
+Outside of SSH, we manage permissions to AWS resources via AWS IAM. We generally follow least-privilege practices and use tags to automate access. Our engineers' IAM users are federated through an AWS IdP like Okta.
 
-These two authentication mechanisms are disparate, and often at odds with eachother. A user may not have privileges for some team's resources through IAM, but their SSH key might be configured to propogate to those resources. This possibility alone is problematic.
+These two authentication mechanisms are disparate and often at odds with each other. Users may not have privileges for some team's resources through IAM, but their SSH key might be configured to propagate to those resources. This possibility alone is problematic.
 
 ### ABAC-based IAM
 
-In our case, every federated user has access to roles with a `team` tag. The `team` tag is a single string value indicating the team that the role belongs to. When authenticated into that role, the user will generally have access to every AWS resource that team owns. The `team` tag is associated with the role as a Principal Tag.
+In our case, every federated user can access roles with a `team` Principal Tag. The `team` tag is a single string value indicating the team the role belongs to. When authenticated into that role, the user will generally have access to every AWS resource that the team owns.
 
 ## Stop Using SSH
 
