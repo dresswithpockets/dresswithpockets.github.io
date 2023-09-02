@@ -138,15 +138,47 @@ data "aws_iam_policy_document" "allow_ssm_sessions_for_users" {
 
 ## SSH over SSM kind of sucks
 
-WIP
+Like us, you may have some tooling which depends on being able to ssh to many hosts in a fleet. If thats the case, AWS provides support for using SSM as a proxy command for SSH. Say you want to be able to do something like:
+
+```sh
+ssh user@i-abcd1234
+```
+
+You can configure SSH with something like this:
+```
+Host i-*
+  ProxyCommand sh -c "aws ssm start-session --target %h --document-name AWS-StartSSHSession --parameters 'portNumber=%p'"
+```
+
+You still need to distribute SSH keys, so this is useful as a stop-gap while transitioning to entirely SSM-based fleet management.
 
 ## Port Tunneling over SSM sucks (but only a little bit)
 
-WIP
+If you're used to doing something like `ssh host -L 8080:localhost:8080`, SSM can tunnel ports for you with Port sessions. AWS provides a few managed documents that are preconfigured to support this. For example:
+
+```sh
+aws ssm start-session \
+  --target i-abcd1234 \
+  --document AWS-StartPortForwardingSession \
+  --parameters 'portNumber=8080,localPortNumber=8080'
+```
+
+You can also tunnel to a remote host via a jumpbox, the equivalent of `ssh host -L 8080:some_remote_host:8080`:
+
+```sh
+aws ssm start-session \
+  --target i-abcd1234 \
+  --document AWS-StartPortForwardingSessionToRemoteHost \
+  --parameters 'host=some_host,portNumber=8080,localPortNumber=8080'
+```
+
+However, I urge you to read the contents of the managed documents you end up using; I go over an example of why you should care in [this section](#stop-using-aws-managed-documents).
 
 ## SCP over SSM also sucks
 
-WIP
+If you've configured support for SSH-over-SSM, then SCP should "just work". I do not recommend relying on this stop-gap configuration for file transfers, especially if you plan on eventually phasing out general SSH use.
+
+There is no SSM-native way to transfer files between hosts. You will need to share files remotely via S3 or another service, and then download them from the target machine. My information here is a bit lacking though since someone else implemented SSM-based file transfers.
 
 ## Stop Using AWS-Managed Documents
 
