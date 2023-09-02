@@ -9,7 +9,7 @@ These are some of my discoveries while helping a company move from SSH to AWS SS
 
 ## Be Prepared
 
-Warning! This post assumes you have some basic understanding of how to use SSM and what SSM [Sessions](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager.html), [Commands](https://docs.aws.amazon.com/systems-manager/latest/userguide/run-command.html), and [Documents](https://docs.aws.amazon.com/systems-manager/latest/userguide/documents.html) are.
+**Warning!** This post assumes you have some basic understanding of how to use SSM and what SSM [Sessions](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager.html), [Commands](https://docs.aws.amazon.com/systems-manager/latest/userguide/run-command.html), and [Documents](https://docs.aws.amazon.com/systems-manager/latest/userguide/documents.html) are.
 
 If you are new to SSM, then I recommend doing the following to get acquainted with it before reading this article:
 1. Read [General SSM setup](https://docs.aws.amazon.com/systems-manager/latest/userguide/setting_up_prerequisites.html)
