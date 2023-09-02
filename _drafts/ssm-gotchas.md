@@ -43,9 +43,9 @@ SSM Sessions are proxied through the AWS SSM service. No more port 22, no more i
 
 If you already use SSH, with bastions in your infra, I recommend the following after fully switching over to SSM:
 1. Configure a "recovery" SSH key
-  - ideally, this key is rotated regularly and after every use
+    - ideally, this key is rotated regularly and after every use
 1. Configure a "recovery" bastion ASG (or your favourite auto-scaling service), and keep it at 0 scale
-  - ideally, this would only ever be scaled in in response to the rare SSM outage
+    - ideally, this would only ever be scaled in in response to the rare SSM outage
 1. Scale in all other bastions
 
 ## Make Your Own Tooling
