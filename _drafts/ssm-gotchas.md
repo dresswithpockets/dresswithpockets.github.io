@@ -37,20 +37,20 @@ Taggable resources are tagged by the teams that own them and additional teams th
 
 ## Stop Using SSH
 
-SSH is difficult to administer at scale, especially in infrastructures that already have other systems of providing IAM for access to resources. Instances shouldnt be generally accessible to the internet. So, you usually have to maintain additional infrastructure to facilitate SSH'ing into instances, such as internet-facing bastions or a VPN.
+SSH is difficult to administer at scale, especially in infrastructures with other systems providing IAM for access to resources. Instances shouldn't be generally accessible to the internet. You usually must maintain additional infrastructure to facilitate SSH'ing into instances, such as internet-facing bastions or a VPN.
 
-SSM Sessions are proxied through the AWS SSM service. No more port 22; no more internet-facing bastions; no more VPN-just-for-ssh.
+SSM Sessions are proxied through the AWS SSM service. No more port 22, no more internet-facing bastions, no more VPN-just-for-ssh.
 
 If you already use SSH, with bastions in your infra, I recommend the following after fully switching over to SSM:
 1. Configure a "recovery" SSH key
-  - ideally, this key is rotated regularly, and after every use
+  - ideally, this key is rotated regularly and after every use
 1. Configure a "recovery" bastion ASG (or your favourite auto-scaling service), and keep it at 0 scale
   - ideally, this would only ever be scaled in in response to the rare SSM outage
 1. Scale in all other bastions
 
 ## Make Your Own Tooling
 
-If you already have an internal CLI tool or a pool of internal scripts, I highly recommend adding common SSM operations to it. Virtually every operation I describe below is made simpler by tooling we maintain.
+If you already have an internal CLI tool or a pool of internal scripts, I recommend adding common SSM operations. Virtually every operation I describe below is made simpler by the tooling we maintain.
 
 ## Account Wide SSM Settings
 
@@ -58,7 +58,7 @@ AWS automatically creates a document `SSM-SessionManagerRunShell` in every accou
 
 > Important! This document is implicitly invoked whenever a session is started via `aws ssm start-session`, but not when invoking `ssm:StartSession`.
 
-You can manage that document in IaC tools like terraform, but you'll likely need to import it into your managed state.
+You can manage that document in IaC tools like Terraform, but you'll likely need to import it into your managed state.
 
 ```sh
 terraform import aws_ssm_document.ssm_session_manager_run_shell "SSM-SessionManagerRunShell"
@@ -76,7 +76,7 @@ resource "aws_ssm_document" "ssm_settings" {
 }
 ```
 
-## Can't Always Use Tags For Permissions
+## Use Tags For Permissions
 
 For `ssm:StartSession` and `ssm:SendCommand`, its trivial to filter permission by tag:
 
