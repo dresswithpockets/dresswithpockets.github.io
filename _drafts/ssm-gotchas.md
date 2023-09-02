@@ -46,6 +46,10 @@ If you already use SSH, with bastions in your infra, I recommend the following a
   - ideally, this would only ever be scaled in in response to the rare SSM outage
 1. Scale in all other bastions
 
+## Make Your Own Tooling
+
+If you already have an internal CLI tool or a pool of internal scripts, I highly recommend adding common SSM operations to it. Virtually every operation I describe below is made simpler by tooling we maintain.
+
 ## Account Wide SSM Settings
 
 AWS automatically creates a document `SSM-SessionManagerRunShell` in every account. Allowing `ssm:StartSession` also implicitly grants access to this document.
