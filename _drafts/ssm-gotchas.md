@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "AWS SSM Kind of Sucks (but thats okay)"
+title:  "AWS SSM Kind of Sucks (and that's okay)"
 date:   2023-09-01 10:45:00 -0700
 tags:   aws ssm sre
 ---
