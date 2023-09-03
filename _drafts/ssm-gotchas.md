@@ -30,7 +30,7 @@ If you are new to SSM, then I recommend doing the following to get acquainted wi
 1. Follow [Setting up SSM for EC2](https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-setting-up-ec2.html)
 1. Spin up an ec2 instance, with IMDSv2 support
 1. [Install SSM Agent](https://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-manual-agent-install.html) 3.2.582 or later on that instance
-    - this is necessary for [DHCP](https://docs.aws.amazon.com/systems-manager/latest/userguide/setup-instance-permissions.html#default-host-management).
+    - this is necessary for [DHMC](https://docs.aws.amazon.com/systems-manager/latest/userguide/setup-instance-permissions.html#default-host-management).
 1. [Install Session Manager Plugin](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-working-with-install-plugin.html) for your AWS CLI locally
 1. [Start a session](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-working-with-sessions-start.html) to your ec2 instance
 1. Read up on [Sessions](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager.html), [Commands](https://docs.aws.amazon.com/systems-manager/latest/userguide/run-command.html), and [Documents](https://docs.aws.amazon.com/systems-manager/latest/userguide/documents.html).
