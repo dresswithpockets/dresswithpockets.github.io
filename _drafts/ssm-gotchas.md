@@ -7,6 +7,20 @@ tags:   aws ssm sre
 
 These are some of my discoveries while helping a company move from SSH to AWS SSM.
 
+1. [Be Prepared](#be-prepared)
+1. [Background](#background)
+    1. [ABAC-Based IAM](#abac-based-iam)
+1. [Stop Using SSH](#stop-using-ssh)
+1. [Make Your Own Tooling](#make-your-own-tooling)
+1. [Account Wide SSM Settings](#account-wide-ssm-settings)
+1. [Use Tags For Permissions](#use-tags-for-permissions)
+    1. [Problem: Sessions and Commands can't be tagged](#problem-sessions-and-commands-cant-be-tagged)
+    1. [Problem: Federated users don't get a userid](#problem-federated-users-dont-get-a-userid)
+1. [SSH over SSM kind of sucks](#ssh-over-ssm-kind-of-sucks)
+1. [Port Tunneling over SSM kind of sucks](#port-tunneling-over-ssm-kind-of-sucks)
+1. [SCP over SSM also sucks](#scp-over-ssm-also-sucks)
+1. [Stop Using AWS-Managed Documents](#stop-using-aws-managed-documents)
+
 ## Be Prepared
 
 **Warning!** This post assumes you have some basic understanding of how to use SSM and what SSM [Sessions](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager.html), [Commands](https://docs.aws.amazon.com/systems-manager/latest/userguide/run-command.html), and [Documents](https://docs.aws.amazon.com/systems-manager/latest/userguide/documents.html) are.
