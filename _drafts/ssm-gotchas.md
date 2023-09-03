@@ -213,7 +213,7 @@ However, I urge you to read the contents of the managed documents you end up usi
 
 This section might be a bit unfulfilling - my information for SCP-over-SSM is lacking, since someone else implemented SSM-based file transfers.
 
-If you've configured support for SSH-over-SSM, then scp(1) should "just work." I recommend relying on something other than this stop-gap configuration for file transfers, especially if you plan on eventually phasing out general SSH use.
+If you've configured support for SSH-over-SSM, then scp(1) should "just work." **However**, I recommend relying on something other than this stop-gap configuration for file transfers, especially if you plan on eventually phasing out general SSH use.
 
 There is no SSM-native way to transfer files between hosts. You must share files remotely via S3 or another service and then download them on the target machine.
 
