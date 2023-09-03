@@ -52,7 +52,7 @@ If you already use SSH, with bastions in your infra, I recommend the following a
 
 If you already have an internal CLI tool or a pool of internal scripts, I recommend adding common SSM operations. Virtually every operation I describe below is made simpler by the tooling we maintain.
 
-For example, as you'll see later, you have to write something like this:
+As you'll see later, whenever you want to forward a port from a host, you have to write something like this:
 
 ```sh
 aws ssm start-session \
@@ -61,7 +61,7 @@ aws ssm start-session \
   --parameters 'portNumber=8080,localPortNumber=8080'
 ```
 
-Whenever you want to forward a port from a host. It'd be nice to have an alias or CLI tool that's a bit more familiar, like:
+It'd be nice to have an alias or CLI tool that's a bit more familiar, like:
 
 ```sh
 start-session i-abcd1234 -L 8080:localhost:8080
