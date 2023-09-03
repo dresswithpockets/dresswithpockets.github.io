@@ -173,7 +173,7 @@ Host i-*
 
 You still need to distribute SSH keys, so this is useful as a stop-gap while transitioning to entirely SSM-based fleet management.
 
-## Port Tunneling over SSM sucks (but only a little bit)
+## Port Tunneling over SSM kind of sucks
 
 If you're used to doing something like `ssh host -L 8080:localhost:8080`, SSM can tunnel ports for you with Port sessions. AWS provides a few managed documents that are preconfigured to support this. For example:
 
