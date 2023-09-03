@@ -270,7 +270,7 @@ If we take a look at the contents of one of those documents, something seems a b
 
 `AWS-StartPortForwardingSession`'s `portNumber` parameter takes an arbitrary port. This is akin to federating access to a VPN and then exposing every port on the instance to the VPN. No good.
 
-Instead, create your own documents with a specific list of allowed ports.
+Instead, create your own documents with a specific list of allowed ports. This ruleset can be applied to the other port forwarding documents, as well:
 
 ```terraform
 locals {
@@ -311,5 +311,3 @@ resource "aws_ssm_document" "start_port_forwarding_session" {
   })
 }
 ```
-
-This ruleset can be applied to the other port forwarding documents.
