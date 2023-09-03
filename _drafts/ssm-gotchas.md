@@ -25,9 +25,9 @@ These are some of my discoveries while helping a company move from SSH to AWS SS
 
 **Warning!** This post assumes you have some basic understanding of how to use SSM and what SSM [Sessions](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager.html), [Commands](https://docs.aws.amazon.com/systems-manager/latest/userguide/run-command.html), and [Documents](https://docs.aws.amazon.com/systems-manager/latest/userguide/documents.html) are.
 
-If you are new to SSM, then I recommend doing the following to get acquainted with it before reading this article:
-1. Read [General SSM setup](https://docs.aws.amazon.com/systems-manager/latest/userguide/setting_up_prerequisites.html)
-1. Read [Setting up SSM for EC2](https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-setting-up-ec2.html)
+If you are new to SSM, then I recommend doing the following to get acquainted with it before reading this post:
+1. Follow [General SSM setup](https://docs.aws.amazon.com/systems-manager/latest/userguide/setting_up_prerequisites.html)
+1. Follow [Setting up SSM for EC2](https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-setting-up-ec2.html)
 1. Spin up an ec2 instance, with IMDSv2 support
 1. [Install SSM Agent](https://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-manual-agent-install.html) 3.2.582 or later on that instance
     - this is necessary for [DHCP](https://docs.aws.amazon.com/systems-manager/latest/userguide/setup-instance-permissions.html#default-host-management).
