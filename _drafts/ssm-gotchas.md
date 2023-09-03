@@ -50,7 +50,7 @@ If you already use SSH, with bastions in your infra, I recommend the following a
 
 ## Make Your Own Tooling
 
-If you already have an internal CLI tool or a pool of internal scripts, I recommend adding common SSM operations. Virtually every operation I describe below is made simpler by the tooling we maintain.
+If you already have an internal CLI tool or a pool of internal scripts, I recommend adding common SSM operations.
 
 As you'll see later, whenever you want to forward a port from a host, you have to write something like this:
 
@@ -66,6 +66,8 @@ It'd be nice to have an alias or CLI tool that's a bit more familiar, like:
 ```sh
 start-session i-abcd1234 -L 8080:localhost:8080
 ```
+
+Virtually every operation I describe below is made simpler by the tooling we maintain.
 
 ## Account Wide SSM Settings
 
