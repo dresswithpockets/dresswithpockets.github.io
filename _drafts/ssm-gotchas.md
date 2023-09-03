@@ -211,9 +211,17 @@ However, I urge you to read the contents of the managed documents you end up usi
 
 ## SCP over SSM also sucks
 
-If you've configured support for SSH-over-SSM, then SCP should "just work." I recommend relying on something other than this stop-gap configuration for file transfers, especially if you plan on eventually phasing out general SSH use.
+This section might be a bit unfulfilling - my information for SCP-over-SSM is lacking, since someone else implemented SSM-based file transfers.
 
-There is no SSM-native way to transfer files between hosts. You must share files remotely via S3 or another service and then download them on the target machine. My information here is lacking since someone else implemented SSM-based file transfers.
+If you've configured support for SSH-over-SSM, then scp(1) should "just work." I recommend relying on something other than this stop-gap configuration for file transfers, especially if you plan on eventually phasing out general SSH use.
+
+There is no SSM-native way to transfer files between hosts. You must share files remotely via S3 or another service and then download them on the target machine.
+
+Our tooling basically just does this:
+1. Send command to remote instance, to upload files to a shared S3 bucket
+1. Locally download the newly uploaded S3 objects
+
+Or a variation of this for local-to-remote and remote-to-remote file transfers.
 
 ## Stop Using AWS-Managed Documents
 
