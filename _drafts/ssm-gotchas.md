@@ -173,7 +173,7 @@ data "aws_iam_policy_document" "allow_ssm_sessions_for_users" {
 
 ## SSH over SSM kind of sucks
 
-Like us, you may have some tooling that depends on being able to ssh to many hosts in a fleet. If that's the case, AWS supports using SSM as a proxy command for SSH. Say you want to be able to do something like:
+Like us, you may have some tooling that depends on being able to ssh(1) to many hosts in a fleet. If that's the case, AWS supports using SSM as a proxy command for SSH. Say you want to be able to do something like:
 
 ```sh
 ssh user@i-abcd1234
