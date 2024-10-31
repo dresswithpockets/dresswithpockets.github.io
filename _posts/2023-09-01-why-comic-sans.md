@@ -1,13 +1,11 @@
 ---
 layout: post
-title:  "Comic Sans is good, and everybody should use it"
+title:  "Comic Sans is good"
 date:   2023-09-01 5:00:00 -0700
 tags:   fonts dyslexia
 ---
 
-## Truth is,
-
-i am dyslexic.
+i am dyslexic :3
 
 I think this is a pretty cold take at this point; but, Comic Sans just kinda looks _good_.
 
