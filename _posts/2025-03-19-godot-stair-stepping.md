@@ -43,13 +43,7 @@ It works great! Its not too floaty, and not too snappy. It handles things like s
 
 ## I can't climb stairs!
 
-<figure class="video-player">
-  <video preload="none" width="480" height="270" poster="video.jpg">
-    <source src="/assets/videos/godot-stair-stepping/cant-climb-stairs.mkv" type="video/webm">
-  </video>
-  <button class="play-toggle">Toggle play</button>
-  <button class="mute-toggle">Toggle mute</button>
-</figure>
+{% include youtubePlayer.html id=esmxfLw5des %}
 
 Climbing stairs is a surprisingly unintuitive problem. Theres one obvious solution we could try, which is to add an invisible collision mesh with an angle lower than our controller's max slope angle:
 
@@ -57,7 +51,7 @@ Climbing stairs is a surprisingly unintuitive problem. Theres one obvious soluti
 
 This works pretty well, actually! My character controller is able to move up and down this without any changes:
 
-![clip brush slope video](/assets/videos/godot-stair-stepping/clip-brush-slope.mkv)
+{% include youtubePlayer.html id=xr_NiLQwjJs %}
 
 I'm not satisfied, though; After thinking about it, there are some problems:
 
@@ -121,7 +115,7 @@ func _physics_process(delta: float) -> void:
 
 And give it a try, without any extra stair clipping:
 
-![naive stair test video](/assets/videos/godot-stair-stepping/stair-stepping-1.mkv)
+{% include youtubePlayer.html id=yLJsJBZWEsY %}
 
 It works!!! Though, its not particularly smooth. I'll get to smoothing out the vertical motion later in this post.
 
@@ -193,7 +187,7 @@ func stair_step_up(delta: float) -> void:
 
 And that works... but there is certainly some unexpected behaviour that happens occasionally when going up each step:
 
-![naive stair test video 2](/assets/videos/godot-stair-stepping/stair-stepping-2.mkv)
+{% include youtubePlayer.html id=F8Tiljp1IV4 %}
 
 ### Small Gains
 
@@ -402,7 +396,7 @@ static func exp_decay_f(a: float, b: float, decay: float, delta: float) -> float
     return b + (a - b) * exp(-decay * delta)
 ```
 
-![camera smoothed video](/assets/videos/godot-stair-stepping/stair-stepping-3.mkv)
+{% include youtubePlayer.html id=8SawjIxlRrM %}
 
 Wow. That is really nice. Its not perfectly interpolating between each step, but I personally really like that it doesn't do that. This feels like theres weight to each step, and the code itself is really simple and satisfying.
 
@@ -463,7 +457,8 @@ func stair_step_up(delta: float) -> void:
 
 With that we get some better accuracy around walls & low slanted ceilings:
 
-![wall sliding video](/assets/videos/godot-stair-stepping/wall-sliding.mkv)
+
+{% include youtubePlayer.html id=9pyWqqpBN74 %}
 
 ## Thats It!
 
@@ -472,61 +467,3 @@ For me, this is a pretty satisfying character controller. Its perfect for the ki
 I've got an example project with the fully implemented player controller [here](https://github.com/dresswithpockets/dresswithpockets.github.io/blob/main/examples/godot-stair-stepping), if you wanted to see the full code.
 
 Thanks for reading <3
-
-<script>
-/**
-* A simple video player.
-* @author Jayden Seric
-* @param  {Object}      options                  - Options object.
-* @param  {HTMLElement} options.element          - Container.
-* @param  {string}      [options.playClass=play] - Container class name when video is playing.
-* @param  {string}      [options.muteClass=mute] - Container class name when video is mute.
-*/
-function VideoPlayer(options) {
-  var self = this;
-  // Options
-  self.element   = options.element;
-  self.playClass = options.playClass || 'play';
-  self.muteClass = options.muteClass || 'mute';
-  // Derived
-  self.video            = element.querySelector('video');
-  self.playToggleButton = element.querySelector('.play-toggle');
-  self.muteToggleButton = element.querySelector('.mute-toggle');
-  // Handle play
-  self.video.addEventListener('play', function() {
-    self.classList.add(self.playClass);
-  });
-  // Handle pause
-  self.video.addEventListener('pause', function() {
-    self.classList.remove(self.playClass);
-  });
-  // Handle mute
-  self.video.addEventListener('volumechange', function() {
-    if (self.video.muted) self.element.classList.add(self.muteClass);
-    else self.element.classList.remove(self.muteClass);
-  });
-  // Enable play toggle button
-  self.playToggleButton.addEventListener('click', function() { self.togglePlay() });
-  // Enable mute toggle button
-  self.muteToggleButton.addEventListener('click', function() { self.toggleMute() });
-}
-
-/**
- * Toggles video play/pause.
- */
-VideoPlayer.prototype.togglePlay = function() {
-  if (this.video.paused) this.video.play();
-  else this.video.pause();
-};
-
-/**
- * Toggles video mute/unmute.
- */
-VideoPlayer.prototype.toggleMute = function() {
-  this.video.muted = !this.video.muted;
-};
-
-new VideoPlayer({
-    element: document.querySelector('.video-player')
-})
-</script>
