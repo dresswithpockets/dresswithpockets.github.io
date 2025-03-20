@@ -43,7 +43,7 @@ It works great! Its not too floaty, and not too snappy. It handles things like s
 
 ## I can't climb stairs!
 
-<figure class="player-1">
+<figure class="video-player">
   <video preload="none" width="480" height="270" poster="video.jpg">
     <source src="/assets/videos/godot-stair-stepping/cant-climb-stairs.mkv" type="video/webm">
   </video>
@@ -525,4 +525,8 @@ VideoPlayer.prototype.togglePlay = function() {
 VideoPlayer.prototype.toggleMute = function() {
   this.video.muted = !this.video.muted;
 };
+
+new VideoPlayer({
+    element: document.querySelector('.video-player')
+})
 </script>
