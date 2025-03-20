@@ -43,7 +43,13 @@ It works great! Its not too floaty, and not too snappy. It handles things like s
 
 ## I can't climb stairs!
 
-![I can't climb stairs!](/assets/videos/godot-stair-stepping/cant-climb-stairs.mkv)
+<figure class="player-1">
+  <video preload="none" width="480" height="270" poster="video.jpg">
+    <source src="/assets/videos/godot-stair-stepping/cant-climb-stairs.mkv" type="video/webm">
+  </video>
+  <button class="play-toggle">Toggle play</button>
+  <button class="mute-toggle">Toggle mute</button>
+</figure>
 
 Climbing stairs is a surprisingly unintuitive problem. Theres one obvious solution we could try, which is to add an invisible collision mesh with an angle lower than our controller's max slope angle:
 
@@ -466,3 +472,57 @@ For me, this is a pretty satisfying character controller. Its perfect for the ki
 I've got an example project with the fully implemented player controller [here](https://github.com/dresswithpockets/dresswithpockets.github.io/blob/main/examples/godot-stair-stepping), if you wanted to see the full code.
 
 Thanks for reading <3
+
+<script>
+/**
+* A simple video player.
+* @author Jayden Seric
+* @param  {Object}      options                  - Options object.
+* @param  {HTMLElement} options.element          - Container.
+* @param  {string}      [options.playClass=play] - Container class name when video is playing.
+* @param  {string}      [options.muteClass=mute] - Container class name when video is mute.
+*/
+function VideoPlayer(options) {
+  var self = this;
+  // Options
+  self.element   = options.element;
+  self.playClass = options.playClass || 'play';
+  self.muteClass = options.muteClass || 'mute';
+  // Derived
+  self.video            = element.querySelector('video');
+  self.playToggleButton = element.querySelector('.play-toggle');
+  self.muteToggleButton = element.querySelector('.mute-toggle');
+  // Handle play
+  self.video.addEventListener('play', function() {
+    self.classList.add(self.playClass);
+  });
+  // Handle pause
+  self.video.addEventListener('pause', function() {
+    self.classList.remove(self.playClass);
+  });
+  // Handle mute
+  self.video.addEventListener('volumechange', function() {
+    if (self.video.muted) self.element.classList.add(self.muteClass);
+    else self.element.classList.remove(self.muteClass);
+  });
+  // Enable play toggle button
+  self.playToggleButton.addEventListener('click', function() { self.togglePlay() });
+  // Enable mute toggle button
+  self.muteToggleButton.addEventListener('click', function() { self.toggleMute() });
+}
+
+/**
+ * Toggles video play/pause.
+ */
+VideoPlayer.prototype.togglePlay = function() {
+  if (this.video.paused) this.video.play();
+  else this.video.pause();
+};
+
+/**
+ * Toggles video mute/unmute.
+ */
+VideoPlayer.prototype.toggleMute = function() {
+  this.video.muted = !this.video.muted;
+};
+</script>
