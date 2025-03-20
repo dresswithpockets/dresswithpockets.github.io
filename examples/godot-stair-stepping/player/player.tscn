@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://csweg8dldmqv3"]
+
+[ext_resource type="Script" uid="uid://pm60unqjp0g8" path="res://player/player.gd" id="1_oul6g"]
+[ext_resource type="Script" uid="uid://dx1p5foa66hlv" path="res://player/camera.gd" id="2_rkbax"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_rkbax"]
+margin = 0.005
+height = 1.75
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_oul6g")
+
+[node name="PlayerShape" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.875, 0)
+shape = SubResource("CylinderShape3D_rkbax")
+
+[node name="CameraYaw" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+
+[node name="Camera" type="Camera3D" parent="CameraYaw"]
+fov = 90.0
+script = ExtResource("2_rkbax")
+
+[connection signal="stepped" from="." to="CameraYaw/Camera" method="_on_player_stepped"]
