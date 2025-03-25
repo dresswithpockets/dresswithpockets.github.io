@@ -5,7 +5,13 @@ date:   2025-03-19 5:00:00 -0700
 tags:   godot gamedev
 ---
 
-For this guide, I'm using Jolt Physics. I've got this basic First Person character controller, with a CollisionShape3D that has a shape margin of `0.005`, and the following code attached:
+For this guide, I've configured:
+- Jolt Physics
+- 60 physics ticks per second
+- `CharacterBody3D.safe_margin = 0.001`
+- `CharacterBody3D`'s `CollisionShape3D.shape.margin = 0.001`
+
+And, the following script attached:
 
 ```gdscript
 class_name Player extends CharacterBody3D
@@ -90,7 +96,7 @@ So we can write a function that does that test for us:
 ```gdscript
 func stair_step_up(delta: float) -> void:
     var params := PhysicsTestMotionParameters3D.new()
-    params.margin = player_shape.margin
+    params.margin = safe_margin
     params.from = global_transform.translated(horizontal_velocity * delta + Vector3(0, max_step_height, 0))
     params.motion = Vector3(0, -max_step_height, 0)
 
@@ -159,7 +165,7 @@ func stair_step_up(delta: float) -> void:
 
     var result := PhysicsTestMotionResult3D.new()
     var params := PhysicsTestMotionParameters3D.new()
-    params.margin = player_shape.margin
+    params.margin = safe_margin
     
     # sweep up
     params.from = sweep_transform
@@ -189,9 +195,51 @@ And that works... but there is certainly some unexpected behaviour that happens 
 
 ![clip brush slope](/assets/images/godot-stair-stepping/stair-stepping-2.gif)
 
+### Mis-steps
+
+I'm making some assumptions about why this happens:
+- Jolt uses an SAT-derived solver
+- Jolt evaluates the vertical axis before either of the horizontal axes in the motion are tested
+
+I believe this happens because `stair_step_up` _only_ moves the player vertically. It could be possible that the vertical velocity due to gravity causes the player to fall too fast for Jolt to determine that the player is "on" the next step.
+
+So, I'll try to solve the problem given these assumptions. Lets force the body to only move the horizontal component first, then handle vertical after:
+
+```gdscript
+func _physics_process(delta: float) -> void:
+    # ...
+    stair_step_up(delta)
+    
+    # horizontal-only move
+    velocity = horizontal_velocity
+    move_and_slide()
+
+    horizontal_velocity = Vector3(velocity.x, 0, velocity.z)
+
+    # the horizontal motion may have induced some vertical motion after a slide iteration
+    vertical_speed += velocity.y
+
+    # vertical-only move
+    velocity = Vector3(0, vertical_speed, 0)
+    move_and_slide()
+    
+    # the vertical motion may have induced some horizontal motion after a slide iteration
+    vertical_speed = velocity.y
+    horizontal_velocity.x += velocity.x
+    horizontal_velocity.z += velocity.z
+```
+
+Lets see how that feels:
+
+![fixed missteps](/assets/images/godot-stair-stepping/fixed-missteps.gif)
+
+Not bad. Its not a perfect solution since I effectively doubled the number of slide iterations I'm doing each frame - but spending time solving for a more performant solution would be time spent prematurely on an optimization I may not even need.
+
+Good enough is better than good.
+
 ### Small Gains
 
-We can make some small improvements to the procedure as we have it in order to reduce some of the problem behaviour we just saw. For starters, we shouldn't be trying to step up if the player isn't grounded, or if their velocity is zero:
+We can make some small improvements to the stair step procedure. For starters, we shouldn't be trying to step up if the player isn't grounded, or if their velocity is zero:
 
 ```gdscript
 func stair_step_up(delta: float) -> void:
@@ -284,7 +332,7 @@ So, lets just do that:
 func stair_step_down() -> void:
     var result := PhysicsTestMotionResult3D.new()
     var params := PhysicsTestMotionParameters3D.new()
-    params.margin = player_shape.margin
+    params.margin = safe_margin
     params.from = global_transform
     params.motion = Vector3(0, -max_step_height, 0)
 

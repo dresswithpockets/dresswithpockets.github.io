@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://dx1p5foa66hlv" path="res://player/camera.gd" id="2_rkbax"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_rkbax"]
-margin = 0.005
+margin = 0.001
 height = 1.75
 
 [node name="Player" type="CharacterBody3D"]

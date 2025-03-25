@@ -18,6 +18,8 @@ config/icon="res://icon.svg"
 [autoload]
 
 Settings="*res://settings.gd"
+DemoRecorder="*res://demo_recorder.gd"
+MouseCapture="*res://mouse_capture.gd"
 
 [input]
 

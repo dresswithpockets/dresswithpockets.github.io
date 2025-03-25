@@ -19,23 +19,25 @@ class_name Player extends CharacterBody3D
 @onready var default_gravity: float = -ProjectSettings.get_setting("physics/3d/default_gravity")
 @onready var camera_yaw: Node3D = $CameraYaw
 @onready var camera: Camera3D = $CameraYaw/Camera
-@onready var player_shape: Shape3D = $PlayerShape.shape
-var vertical_speed: float = 0
-var horizontal_velocity: Vector3 = Vector3.ZERO
+
+# N.B. vertical_speed and horizontal_speed are only @export'd so that Node.duplicate()
+# will duplicate their values, which is necessary for a playback history in the DemoRecorder
+#
+# These should not be exported normally.
+@export var vertical_speed: float = 0
+@export var horizontal_velocity: Vector3 = Vector3.ZERO
 
 signal stepped(distance: float)
 
 func _input(event: InputEvent) -> void:
-    if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
-        if event is InputEventKey and event.keycode == KEY_ESCAPE:
-            Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-        
-        if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
-            move_camera(event.relative)
+    if Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
+        return
+    
+    if DemoRecorder.playback_state == DemoRecorder.PlaybackState.REPLAYING:
+        return
 
-    else:
-        if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed():
-            Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+    if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+        move_camera(event.relative)
 
 func move_camera(relative_move: Vector2) -> void:
     var horizontal: float = relative_move.x * Settings.yaw_speed * Settings.mouse_speed
@@ -46,38 +48,62 @@ func move_camera(relative_move: Vector2) -> void:
     camera.rotate_x(pitch_rotation)
 
 func _physics_process(delta: float) -> void:
-    var input_dir := Vector2.ZERO
-    if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
-        # get player's raw movement input as a 2d vector
-        input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
-    
-    # apply camera's yaw rotation onto the input vector
-    var wish_dir := camera_yaw.global_basis * Vector3(input_dir.x, 0, input_dir.y)
-    
+    var wish_dir := Vector3.ZERO
+
+    if DemoRecorder.playback_state == DemoRecorder.PlaybackState.REPLAYING:
+        var next_state := DemoRecorder.get_next_state()
+        if next_state == null:
+            return
+        
+        wish_dir = next_state.wish_dir
+    else:
+        var input_dir := Vector2.ZERO
+        if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+            # get player's raw movement input as a 2d vector
+            input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
+        
+        # apply camera's yaw rotation onto the input vector
+        wish_dir = camera_yaw.global_basis * Vector3(input_dir.x, 0, input_dir.y)
+        DemoRecorder.push_state(wish_dir)
+
     # we have different movement properties depending on whether or not we're on floor.
     if is_on_floor():
         update_velocity_grounded(wish_dir, delta)
     else:
         update_velocity_air(wish_dir, delta)
-    
+
     # we always apply gravity when we're not falling faster than terminal velocity
     apply_gravity(delta)
     
     # combine the horizontal and vertical components together & move
     var was_grounded := is_on_floor()
     stair_step_up(delta)
-    velocity = Vector3(horizontal_velocity.x, vertical_speed, horizontal_velocity.z)
+    
+    velocity = horizontal_velocity
     move_and_slide()
+
+    horizontal_velocity = Vector3(velocity.x, 0, velocity.z)
+    vertical_speed += velocity.y
+
+    velocity = Vector3(0, vertical_speed, 0)
+    move_and_slide()
+
+    vertical_speed = velocity.y
+    horizontal_velocity.x += velocity.x
+    horizontal_velocity.z += velocity.z
+    
+    # velocity = Vector3(horizontal_velocity.x, vertical_speed, horizontal_velocity.z)
+    # move_and_slide()
     stair_step_down(was_grounded)
     
     # get our new horizontal & vertical components after moving
-    horizontal_velocity = Vector3(velocity.x, 0, velocity.z)
-    vertical_speed = velocity.y
+    # horizontal_velocity = Vector3(velocity.x, 0, velocity.z)
+    # vertical_speed = velocity.y
 
 func update_velocity_grounded(wish_dir: Vector3, delta: float) -> void:
     horizontal_velocity = Math.exp_decay_v3(
         horizontal_velocity,
-        horizontal_velocity * wish_dir.abs(),
+        wish_dir * ground_max_speed,
         ground_friction,
         delta)
 
@@ -86,11 +112,12 @@ func update_velocity_grounded(wish_dir: Vector3, delta: float) -> void:
         horizontal_velocity = Vector3.ZERO
 
     horizontal_velocity = horizontal_velocity.limit_length(ground_max_speed)
+    print(horizontal_velocity.normalized().dot(wish_dir))
 
 func update_velocity_air(wish_dir: Vector3, delta: float) -> void:
     horizontal_velocity = Math.exp_decay_v3(
         horizontal_velocity,
-        horizontal_velocity * wish_dir.abs(),
+        wish_dir * air_max_speed,
         air_friction,
         delta)
 
@@ -140,7 +167,7 @@ func stair_step_up(delta: float) -> void:
 
     var result := PhysicsTestMotionResult3D.new()
     var params := PhysicsTestMotionParameters3D.new()
-    params.margin = player_shape.margin
+    params.margin = safe_margin
 
     # don't run through if theres nothing for us to step up onto
     params.from = sweep_transform
@@ -185,7 +212,7 @@ func stair_step_down(was_grounded: bool) -> void:
 
     var result := PhysicsTestMotionResult3D.new()
     var params := PhysicsTestMotionParameters3D.new()
-    params.margin = player_shape.margin
+    params.margin = safe_margin
     params.from = global_transform
     params.motion = Vector3(0, -max_step_height, 0)
 
