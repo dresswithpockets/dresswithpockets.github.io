@@ -350,9 +350,10 @@ func _physics_process(delta: float) -> void:
     # ...
     stair_step_up(delta)
 
-    # combine the horizontal and vertical components together & move
-    velocity = Vector3(horizontal_velocity.x, vertical_speed, horizontal_velocity.z)
+    # horizontal-only move
+    velocity = horizontal_velocity
     move_and_slide()
+    # ...
 
     stair_step_down()
     # ...
@@ -374,9 +375,10 @@ func _physics_process(delta: float) -> void:
     var was_grounded := is_on_floor()
     stair_step_up(delta)
 
-    # combine the horizontal and vertical components together & move
-    velocity = Vector3(horizontal_velocity.x, vertical_speed, horizontal_velocity.z)
+    # horizontal-only move
+    velocity = horizontal_velocity
     move_and_slide()
+    # ...
 
     stair_step_down(was_grounded)
     # ...
