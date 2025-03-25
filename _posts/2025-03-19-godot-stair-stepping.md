@@ -43,7 +43,7 @@ It works great! Its not too floaty, and not too snappy. It handles things like s
 
 ## I can't climb stairs!
 
-{% include youtubePlayer.html id="esmxfLw5des"%}
+![clip brush slope](/assets/images/godot-stair-stepping/cant-climb-stairs.gif)
 
 Climbing stairs is a surprisingly unintuitive problem. Theres one obvious solution we could try, which is to add an invisible collision mesh with an angle lower than our controller's max slope angle:
 
@@ -51,7 +51,7 @@ Climbing stairs is a surprisingly unintuitive problem. Theres one obvious soluti
 
 This works pretty well, actually! My character controller is able to move up and down this without any changes:
 
-{% include youtubePlayer.html id="xr_NiLQwjJs"%}
+![clip brush slope](/assets/images/godot-stair-stepping/clip-brush-slope.gif)
 
 I'm not satisfied, though; After thinking about it, there are some problems:
 
@@ -115,7 +115,7 @@ func _physics_process(delta: float) -> void:
 
 And give it a try, without any extra stair clipping:
 
-{% include youtubePlayer.html id="yLJsJBZWEsY" %}
+![clip brush slope](/assets/images/godot-stair-stepping/stair-stepping-1.gif)
 
 It works!!! Though, its not particularly smooth. I'll get to smoothing out the vertical motion later in this post.
 
@@ -187,7 +187,7 @@ func stair_step_up(delta: float) -> void:
 
 And that works... but there is certainly some unexpected behaviour that happens occasionally when going up each step:
 
-{% include youtubePlayer.html id="F8Tiljp1IV4"%}
+![clip brush slope](/assets/images/godot-stair-stepping/stair-stepping-2.gif)
 
 ### Small Gains
 
@@ -396,7 +396,7 @@ static func exp_decay_f(a: float, b: float, decay: float, delta: float) -> float
     return b + (a - b) * exp(-decay * delta)
 ```
 
-{% include youtubePlayer.html id="8SawjIxlRrM"%}
+![clip brush slope](/assets/images/godot-stair-stepping/stair-stepping-3.gif)
 
 Wow. That is really nice. Its not perfectly interpolating between each step, but I personally really like that it doesn't do that. This feels like theres weight to each step, and the code itself is really simple and satisfying.
 
@@ -457,8 +457,7 @@ func stair_step_up(delta: float) -> void:
 
 With that we get some better accuracy around walls & low slanted ceilings:
 
-
-{% include youtubePlayer.html id="9pyWqqpBN74"%}
+![clip brush slope](/assets/images/godot-stair-stepping/wall-sliding.gif)
 
 ## Thats It!
 
