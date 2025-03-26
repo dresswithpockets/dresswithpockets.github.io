@@ -232,7 +232,7 @@ func _physics_process(delta: float) -> void:
 
 Lets see how that feels:
 
-![fixed missteps](/assets/images/godot-stair-stepping/fixed-missteps.gif)
+![fixed missteps](/assets/images/godot-stair-stepping/fixed-missteps-s.gif)
 
 Not bad. Its not a perfect solution since I effectively doubled the number of slide iterations I'm doing each frame - but spending time solving for a more performant solution would be time spent prematurely on an optimization I may not even need.
 
@@ -514,7 +514,7 @@ With that we get some better accuracy around walls & low slanted ceilings:
 
 We actually don't need to make any special considerations for this code to work on slopes! This implementation is sufficiently generalized that it should work on most reasonable geometry!
 
-![slope walking](/assets/images/godot-stair-stepping/slope-walking.gif)
+![slope walking](/assets/images/godot-stair-stepping/slope-walking-s.gif)
 
 Smooth (:
 
