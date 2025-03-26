@@ -144,18 +144,15 @@ func apply_gravity(delta: float) -> void:
 func iterate_sweep(
     sweep_transform: Transform3D,
     motion: Vector3,
-    params: PhysicsTestMotionParameters3D,
-    result: PhysicsTestMotionResult3D
+    result: KinematicCollision3D
 ) -> Transform3D:
     for i in max_step_up_slide_iterations:
-        params.from = sweep_transform
-        params.motion = motion
-        var hit := PhysicsServer3D.body_test_motion(get_rid(), params, result)
+        var hit := test_move(sweep_transform, motion, result, safe_margin)
         sweep_transform = sweep_transform.translated(result.get_travel())
         if not hit:
             break
 
-        var ceiling_normal := result.get_collision_normal()
+        var ceiling_normal := result.get_normal()
         motion = motion.slide(ceiling_normal)
     
     return sweep_transform
@@ -166,14 +163,9 @@ func stair_step_up(delta: float) -> void:
 
     var sweep_transform := global_transform
 
-    var result := PhysicsTestMotionResult3D.new()
-    var params := PhysicsTestMotionParameters3D.new()
-    params.margin = safe_margin
-
     # don't run through if theres nothing for us to step up onto
-    params.from = sweep_transform
-    params.motion = horizontal_velocity * delta
-    if !PhysicsServer3D.body_test_motion(get_rid(), params, result):
+    var result := KinematicCollision3D.new()
+    if !test_move(sweep_transform, horizontal_velocity * delta, result, safe_margin):
         return
 
     var horizontal_remainder := result.get_remainder()
@@ -181,23 +173,21 @@ func stair_step_up(delta: float) -> void:
     # sweep up
     sweep_transform = sweep_transform.translated(result.get_travel())
     var pre_sweep_y := sweep_transform.origin.y
-    sweep_transform = iterate_sweep(sweep_transform, Vector3(0, max_step_height, 0), params, result)
+    sweep_transform = iterate_sweep(sweep_transform, Vector3(0, max_step_height, 0), result)
 
     var height_travelled := sweep_transform.origin.y - pre_sweep_y
     if height_travelled <= 0:
         return
 
     # sweep forward using player's velocity
-    sweep_transform = iterate_sweep(sweep_transform, horizontal_remainder, params, result)
+    sweep_transform = iterate_sweep(sweep_transform, horizontal_remainder, result)
 
     # sweep back down, at most the amount we travelled from the sweep up
-    params.from = sweep_transform
-    params.motion = Vector3(0, -height_travelled, 0)
-    if !PhysicsServer3D.body_test_motion(get_rid(), params, result):
+    if !test_move(sweep_transform, Vector3(0, -height_travelled, 0), result, safe_margin):
         # don't bother if we don't hit anything
         return
 
-    var floor_angle = result.get_collision_normal().angle_to(Vector3.UP)
+    var floor_angle = result.get_normal().angle_to(Vector3.UP)
     if absf(floor_angle) > floor_max_angle:
         return
 
