@@ -7,6 +7,7 @@ class_name Player extends CharacterBody3D
 @export var ground_max_speed: float = 7.5
 @export var max_step_height: float = 0.6
 @export var max_step_up_slide_iterations: int = 4
+@export var no_input_step_up_speed_threshold: float = 2
 
 @export_subgroup("In Air")
 @export var gravity_up_scale: float = 1.0
@@ -75,9 +76,12 @@ func _physics_process(delta: float) -> void:
     # we always apply gravity when we're not falling faster than terminal velocity
     apply_gravity(delta)
 
-    # combine the horizontal and vertical components together & move
     var was_grounded := is_on_floor()
-    stair_step_up(delta)
+    # N.B. this is a little game feel hack. It feels kind of weird for the player 
+    # controller to step up when the player isn't pressing any movement keys and
+    # speed is low. This prevents that specific situation from happening.
+    if wish_dir != Vector3.ZERO or horizontal_velocity.length() > no_input_step_up_speed_threshold:
+        stair_step_up(delta)
 
     velocity = horizontal_velocity
     move_and_slide()
