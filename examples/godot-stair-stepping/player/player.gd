@@ -201,13 +201,9 @@ func stair_step_down(was_grounded: bool) -> void:
     if !was_grounded or velocity.y >= 0 or is_on_floor():
         return
 
-    var result := PhysicsTestMotionResult3D.new()
-    var params := PhysicsTestMotionParameters3D.new()
-    params.margin = safe_margin
-    params.from = global_transform
-    params.motion = Vector3(0, -max_step_height, 0)
+    var result := KinematicCollision3D.new()
 
-    if !PhysicsServer3D.body_test_motion(get_rid(), params, result):
+    if !test_move(global_transform, Vector3(0, -max_step_height, 0), result, safe_margin):
         return
 
     var new_transform := global_transform.translated(result.get_travel())
@@ -215,6 +211,6 @@ func stair_step_down(was_grounded: bool) -> void:
     var previous_y := global_position.y
     global_transform = new_transform
     apply_floor_snap()
-    
+
     var distance := global_position.y - previous_y
     stepped.emit(distance)
