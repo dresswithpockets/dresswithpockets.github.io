@@ -2,8 +2,8 @@ class_name Player extends CharacterBody3D
 
 @export_group("Movement")
 @export_subgroup("On Ground")
-@export var ground_friction: float = 20.0
-@export var ground_accel: float = 100.0
+@export var ground_friction: float = 15.0
+@export var ground_accel: float = 80.0
 @export var ground_max_speed: float = 7.5
 @export var max_step_height: float = 0.6
 @export var max_step_up_slide_iterations: int = 4
@@ -107,7 +107,6 @@ func update_velocity_grounded(wish_dir: Vector3, delta: float) -> void:
         horizontal_velocity = Vector3.ZERO
 
     horizontal_velocity = horizontal_velocity.limit_length(ground_max_speed)
-    print(horizontal_velocity.normalized().dot(wish_dir))
 
 func update_velocity_air(wish_dir: Vector3, delta: float) -> void:
     horizontal_velocity = Math.exp_decay_v3(

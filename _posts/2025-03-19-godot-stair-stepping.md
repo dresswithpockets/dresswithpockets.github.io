@@ -509,6 +509,14 @@ With that we get some better accuracy around walls & low slanted ceilings:
 
 ![clip brush slope](/assets/images/godot-stair-stepping/wall-sliding.gif)
 
+## Slopes
+
+We actually don't need to make any special considerations for this code to work on slopes! This implementation is sufficiently generalized that it should work on most reasonable geometry!
+
+![slope walking](/assets/images/godot-stair-stepping/slope-walking.gif)
+
+Smooth (:
+
 ## Thats It!
 
 For me, this is a pretty satisfying character controller. Its perfect for the kinds of games I work on, and could be easily augmented to have more complex movement features without disrupting the stair sweep code.

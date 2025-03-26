@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://skcssxo0jnxi"]
+[gd_scene load_steps=10 format=3 uid="uid://skcssxo0jnxi"]
 
 [ext_resource type="Texture2D" uid="uid://cmakn5jlblrk7" path="res://playground/green_ground.png" id="1_duj6w"]
 [ext_resource type="PackedScene" uid="uid://csweg8dldmqv3" path="res://player/player.tscn" id="2_8vnjg"]
 [ext_resource type="Texture2D" uid="uid://6178amv01n5s" path="res://playground/purple_stairs.png" id="2_tuib3"]
+[ext_resource type="PackedScene" uid="uid://cx7n67q7njcp0" path="res://playground/funny_terrain.blend" id="4_gwu22"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_duj6w"]
 albedo_texture = ExtResource("1_duj6w")
@@ -155,3 +156,6 @@ grow_vertical = 2
 [node name="ColorRect" type="ColorRect" parent="CenterContainer"]
 custom_minimum_size = Vector2(8, 8)
 layout_mode = 2
+
+[node name="funny_terrain" parent="." instance=ExtResource("4_gwu22")]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, -5.03649, -0.177298, -12.9381)

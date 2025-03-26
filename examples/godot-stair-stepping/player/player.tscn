@@ -8,6 +8,7 @@ margin = 0.001
 height = 1.75
 
 [node name="Player" type="CharacterBody3D"]
+floor_constant_speed = true
 script = ExtResource("1_oul6g")
 
 [node name="PlayerShape" type="CollisionShape3D" parent="."]
