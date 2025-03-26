@@ -51,7 +51,11 @@ func move_camera(relative_move: Vector2) -> void:
 func _physics_process(delta: float) -> void:
     var wish_dir := Vector3.ZERO
 
+    # this is a special handler for the DemoRecorder. If you don't care about the
+    # DemoRecorder, you can replace this if-else block with just the contents
+    # of the else branch - dont forget to remove the call to `DemoRecorder.push_state`.
     if DemoRecorder.playback_state == DemoRecorder.PlaybackState.REPLAYING:
+        # wait for us to get a new state from the demo recorder
         var next_state := DemoRecorder.get_next_state()
         if next_state == null:
             return
