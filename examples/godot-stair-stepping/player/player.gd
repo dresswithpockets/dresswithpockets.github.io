@@ -91,12 +91,11 @@ func _physics_process(delta: float) -> void:
 
     velocity = Vector3(0, vertical_speed, 0)
     move_and_slide()
+    stair_step_down(was_grounded)
 
     vertical_speed = velocity.y
     horizontal_velocity.x += velocity.x
     horizontal_velocity.z += velocity.z
-
-    stair_step_down(was_grounded)
 
 
 func update_velocity_grounded(wish_dir: Vector3, delta: float) -> void:
