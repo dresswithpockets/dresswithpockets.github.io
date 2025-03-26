@@ -70,14 +70,14 @@ I'm not satisfied, though; After thinking about it, there are some problems:
 
 I've played plenty of games that don't use stair clipping at all but have really smooth stair stepping - like Selaco, Ion Fury, and Quake 3. I want the boon of a robust character controller that can walk up and down any appropriate geometry with satisfying smoothing.
 
-## Enter: `body_test_motion`
+## Enter: `test_move`
 
-Godot's `PhsyicsServer3D` has a function, [`body_test_motion`](https://docs.godotengine.org/en/4.4/classes/class_physicsserver3d.html#class-physicsserver3d-method-body-test-motion), which tests if a particular motion applied to a `PhysicsBody3D` will hit anything. The test gives us back some useful information in the result, like how far the test travelled before hitting anything, and the normal of the surface the test hit.
+Godot's `PhysicsBody3D` has a function, [`test_move`](https://docs.godotengine.org/en/4.4/classes/class_physicsbody3d.html#class-physicsbody3d-method-test-move), which tests if a particular motion applied to a `PhysicsBody3D` will hit anything. The test gives us back some useful information in the result, like how far the test travelled before hitting anything, and the normal of the surface the test hit.
 
 So, we could do a test motion downward, with its origin at `global_position + (velocity * delta) + Vector3(0, max_step_height, 0)`, with a downard motion thats `max_step_height` in length:
 
 ```
-                        body_test_motion     
+                           test_move     
                            ┌──────┐           
                            │      │           
                            │      │           
@@ -96,15 +96,12 @@ So we can write a function that does that test for us:
 
 ```gdscript
 func stair_step_up(delta: float) -> void:
-    var params := PhysicsTestMotionParameters3D.new()
-    params.margin = safe_margin
-    params.from = global_transform.translated(horizontal_velocity * delta + Vector3(0, max_step_height, 0))
-    params.motion = Vector3(0, -max_step_height, 0)
-
-    var result := PhysicsTestMotionResult3D.new()
-    var hit_something := PhysicsServer3D.body_test_motion(get_rid(), params, result)
+    var sweep_transform := global_transform.translated(horizontal_velocity * delta + Vector3(0, max_step_height, 0))
+    var result := KinematicCollision3D.new()
+    var hit_something := test_move(sweep_transform, Vector3(0, -max_step_height, 0), result, safe_margin)
     if hit_something:
-        global_position.y = params.from.translated(result.get_travel()).origin.y
+        sweep_transform = sweep_transform.translated(result.get_travel())
+        global_position.y = sweep_transform.origin.y
 ```
 
 And call it before we call `move_and_slide()`:
@@ -163,28 +160,19 @@ And the updated procedure:
 ```gdscript
 func stair_step_up(delta: float) -> void:
     var sweep_transform := global_transform
-
-    var result := PhysicsTestMotionResult3D.new()
-    var params := PhysicsTestMotionParameters3D.new()
-    params.margin = safe_margin
+    var result := KinematicCollision3D.new()
     
     # sweep up
-    params.from = sweep_transform
-    params.motion = Vector3(0, max_step_height, 0)
-    PhysicsServer3D.body_test_motion(get_rid(), params, result)
+    test_move(sweep_transform, Vector3(0, max_step_height, 0), result, safe_margin)
     
     # sweep forward using player's velocity
     var height_travelled = result.get_travel().y
     sweep_transform = sweep_transform.translated(result.get_travel())
-    params.from = sweep_transform
-    params.motion = horizontal_velocity * delta
-    PhysicsServer3D.body_test_motion(get_rid(), params, result)
+    test_move(sweep_transform, horizontal_velocity * delta, result, safe_margin)
     
     # sweep back down, at most the amount we travelled from the sweep up
     sweep_transform = sweep_transform.translated(result.get_travel())
-    params.from = sweep_transform
-    params.motion = Vector3(0, -height_travelled, 0)
-    if !PhysicsServer3D.body_test_motion(get_rid(), params, result):
+    if !test_move(sweep_transform, Vector3(0, -height_travelled, 0), result, safe_margin):
         # don't bother if we don't hit anything
         return
 
@@ -256,9 +244,7 @@ We shouldn't be running the entire sweep if theres not ledge we could potentiall
     # ...
 
     # don't run through if theres nothing for us to step up onto
-    params.from = sweep_transform
-    params.motion = horizontal_velocity * delta
-    if !PhysicsServer3D.body_test_motion(get_rid(), params, result):
+    if !test_move(sweep_transform, horizontal_velocity * delta, result, safe_margin):
         return
 
     # capture whatever remainder was left over from the horizontal move
@@ -267,16 +253,13 @@ We shouldn't be running the entire sweep if theres not ledge we could potentiall
 
     # sweep up, from the wall we hit
     sweep_transform = sweep_transform.translated(result.get_travel())
-    params.from = sweep_transform
-    params.motion = Vector3(0, max_step_height, 0)
-    PhysicsServer3D.body_test_motion(get_rid(), params, result)
+    test_move(sweep_transform, Vector3(0, max_step_height, 0), result, safe_margin)
     
-    # sweep forward using player's velocity
     var height_travelled := result.get_travel().y
+
+    # sweep forward using player's velocity
     sweep_transform = sweep_transform.translated(result.get_travel())
-    params.from = sweep_transform
-    params.motion = horizontal_remainder
-    PhysicsServer3D.body_test_motion(get_rid(), params, result)
+    test_move(sweep_transform, horizontal_remainder, result, safe_margin)
 
     # ...
 ```
@@ -287,9 +270,7 @@ We shouldn't try stepping down if the height traveled by the up-sweep is too sma
     # ...
     # sweep up, from the wall we hit
     sweep_transform = sweep_transform.translated(result.get_travel())
-    params.from = sweep_transform
-    params.motion = Vector3(0, max_step_height, 0)
-    PhysicsServer3D.body_test_motion(get_rid(), params, result)
+    test_move(sweep_transform, Vector3(0, max_step_height, 0), result, safe_margin)
 
     var height_travelled := result.get_travel().y
     if height_travelled <= 0:
@@ -302,7 +283,7 @@ We shouldn't try stepping onto a surface thats too steep for us to walk onto any
 
 ```gdscript
     # after sweeping down, skip if the hit surface is too steep
-    var floor_angle = result.get_collision_normal().angle_to(Vector3.UP)
+    var floor_angle = result.get_normal().angle_to(Vector3.UP)
     if absf(floor_angle) > floor_max_angle:
         return
 ```
@@ -331,13 +312,8 @@ So, lets just do that:
 
 ```gdscript
 func stair_step_down() -> void:
-    var result := PhysicsTestMotionResult3D.new()
-    var params := PhysicsTestMotionParameters3D.new()
-    params.margin = safe_margin
-    params.from = global_transform
-    params.motion = Vector3(0, -max_step_height, 0)
-
-    if !PhysicsServer3D.body_test_motion(get_rid(), params, result):
+    var result := KinematicCollision3D.new()
+    if !test_move(global_transform, Vector3(0, -max_step_height, 0), result, safe_margin):
         return
 
     var new_transform := global_transform.translated(result.get_travel())
@@ -461,18 +437,15 @@ Instead of just stopping whenever we detect a collision during one of our initia
 func iterate_sweep(
     sweep_transform: Transform3D,
     motion: Vector3,
-    params: PhysicsTestMotionParameters3D,
-    result: PhysicsTestMotionResult3D
+    result: KinematicCollision3D
 ) -> Transform3D:
     for i in max_step_up_slide_iterations:
-        params.from = sweep_transform
-        params.motion = motion
-        var hit := PhysicsServer3D.body_test_motion(get_rid(), params, result)
+        var hit := test_move(sweep_transform, motion, result, safe_margin)
         sweep_transform = sweep_transform.translated(result.get_travel())
         if not hit:
             break
 
-        var ceiling_normal := result.get_collision_normal()
+        var ceiling_normal := result.get_normal()
         motion = motion.slide(ceiling_normal)
     
     return sweep_transform
@@ -483,9 +456,7 @@ Then we replace our up- and forward- sweep tests with calls to `iterate_sweep`:
 func stair_step_up(delta: float) -> void:
     # ...
     # don't run through if theres nothing for us to step up onto
-    params.from = sweep_transform
-    params.motion = horizontal_velocity * delta
-    if !PhysicsServer3D.body_test_motion(get_rid(), params, result):
+    if !test_move(sweep_transform, horizontal_velocity * delta, result, safe_margin)
         return
 
     var horizontal_remainder := result.get_remainder()
@@ -493,14 +464,14 @@ func stair_step_up(delta: float) -> void:
     # sweep up
     sweep_transform = sweep_transform.translated(result.get_travel())
     var pre_sweep_y := sweep_transform.origin.y
-    sweep_transform = iterate_sweep(sweep_transform, Vector3(0, max_step_height, 0), params, result)
+    sweep_transform = iterate_sweep(sweep_transform, Vector3(0, max_step_height, 0), result)
 
     var height_travelled := sweep_transform.origin.y - pre_sweep_y
     if height_travelled <= 0:
         return
 
     # sweep forward using player's velocity
-    sweep_transform = iterate_sweep(sweep_transform, horizontal_remainder, params, result)
+    sweep_transform = iterate_sweep(sweep_transform, horizontal_remainder, result)
 
     # sweep back down, at most the amount we travelled from the sweep up
     # ...
