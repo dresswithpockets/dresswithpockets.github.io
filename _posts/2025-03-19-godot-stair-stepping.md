@@ -9,6 +9,7 @@ For this guide, I've configured:
 - Jolt Physics
 - 60 physics ticks per second
 - `CharacterBody3D.safe_margin = 0.001`
+- `CharacterBody3D.constant_speed = true`
 - `CharacterBody3D`'s `CollisionShape3D.shape.margin = 0.001`
 
 And, the following script attached:
