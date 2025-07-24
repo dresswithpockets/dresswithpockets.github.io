@@ -27,6 +27,7 @@ I've worked on a few games:
 
 And, I've made a few things:
 
+- [openstats](https://github.com/dresswithpockets/openstats) - personal game stats & achievment tracking
 - [odin-godot](https://github.com/dresswithpockets/odin-godot) - a Godot toolkit for Odin
 - [FakeS3](https://github.com/dresswithpockets/FakeS3) - in-memory and on-disk S3 provider for .NET
 - [Scenario](https://github.com/dresswithpockets/Scenario) - tool for prescribing tests in C#
