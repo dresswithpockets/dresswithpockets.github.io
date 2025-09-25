@@ -3,12 +3,11 @@ layout: post
 title:  "A Godot Replay System"
 date:   2025-09-25 5:00:00 -0700
 tags:   godot gamedev
-hidden: true
 ---
 
 If you load up Super Mario 64, and sit on the start screen for a little while, the game will show example gameplay on screen:
 
-![sm64 start screen demo](/assets/images/godot-stair-stepping/sm64-demo.gif)
+![sm64 start screen demo](/assets/images/godot-replay/sm64-demo.gif)
 
 This gameplay isn't a video though - even if the Nintendo 64 was capable of video playback of this quality, it wouldve been quite the waste of space. If its not a video recording, how is gameplay being shown here?
 
