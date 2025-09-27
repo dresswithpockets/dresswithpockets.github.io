@@ -40,6 +40,7 @@ Why?
 - leaderboard entries can have replays associated with them (ex: [Devil Daggers](https://devildaggers.info/leaderboard), [Half-Life Speedruns](https://www.speedrun.com/hl1))
 - replays can be verified systematically, to prevent cheating
 - replays can be analyzed for player behaviour, to aid in game design
+- screen recordings are bigger and resource intensive to create
 
 ## How they work
 
@@ -60,11 +61,27 @@ The details of a replay system will vary drastically depending on the kind of ga
 
 During playback, the game will use the stored input data in place of a player's input. **If your game logic is deterministic, then the playback should be logically identical to the original gameplay.**
 
+## Debugging your game with a replay
+
+There are two scenarios where replays really come in handy: bug reproduction, and investigation.
+
+### Reproduction
+
+Lets say someone has sent you a bug report, but youre not able to recreate the bug using the description & dump sent in the report. You open up the replay and watch as some crazy glitch happens. Now you have a legitimate reproduction of the bug!
+
+With good playback controls, you can pause and step back/forward to the ticks where the bug occurs, and do whatever debugging you need to do from that point on. Set breakpoints, step through code one tick at a time, etc.
+
+### Investigation
+
+You're playtesting your game and you run into a bug, and you want to debug it. You're able to reproduce it somewhat consistently, and you have an idea of where to set a breakpoint to start investigating what might be the culprit; but... theres no way to set a breakpoint that only pauses execution when "a bug happens".
+
+So you start recording a replay, reproduce the bug, then play the replay back until the bug occurs. Now you have a specific tick you can pause on, set breakpoints on, and investigate in.
+
 ## Godot SReplay
 
-I wanted to create a replay system for my games, in a way that doesn't require me to build my game _around_ the replay system. I want this tool to work without me having to consider how it works.
+I wanted to create a replay system for my games, in a way that doesn't require me to build my game _around_ the replay system. I want this tool to work without me having to consider how it works when writing game code.
 
-In search of that, I've created [SReplay](https://github.com/dresswithpockets/godot-sreplay). This addon acts as a shim between your game logic and Godot's input systems.
+In search of that, I've created [SReplay](https://github.com/dresswithpockets/godot-sreplay). This addon acts as a shim between your game logic and Godot's input systems. Its effectively a drop-in replacement for `Input` and the `_unhandled_input` event - though with some caveats.
 
 ### Integration
 
