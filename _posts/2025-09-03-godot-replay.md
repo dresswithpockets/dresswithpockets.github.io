@@ -178,7 +178,7 @@ Replays aren't a total replacement for videos - videos are portable; but, for th
 
 ### Video codec nerd stuff
 
-For those interested, heres the final video I used size comparisons:
+For those interested, heres the final video I used in size comparisons:
 
 <video src="/assets/videos/godot-replay/test.1080p30.hevc.mp4" data-canonical-src="/assets/videos/godot-replay/test.1080p30.hevc.mp4" controls="controls" muted="muted" class="d-block rounded-bottom-2 border-top width-fit" style="max-height:640px; min-height: 200px" crossorigin="anonymous"></video>
 
@@ -201,10 +201,10 @@ Then I transcoded the video via ffmpeg:
 ffmpeg -i test.1080p120.av1.mkv -filter:v fps=30 -c:v libx265 -crf 25 -preset slow test.1080p30.hevc.mp4
 ```
 
+This took ~30 seconds to finish encoding. Most people recording clips won't be manually re-encoding their clips with an expensive compression mode like `-preset slow`, and are instead going to be encoding them in real-time with OBS or Shadowplay. My demo game is also not particularly noisy, so its particularly well suited to HEVC's compression. All in all, a recording of a more complex game with worse compression settings will likely produce a significantly larger video.
+
 > N.B. AV1 can likely get better stats, but AV1 doesn't have great web support yet. Most people are going to be sharing AVC (h.264) or HEVC (h.265) videos. So, I chose HEVC which will produce decent quality with relatively small sizes. 
 >
 > N.B.B. Encoding with `fps=60` only increases the file size by about 20% for this video. Depending on the size limitations, that tradeoff may be desirable.
-
-This took ~30 seconds to finish encoding. Most people recording clips won't be manually re-encoding their clips with an expensive compression mode like `-preset slow`, and are instead going to be encoding them in real-time with OBS or Shadowplay. My demo game is also not particularly noisy, so its particularly well suited to HEVC's compression. All in all, a recording of a more complex game with worse compression settings will likely produce a significantly larger video.
-
-> N.B. I tried transcoding with NVDEC and NVENC for better performance. I was able to transcode the video in under two seconds, which exceeds real-time transcoding; but, since there arent equivalent CRF options in the `hevc_nvenc` encoder, I wasnt able to tune the encoder to get the same size performance.
+>
+> N.B.B. I tried transcoding with NVDEC and NVENC for better performance. I was able to transcode the video in under two seconds, which exceeds real-time transcoding; but, since there arent equivalent CRF options in the `hevc_nvenc` encoder, I wasnt able to tune the encoder to get the same size performance.
