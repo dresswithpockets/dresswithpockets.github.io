@@ -140,6 +140,10 @@ SReplay records input state captured on the Idle tick separately from those capt
 
 Managing recording & playback is out of the scope of SReplay - the approach to recording & playback could vary drastically depending on the game, so its up to you to implement those systems. I've included an [example recording manager](https://github.com/dresswithpockets/godot-sreplay/blob/main/example/recorder), which includes a very basic playback control UI - with timeline scrubbing & speed controls.
 
+Here's a demonstration of that recorder in practice:
+
+<video src="/assets/videos/godot-replay/embed_demo.mp4" data-canonical-src="/assets/videos/godot-replay/embed_demo.mp4" controls="controls" muted="muted" class="d-block rounded-bottom-2 border-top width-fit" style="max-height:640px; min-height: 200px" crossorigin="anonymous"></video>
+
 ### Serialization
 
 SReplay provides functions to convert the recording to a serializable dictionary - so you can serialize the recording in any format you see fit. I've had good results with this approach to serialization:
