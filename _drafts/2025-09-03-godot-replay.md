@@ -37,7 +37,7 @@ Why?
 - players want them
 - replays can aid in reproducing bugs
 - players can submit replays alongside bug reports
-- leaderboard entries can have replays associated with them (ex: [Devil Daggers](https://devildaggers.info/leaderboard), [Half-Life Speedruns](https://www.speedrun.com/hl1))
+- replays can be associated with leaderboard entries (ex: [Devil Daggers](https://devildaggers.info/leaderboard), [Half-Life Speedruns](https://www.speedrun.com/hl1))
 - replays can be verified systematically, to prevent cheating
 - replays can be analyzed for player behaviour, to aid in game design
 - screen recordings are bigger and resource intensive to create
