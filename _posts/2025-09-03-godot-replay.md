@@ -142,26 +142,69 @@ Managing recording & playback is out of the scope of SReplay - the approach to r
 
 Here's a demonstration of that recorder in practice:
 
-<video src="/assets/videos/godot-replay/embed_demo.mp4" data-canonical-src="/assets/videos/godot-replay/embed_demo.mp4" controls="controls" muted="muted" class="d-block rounded-bottom-2 border-top width-fit" style="max-height:640px; min-height: 200px" crossorigin="anonymous"></video>
+<video src="/assets/videos/godot-replay/embed_demo.1080p60.hevc.mp4" data-canonical-src="/assets/videos/godot-replay/embed_demo.1080p60.hevc.mp4" controls="controls" muted="muted" class="d-block rounded-bottom-2 border-top width-fit" style="max-height:640px; min-height: 200px" crossorigin="anonymous"></video>
 
-### Serialization
+### Serialization & File Size
 
 SReplay provides functions to convert the recording to a serializable dictionary - so you can serialize the recording in any format you see fit. I've had good results with this approach to serialization:
 
 ```gdscript
-## serializes the input recording to UTF8 JSON, and compresses it via GZIP
-func serialize(recording: SReplay.Recording) -> PackedByteArray:
+## serializes the input recording to UTF8 JSON, and optionally gzip-compresses it
+func serialize(recording: SReplay.Recording, compress: bool) -> PackedByteArray:
     var dict := recording.to_dict()
     var json := JSON.stringify(dict)
     var bytes := json.to_utf8_buffer()
-    return bytes.compress(FileAccess.COMPRESSION_GZIP)
+    if compress:
+        return bytes.compress(FileAccess.COMPRESSION_GZIP)
+    return bytes
 
-## deserializes the compressed UTF8 JSON bytes into a Recording
-func deserialize(compressed_bytes: PackedByteArray) -> SReplay.Recording:
-    # don't allow more than 512MB in decompressed size
-    const max_size := 1024 * 1024 * 1024 * 512
-    var bytes := compressed_bytes.decompress_dynamic(max_size, FileAccess.COMPRESSION_GZIP)
+## deserializes UTF8 JSON bytes into a Recording, optionally gzip-decompressing them before parsing
+func deserialize(bytes: PackedByteArray, decompress: bool) -> SReplay.Recording:
+    if decompress:
+        # don't allow more than 512MB in decompressed size
+        const max_size := 1024 * 1024 * 1024 * 512
+        bytes = bytes.decompress_dynamic(max_size, FileAccess.COMPRESSION_GZIP)
+
     var json := bytes.get_string_from_utf8()
-    var dict := JSON.parse_string(json)
-    retrun SReplay.Recording.from_dict(dict)
+    var dict: Dictionary = JSON.parse_string(json)
+    return SReplay.Recording.from_dict(dict)
 ```
+
+The demonstration shown earlier produced a 5MB uncompressed replay file, for about 30 seconds of gameplay - about 166 KB per second on average. I was able to produce a 5MB video of the same gameplay with expensive lossy compression (see below for details on how I recorded & compressed the video). So, without compression, the replay is similar size as an aggressively compressed video - a video with just acceptable quality and framerate. 
+
+With GZIP compression, that same replay only takes up 136KB! Thats 4.5 KB per second, a 97% reduction in bitrate. An hour long replay at this bitrate could be sent as an attachment in an email - which happens to be how some games accept bug reports.
+
+Replays aren't a total replacement for videos - videos are portable; but, for the purposes of reproducing a game's exact state, or storing gameplay for future playback in-engine, replays are great.
+
+#### Video codec nerd stuff
+
+For those interested, heres the final video I used size comparisons:
+
+<video src="/assets/videos/godot-replay/test.1080p30.hevc.mp4" data-canonical-src="/assets/videos/godot-replay/test.1080p30.hevc.mp4" controls="controls" muted="muted" class="d-block rounded-bottom-2 border-top width-fit" style="max-height:640px; min-height: 200px" crossorigin="anonymous"></video>
+
+I recorded the gameplay in OBS with the following video & encoder settings:
+```
+Canvas Resolution: 1920x1080
+Scaled Resolution: 1920x1080
+FPS:               120
+Format:            Matroska Video
+Encoder:           SVT-AV1
+Rate Control:      CBR
+Bitrate:           5000 Kbps
+Keyframe Interval: 0 s
+Preset:            Might be better (9)
+```
+
+Then I transcoded the video via ffmpeg:
+
+```sh
+ffmpeg -i test.1080p120.av1.mkv -filter:v fps=30 -c:v libx265 -crf 25 -preset slow test.1080p30.hevc.mp4
+```
+
+> N.B. AV1 can likely get better stats, but AV1 doesn't have great web support yet. Most people are going to be sharing AVC (h.264) or HEVC (h.265) videos. So, I chose HEVC which will produce decent quality with relatively small sizes. 
+>
+> N.B.B. Encoding with `fps=60` only increases the file size by about 20% for this video. Depending on the size limitations, that tradeoff may be desirable.
+
+This took ~30 seconds to finish encoding. Most people recording clips won't be manually re-encoding their clips with an expensive compression mode like `-preset slow`, and are instead going to be encoding them in real-time with OBS or Shadowplay. My demo game is also not particularly noisy, so its particularly well suited to HEVC's compression. All in all, a recording of a more complex game with worse compression settings will likely produce a significantly larger video.
+
+> N.B. I tried transcoding with NVDEC and NVENC for better performance. I was able to transcode the video in under two seconds, which exceeds real-time transcoding; but, since there arent equivalent CRF options in the `hevc_nvenc` encoder, I wasnt able to tune the encoder to get the same size performance.
