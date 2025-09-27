@@ -11,7 +11,7 @@ If you load up Super Mario 64, and sit on the start screen for a little while, t
 
 This gameplay isn't a video though - even if the Nintendo 64 was capable of video playback of this quality, it wouldve been quite the waste of space. If its not a video recording, how is gameplay being shown here?
 
-## Demos
+# Demos
 
 "Demo" can refer to many things:
 
@@ -30,7 +30,7 @@ SM64 - and many other games - use recordings that contain snapshots of game stat
 
 I'll refer to these as "replays" from now on, to differentiate from the other kinds of demos.
 
-## You should have replays in your game
+# You should have replays in your game
 
 Why?
 
@@ -42,7 +42,7 @@ Why?
 - replays can be analyzed for player behaviour, to aid in game design
 - screen recordings are bigger and resource intensive to create
 
-## How they work
+# How they work
 
 The details of a replay system will vary drastically depending on the kind of game they are in service of. In general, a replay will include the following information:
 
@@ -61,31 +61,31 @@ The details of a replay system will vary drastically depending on the kind of ga
 
 During playback, the game will use the stored input data in place of a player's input. **If your game logic is deterministic, then the playback should be logically identical to the original gameplay.**
 
-## Debugging your game with a replay
+# Debugging your game with a replay
 
 There are two scenarios where replays really come in handy: bug reproduction, and investigation.
 
-### Reproduction
+## Reproduction
 
 Lets say someone has sent you a bug report, but youre not able to recreate the bug using the description & dump sent in the report. You open up the replay and watch as some crazy glitch happens. Now you have a legitimate reproduction of the bug!
 
 With good playback controls, you can pause and step back/forward to the ticks where the bug occurs, and do whatever debugging you need to do from that point on. Set breakpoints, step through code one tick at a time, etc.
 
-### Investigation
+## Investigation
 
 You're playtesting your game and you run into a bug, and you want to debug it. You're able to reproduce it somewhat consistently, and you have an idea of where to set a breakpoint to start investigating what might be the culprit; but... theres no way to set a breakpoint that only pauses execution when "a bug happens".
 
 So you start recording a replay, reproduce the bug, then play the replay back until the bug occurs. Now you have a specific tick you can pause on, set breakpoints on, and investigate in.
 
-## Godot SReplay
+# Godot SReplay
 
 I wanted to create a replay system for my games, in a way that doesn't require me to build my game _around_ the replay system. I want this tool to work without me having to consider how it works when writing game code.
 
 In search of that, I've created [SReplay](https://github.com/dresswithpockets/godot-sreplay). This addon acts as a shim between your game logic and Godot's input systems. Its effectively a drop-in replacement for `Input` and the `_unhandled_input` event - though with some caveats.
 
-### Integration
+## Integration
 
-#### Input Polling
+### Input Polling
 
 SReplay exposes an `Input`-like surface. In many cases, the only difference is replacing `Input` with `SReplay`. Heres an example usage of `get_vector`:
 
@@ -101,7 +101,7 @@ func get_wish_dir() -> Vector3:
 
 The behaviour of this function and others should be identical to `Input`.
 
-#### Input Events
+### Input Events
 
 SReplay captures `InputEvent`'s that you'd normally receive in `_unhandled_input`, and propogates them to `_sreplay_input` across the entire node tree:
 
@@ -111,7 +111,7 @@ func _sreplay_input(event: InputEvent) -> void:
         move_camera(event.screen_relative)
 ```
 
-#### Custom Data
+### Custom Data
 
 Want to store your own data? SReplay exposes a function `capture` to capture arbitrary user data.
 
@@ -132,7 +132,7 @@ func _physics_process(_delta: float) -> void:
 
 See [player_camera.gd](https://github.com/dresswithpockets/godot-sreplay/blob/main/example/player/player_camera.gd) for a complete example.
 
-### Recording & Playback
+## Recording & Playback
 
 SReplay exposes a few functions - `record`, `stop`, `play` - for recording & playback.
 
@@ -144,7 +144,7 @@ Here's a demonstration of that recorder in practice:
 
 <video src="/assets/videos/godot-replay/embed_demo.1080p60.hevc.mp4" data-canonical-src="/assets/videos/godot-replay/embed_demo.1080p60.hevc.mp4" controls="controls" muted="muted" class="d-block rounded-bottom-2 border-top width-fit" style="max-height:640px; min-height: 200px" crossorigin="anonymous"></video>
 
-### Serialization & File Size
+## Serialization & File Size
 
 SReplay provides functions to convert the recording to a serializable dictionary - so you can serialize the recording in any format you see fit. I've had good results with this approach to serialization:
 
@@ -176,7 +176,7 @@ With GZIP compression, that same replay only takes up 136KB! Thats 4.5 KB per se
 
 Replays aren't a total replacement for videos - videos are portable; but, for the purposes of reproducing a game's exact state, or storing gameplay for future playback in-engine, replays are great.
 
-#### Video codec nerd stuff
+### Video codec nerd stuff
 
 For those interested, heres the final video I used size comparisons:
 
