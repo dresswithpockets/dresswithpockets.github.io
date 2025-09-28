@@ -208,3 +208,88 @@ This took ~30 seconds to finish encoding. Most people recording clips won't be m
 > N.B.B. Encoding with `fps=60` only increases the file size by about 20% for this video. Depending on the size limitations, that tradeoff may be desirable.
 >
 > N.B.B. I tried transcoding with NVDEC and NVENC for better performance. I was able to transcode the video in under two seconds, which exceeds real-time transcoding; but, since there arent equivalent CRF options in the `hevc_nvenc` encoder, I wasnt able to tune the encoder to get the same size performance.
+
+## Under The Hood
+
+The SReplay addon adds an `SReplay` autoload to your scene. The recording is just a handful of arrays of state snapshots and changes between the snapshots each tick. The logic thats most relevant to you looks like this:
+
+```
+every physics tick while recording:
+    have we captured any input changes since last tick?
+        then, add those changes to the recording
+
+    has it been long enough since the last snapshot?
+        then, duplicate our current aggregate state
+        then, add the duplicated state to the recording
+
+    capture any new inputs & user captures for the next tick
+
+every physics tick during playback:
+    are we at a new snapshot in the playback?
+        then, replace our current state with the snapshot's state
+
+    are there any new input states this tick?
+        then, apply the changes to the current input state
+```
+
+The logic is almost identical in the idle tick with a couple differences:
+
+```
+every idle tick while recording:
+    have we captured any input changes since last tick?
+        then, add those changes to the recording
+
+    have we captured any input events since last tick?
+        then, add those changes to the recording
+
+every idle tick during playback:
+    for each input change in the recording:
+        is it's timestamp less than or equal to idle_time?
+            then, apply the change to the current input state
+
+    for each input event in the recording:
+        is it's timestamp less than or equal to idle_time?
+            then, propogate the event
+```
+
+The idle tick does its processing based on time passed rather than a tick counter. It doesn't capture snapshots, and additionally handles `InputEvent`'s received from `_unhandled_input`.
+
+The autoload also has drop-in replacements for almost every action-based function in `Input`. For example, `is_action_just_pressed` is implemented like this:
+
+```gdscript
+func is_action_just_pressed(action: StringName, exact_match: bool = false) -> bool:
+    if _mode != Mode.REPLAYING:
+        return Input.is_action_just_pressed(action, exact_match)
+
+    # _idle_input and _physics_input include the current aggregate input state for the idle tick 
+    # and physics tick separately
+    var input_state: InputState = _idle_input
+    if Engine.is_in_physics_frame():
+        input_state = _physics_input
+
+    # the InputState includes two dictionaries that map the action to the action's state; one for
+    # exact_match = true, and one for exact_match = false. This ensures exact_match always has
+    # 1-to-1 parity with Godot's exact_match
+    var actions: Dictionary[StringName, ActionState] = input_state.actions
+    if exact_match:
+        actions = input_state.actions_exact
+
+    var action_state: ActionState = actions.get(action)
+    if action_state == null:
+        push_error("Action doesn't exist in replay: '%s'" % action)
+        return null
+
+    # the ActionState includes a handful of properties like `pressed`, `released`, `just_pressed` 
+    # etc. These are all captured during recording every idle and physics tick, whenever there are
+    # changes, and then applied each tick to the ActionState during playback.
+    return action_state.just_pressed
+```
+
+The logic is the same for all other input functions which return a state for an `InputMap` action. Similar logic is used to capture `mouse_mode`, mouse velocity, and mouse buttons. At the moment some inputs like joys, gyroscopes, and keys, are not captured. With some minor tweaks, they could be added to the input state and recorded.
+
+### Snapshots & Seeking
+
+During playback, you might want to be able to "scrub" the timeline - that is, seek to an arbitrary point in time. With an input-based recording system, that can be quite difficult - without recording the entire game state, you'd have to "play" all of the inputs up to the tick you want to seek to. This can be process intensive and time consuming during. State snapshots can make seeking almost instantaneous.
+
+SReplay will take periodic snapshots of the aggregate input state every so often. The rate is configurable when you call `SReplay.record`. Those snapshots include the current input delta, input event, and capture offsets - as well as a snapshot of the entire input & capture state. Periodic snapshots enable the `seek` function, which will look for the target tick's prior snapshot and quickly play up-to the target tick from the relevant snapshot. As a side effect, this enables bi-directional tick-by-tick stepping. 
+
