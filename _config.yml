@@ -26,6 +26,8 @@ url: "" # the base hostname & protocol for your site, e.g. http://example.com
 github:
   url: https://github.com/dresswithpockets
 
+repository: dresswithpockets/dresswithpockets.github.io
+
 # Build settings
 remote_theme: pages-themes/hacker@v0.2.0
 plugins:
