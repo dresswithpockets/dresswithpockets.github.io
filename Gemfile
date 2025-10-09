@@ -17,6 +17,7 @@ gem "github-pages", "~> 228", group: :jekyll_plugins
 # If you have any plugins, put them here!
 group :jekyll_plugins do
   gem "jekyll-feed", "~> 0.12"
+  gem "jektex"
 end
 
 # Windows and JRuby does not include zoneinfo files, so bundle the tzinfo-data gem
@@ -34,4 +35,10 @@ gem "wdm", "~> 0.1.1", :platforms => [:mingw, :x64_mingw, :mswin]
 gem "http_parser.rb", "~> 0.6.0", :platforms => [:jruby]
 
 gem "webrick"
+gem "csv"
+gem "erb"
 
+# gem "kramdown"
+# gem "execjs"
+# gem "katex", "~> 0.10.0"
+# gem "kramdown-math-katex"
