@@ -134,3 +134,12 @@ hr {
 a {
   color: $peach;
 }
+
+video.center-video {
+  width: 80%;
+  position: relative;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  max-height:640px;
+  min-height: 200px
+}
