@@ -79,7 +79,7 @@ For example: \(\Delta S(1)\) gives us the difference between 1st and 2nd place, 
 
 $$
 \Large
-\Delta S(p) \ge 1 \text{ for all } \\Set{ p \in \N | 1 \le p \le N_0 - 1 }
+\Delta S(p) \ge 1 \text{ for all } \Set{ p \in \N | 1 \le p \le N_0 - 1 }
 $$
 
 Variations in \(\large{r_c}\) can cause the Delta Constraint to fail given a small enough \(N_0\), or small enough \(S_n - S_0\). So, we should find that - for any given \(N_0\), \(S_0\), and \(S_n\), our \(\large{r_c}\) must be limited to ensure the Delta Constraint is true. We want to a solution for \(\large{r_c}\) such that:
@@ -287,7 +287,7 @@ $$
 \large
 \begin{cases}
 T(p) &= \bigg(1 - \frac{p - 1}{N_0 - 1}\bigg) & \Set{ p \in \N | 1 \leq p \leq N_0 } \\
-S(p) &= B(S_0,\ S_n,\ S_r,\ T(p)^{r_e}) & \\Set{ p \in \N | 1 \leq p \leq N_0 }\\
+S(p) &= B(S_0,\ S_n,\ S_r,\ T(p)^{r_e}) & \Set{ p \in \N | 1 \leq p \leq N_0 }\\
 \end{cases}
 $$
 
@@ -495,7 +495,7 @@ $$
 \large r_e \lessapprox 1.739969987370849
 $$
 
-Now if we set \(r_e = 1.739969987370849\), we should expect to see \(\Delta S(N_0 - 1) \approx 1\):
+Now if we set \(r_e = 1.739969987370849\), we should expect to see \(\Delta S(N_0 - 1) \approxeq 1\):
 
 $$
 \large
@@ -596,7 +596,7 @@ Earlier we created a constraint for \(\large r_c\) for a 2nd-order \(S(p)\). Tha
 
 $$
 \large
-R_c = \Set{r_c \in \R | 0 < r_c \le \frac{N_0^2 - 2N_0 + 1 - S_nN_0 + S_0N_0 + S_n - S_0}{-S_nN_0 + S_0N_0 + 2S_n - 2S_0} }\\
+R_c = \Set{r_c \in \R | 0 < r_c \le \frac{N_0^2 - 2N_0 + 1 - S_nN_0 + S_0N_0 + S_n - S_0}{-S_nN_0 + S_0N_0 + 2S_n - 2S_0} }
 $$
 
 So long as \(\large r_e\) is in \(E\), that implies that \(\large r_c\) is in \(R_c\)! We've fully constrainted both \(\large r_c\) and \(\large r_e\). The scoring function \(S(p)\) can be varied for any valid inputs, and it will output a useful score that represents relative performance.
