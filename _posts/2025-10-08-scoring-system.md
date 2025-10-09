@@ -1,7 +1,7 @@
 ---
 layout: post
-title:  "Scoring players in a competition"
-date:   2025-10-08 2:00:00 -0700
+title:  "Scoring competition participants on a curve (content warning: MATH 😱)"
+date:   2025-10-09 12:00:00 -0700
 tags:   math
 ---
 
