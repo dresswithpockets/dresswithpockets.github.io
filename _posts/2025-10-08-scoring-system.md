@@ -92,16 +92,6 @@ $$
 Expanding \(\Delta S(p)\) gives:
 
 $$
-\def\TRenderedPrev#1{(1 - \frac{#1 - 1}{N_0 - 1})}
-\def\TRenderedNext#1{(1 - \frac{#1}{N_0 - 1})}
-% \def\TRenderedPrevExp#1#2{(1 - \frac{#1 - 1}{N_0 - 1})^{#2} }
-% \def\TRenderedNextExp#1#2{(1 - \frac{#1}{N_0 - 1})^{#2} }
-
-% \def\Tfirstp#1{(1 - \frac{#1 - 1}{N_0 - 1})}
-% \def\Tsecondp#1{(1 - \frac{#1}{N_0 - 1})}
-% \def\Tfirstsp#1{(1 - \frac{#1 - 1}{N_0 - 1})^{2} }
-% \def\Tsecondsp#1{(1 - \frac{#1}{N_0 - 1})^{2} }
-
 \large
 \begin{equation*}
 \begin{split}
@@ -118,9 +108,6 @@ $$
 &\ \ \ \ \ \  2S_0T(p + 1) - 2S_0T(p) - S_0T(p + 1)^2 + S_0T(p)^2 - {}\\
 &\ \ \ \ \ \  S_nT(p + 1)^2 + S_nT(p)^2\\
 
-% &= -2S_r\TRenderedNext{p} + 2S_r\TRenderedPrev{p} + 2S_r\TRenderedNext{p}^2 - 2S_r\TRenderedPrev{p}^2 + {}\\
-% &\ \ \ \ \ \  2S_0\TRenderedNext{p} - 2S_0\TRenderedPrev{p} - S_0\TRenderedNext{p}^2 + S_0\TRenderedPrev{p}^2 - {}\\
-% &\ \ \ \ \ \  S_n\TRenderedNext{p}^2 + S_n\TRenderedPrev{p}^2\\
 \end{split}
 \end{equation*}
 $$
@@ -128,32 +115,27 @@ $$
 We only care about the smallest value of \(\Delta S(p)\). We know that as \(p\) approaches \(0\), \(\Delta S(p)\) will increase, therefore the smallest value will always be \(\Delta S(N_0 - 1)\), given the constraints on \(p\) defined by \(\Delta S(p)\). We can simplify for \(\Delta S(N_0 - 1)\) as:
 
 $$
-\def\TRenderedPrev#1{(1 - \frac{#1 - 1}{N_0 - 1})}
-\def\TRenderedNext#1{(1 - \frac{#1}{N_0 - 1})}
-\def\TRenderedPrevExp#1{(1 - \frac{#1 - 1}{N_0 - 1})^{2} }
-\def\TRenderedNextExp#1{(1 - \frac{#1}{N_0 - 1})^{2} }
-
-% \def\Tfirst{(1 - \frac{p - 1}{N_0 - 1})}
-% \def\Tsecond{(1 - \frac{p}{N_0 - 1})}
-% \def\Tfirsts{(1 - \frac{p - 1}{N_0 - 1})^{2} }
-% \def\Tseconds{(1 - \frac{p}{N_0 - 1})^{2} }
-
-% \def\Tfirstp#1{(1 - \frac{#1 - 1}{N_0 - 1})}
-% \def\Tsecondp#1{(1 - \frac{#1}{N_0 - 1})}
-% \def\Tfirstsp#1{(1 - \frac{#1 - 1}{N_0 - 1})^{2} }
-% \def\Tsecondsp#1{(1 - \frac{#1}{N_0 - 1})^{2} }
-
 \large
 \begin{equation*}
 \begin{split}
 
-\Delta S(N_0 -1) &= -2S_r\TRenderedNext{N_0 - 1} + 2S_r\TRenderedPrev{N_0 - 1} + 2S_r\TRenderedNextExp{N_0 - 1} - 2S_r\TRenderedPrev{N_0 - 1} + {}\\
-&\ \ \ \ \ \  2S_0\TRenderedNext{N_0 - 1} - 2S_0\TRenderedPrev{N_0 - 1} - S_0\TRenderedNextExp{N_0 - 1} + S_0\TRenderedPrevExp{N_0 - 1} - {}\\
-&\ \ \ \ \ \  S_n\TRenderedNextExp{N_0 - 1} + S_n\TRenderedPrevExp{N_0 - 1}\\
+T(N_0) &= 1 - \frac{N_0 - 1}{N_0 - 1}\\
+&= 1 - 1\\
+&= 0\\
 
-&= \cancel{-2S_r(1 - 1)} + 2S_r\TRenderedNext{N_0 - 2} + \cancel{2S_r(1 - 1)^{2} } - 2S_r\TRenderedNextExp{N_0 - 2} + {}\\
-&\ \ \ \ \ \  \cancel{2S_0(1 - 1)} - 2S_0\TRenderedNext{N_0 - 2} - \cancel{S_0(1 - 1)^{2} } + S_0\TRenderedNextExp{N_0 - 2} - {}\\
-&\ \ \ \ \ \  \cancel{S_n(1 - 1)^{2} } + S_n\TRenderedNextExp{N_0 - 2}\\
+T(N_0 - 1) &= 1 - \frac{N_0 - 1 - 1}{N_0 - 1}\\
+&= 1 - \frac{N_0 - 2}{N_0 - 1}\\
+&= \frac{N_0 - 1}{N_0 - 1} - \frac{N_0 - 2}{N_0 - 1}\\
+&= \frac{\cancel{N_0 - N_0} + 2 - 1}{N_0 - 1}\\
+&= \frac{1}{N_0 - 1}\\
+
+\Delta S(N_0 - 1) &= -2S_rT(N_0) + 2S_rT(N_0 - 1) + 2S_rT(N_0)^2 - 2S_rT(N_0 - 1)^2 + {}\\
+&\ \ \ \ \ \  2S_0T(N_0) - 2S_0T(N_0 - 1) - S_0T(N_0)^2 + S_0T(N_0 - 1)^2 - {}\\
+&\ \ \ \ \ \  S_nT(N_0)^2 + S_nT(N_0 - 1)^2\\
+
+&= \cancel{-2S_r0} + 2S_r\frac{1}{N_0 - 1} + \cancel{2S_rT0^2} - 2S_r\frac{1}{N_0 - 1}^2 + {}\\
+&\ \ \ \ \ \  \cancel{2S_00} - 2S_0\frac{1}{N_0 - 1} - \cancel{S_00^2} + S_0\frac{1}{N_0 - 1}^2 - {}\\
+&\ \ \ \ \ \  \cancel{S_n0^2} + S_n\frac{1}{N_0 - 1}^2\\
 
 &= 2S_r\frac{1}{N_0-1} + -2S_0\frac{1}{N_0-1} + -2S_r\frac{1}{N_0-1}^{2} + S_0\frac{1}{N_0-1}^{2} + S_n\frac{1}{N_0-1}^{2}\\
 
@@ -163,7 +145,7 @@ $$
 \end{equation*}
 $$
 
-\(large S_r\) needs to be expanded before we can simplify futher:
+\(\large S_r\) needs to be expanded before we can simplify futher:
 
 $$
 \large
@@ -304,8 +286,8 @@ And redefine the score functions to include \(r_e\):
 $$
 \large
 \begin{cases}
-T(p) &= \bigg(1 - \frac{p - 1}{N_0 - 1}\bigg)^{r_e} & \Set{ p \in \N | 1 \leq p \leq N_0 } \\
-S(p) &= B(S_0,\ S_n,\ S_r,\ T(p)) & \\Set{ p \in \N | 1 \leq p \leq N_0 }\\
+T(p) &= \bigg(1 - \frac{p - 1}{N_0 - 1}\bigg) & \Set{ p \in \N | 1 \leq p \leq N_0 } \\
+S(p) &= B(S_0,\ S_n,\ S_r,\ T(p)^{r_e}) & \\Set{ p \in \N | 1 \leq p \leq N_0 }\\
 \end{cases}
 $$
 
@@ -319,7 +301,7 @@ $$
 \end{cases}
 $$
 
-Unfourtunately, given the higher order \(T(p)\), small variations in \(\large{r_e}\) can cause the Delta Constraint to fail given a small enough \(N_0\), large enough \(r_c\), or small enough \(S_n - S_0\). So, we should find that - for any given \(N_0\), \(\large{r_c}\), \(S_0\), and \(S_n\) - our \(\large{r_e}\) must be limited to ensure the Delta Constraint is true. Just as with our 2nd order, we want to find a solution for \(\large{r_e}\) such that:
+Unfourtunately, given the higher order \(T(p)^{r_e}\), small variations in \(\large{r_e}\) can cause the Delta Constraint to fail given a small enough \(N_0\), large enough \(r_c\), or small enough \(S_n - S_0\). So, we should find that - for any given \(N_0\), \(\large{r_c}\), \(S_0\), and \(S_n\) - our \(\large{r_e}\) must be limited to ensure the Delta Constraint is true. Just as with our 2nd order, we want to find a solution for \(\large{r_e}\) such that:
 
 $$
 \Large
@@ -329,55 +311,40 @@ $$
 We can reuse the original expansion of \(\Delta S(p)\), because the \(T(p)\) substitutions are unaltered in the simplified form of \(\Delta S(p)\):
 
 $$
-\def\Tfirst{(1 - \frac{p - 1}{N_0 - 1})^{r_e} }
-\def\Tsecond{(1 - \frac{p}{N_0 - 1})^{r_e} }
-\def\Tfirsts{(1 - \frac{p - 1}{N_0 - 1})^{2r_e} }
-\def\Tseconds{(1 - \frac{p}{N_0 - 1})^{2r_e} }
+% \def\Tfirst{(1 - \frac{p - 1}{N_0 - 1})^{r_e} }
+% \def\Tsecond{(1 - \frac{p}{N_0 - 1})^{r_e} }
+% \def\Tfirsts{(1 - \frac{p - 1}{N_0 - 1})^{2r_e} }
+% \def\Tseconds{(1 - \frac{p}{N_0 - 1})^{2r_e} }
 
-\def\Tfirstp#1{(1 - \frac{#1 - 1}{N_0 - 1})^{r_e} }
-\def\Tsecondp#1{(1 - \frac{#1}{N_0 - 1})^{r_e} }
-\def\Tfirstsp#1{(1 - \frac{#1 - 1}{N_0 - 1})^{2r_e} }
-\def\Tsecondsp#1{(1 - \frac{#1}{N_0 - 1})^{2r_e} }
+% \def\Tfirstp#1{(1 - \frac{#1 - 1}{N_0 - 1})^{r_e} }
+% \def\Tsecondp#1{(1 - \frac{#1}{N_0 - 1})^{r_e} }
+% \def\Tfirstsp#1{(1 - \frac{#1 - 1}{N_0 - 1})^{2r_e} }
+% \def\Tsecondsp#1{(1 - \frac{#1}{N_0 - 1})^{2r_e} }
 
 \large
 \begin{equation*}
 \begin{split}
 
 \Delta S(p) &= S(p) - S(p + 1) \\
-&= B(S_0,\ S_n,\ S_r,\ T(p)) - B(S_0,\ S_n,\ S_r,\ T(p + 1)) \\
-&= -2S_r\Tsecond{} + 2S_r\Tfirst{} + 2S_r\Tseconds{} - 2S_r\Tfirsts{} + {}\\
-&\ \ \ \ \ \  2S_0\Tsecond{} - 2S_0\Tfirst{} - S_0\Tseconds{} + S_0\Tfirsts{} - {}\\
-&\ \ \ \ \ \  S_n\Tseconds{} + S_n\Tfirsts{}\\
+&= B(S_0,\ S_n,\ S_r,\ T(p)^{r_e}) - B(S_0,\ S_n,\ S_r,\ T(p + 1)^{r_e}) \\
+&= -2S_rT(p + 1)^{r_e} + 2S_rT(p)^{r_e} + 2S_rT(p + 1)^{2r_e} - 2S_rT(p)^{2r_e} + {}\\
+&\ \ \ \ \ \  2S_0T(p + 1)^{r_e} - 2S_0T(p)^{r_e} - S_0T(p + 1)^{2r_e} + S_0T(p)^{2r_e} - {}\\
+&\ \ \ \ \ \  S_nT(p + 1)^{2r_e} + S_nT(p)^{2r_e}\\
+% &= -2S_r\Tsecond{} + 2S_r\Tfirst{} + 2S_r\Tseconds{} - 2S_r\Tfirsts{} + {}\\
+% &\ \ \ \ \ \  2S_0\Tsecond{} - 2S_0\Tfirst{} - S_0\Tseconds{} + S_0\Tfirsts{} - {}\\
+% &\ \ \ \ \ \  S_n\Tseconds{} + S_n\Tfirsts{}\\
 \end{split}
 \end{equation*}
 $$
 
-We only care about the smallest value of \(\Delta S(p)\). We know that as \(p\) approaches \(0\), \(\Delta S(p)\) will increase, therefore the smallest value will always be \(\Delta S(N_0 - 1)\), given the constraints on \(p\) defined by \(\Delta S(p)\). We can simplify for \(\Delta S(N_0 - 1)\) as:
+Just as with our 2nd order variant, we only care about the smallest value of \(\Delta S(p)\), which will be \(\Delta S(N_0 - 1)\) as we showed earlier. We can reuse a simplification that preserves our \(T\) invocations, adding in our exponent:
 
 $$
-\def\Tfirst{(1 - \frac{p - 1}{N_0 - 1})^{r_e} }
-\def\Tsecond{(1 - \frac{p}{N_0 - 1})^{r_e} }
-\def\Tfirsts{(1 - \frac{p - 1}{N_0 - 1})^{2r_e} }
-\def\Tseconds{(1 - \frac{p}{N_0 - 1})^{2r_e} }
-
-\def\Tfirstp#1{(1 - \frac{#1 - 1}{N_0 - 1})^{r_e} }
-\def\Tsecondp#1{(1 - \frac{#1}{N_0 - 1})^{r_e} }
-\def\Tfirstsp#1{(1 - \frac{#1 - 1}{N_0 - 1})^{2r_e} }
-\def\Tsecondsp#1{(1 - \frac{#1}{N_0 - 1})^{2r_e} }
-
 \large
 \begin{equation*}
 \begin{split}
 
-\Delta S(N_0 -1) &= -2S_r\Tsecondp{N_0 - 1} + 2S_r\Tfirstp{N_0 - 1} + 2S_r\Tsecondsp{N_0 - 1} - 2S_r\Tfirstsp{N_0 - 1} + {}\\
-&\ \ \ \ \ \  2S_0\Tsecondp{N_0 - 1} - 2S_0\Tfirstp{N_0 - 1} - S_0\Tsecondsp{N_0 - 1} + S_0\Tfirstsp{N_0 - 1} - {}\\
-&\ \ \ \ \ \  S_n\Tsecondsp{N_0 - 1} + S_n\Tfirstsp{N_0 - 1}\\
-
-&= -2S_r(1 - 1)^{r_e} + 2S_r\Tsecondp{N_0 - 2} + 2S_r(1 - 1)^{2r_e} - 2S_r\Tsecondsp{N_0 - 2} + {}\\
-&\ \ \ \ \ \  2S_0(1 - 1)^{r_e} - 2S_0\Tsecondp{N_0 - 2} - S_0(1 - 1)^{2r_e} + S_0\Tsecondsp{N_0 - 2} - {}\\
-&\ \ \ \ \ \  S_n(1 - 1)^{2r_e} + S_n\Tsecondsp{N_0 - 2}\\
-
-&= 2S_r(\frac{1}{N_0-1})^{r_e} - 2S_r(\frac{1}{N_0-1})^{2r_e} - 2S_0(\frac{1}{N_0-1})^{r_e} + S_0(\frac{1}{N_0-1})^{2r_e} + S_n(\frac{1}{N_0-1})^{2r_e}\\
+\Delta S(N_0 - 1) &= 2S_r\frac{1}{N_0-1}^{r_e} + -2S_0\frac{1}{N_0-1}^{r_e} + -2S_r\frac{1}{N_0-1}^{2r_e} + S_0\frac{1}{N_0-1}^{2r_e} + S_n\frac{1}{N_0-1}^{2r_e}
 
 \end{split}
 \end{equation*}
@@ -503,13 +470,13 @@ S_r &= (1 - 0.5)50500 + 0.5(1000) = 25750\\\\
 \end{cases}\\
 
 \Large{r_e} &\begin{cases}
-\Large \ge \frac{\ln\Bigg(\frac{1}{1}\bigg(-0.5\sqrt{\frac{250-25000+100000-2-100000}{-24750} } - 0.5\bigg)\Bigg)}{\ln(\frac{1}{499})}\\
-\Large \le \frac{\ln\Bigg(\frac{1}{1}\bigg(0.5\sqrt{\frac{250-25000+100000-2-100000}{-24750} } - 0.5\bigg)\Bigg)}{\ln(\frac{1}{499})}\\
+\Large \ge \frac{\ln\frac{1}{1}\bigg(-0.5\sqrt{\frac{250-25000+100000-2-100000}{-24750} } - 0.5\bigg)}{\ln(\frac{1}{499})}\\
+\Large \le \frac{\ln\bigg(0.5\sqrt{\frac{250-25000+100000-2-100000}{-24750} } - 0.5\bigg)}{\ln(\frac{1}{499})}\\
 \end{cases}\\
 
 \Large{r_e} &\begin{cases}
-\Large \ge \frac{\ln\Bigg(\frac{1}{1}\bigg(-0.5\sqrt{\frac{-24752}{−24750} } - 0.5\bigg)\Bigg)}{\ln(\frac{1}{499})}\\
-\Large \le \frac{\ln\Bigg(\frac{1}{1}\bigg(0.5\sqrt{\frac{−24752}{-24750} } - 0.5\bigg)\Bigg)}{\ln(\frac{1}{499})}\\
+\Large \ge \frac{\ln\bigg(-0.5\sqrt{\frac{-24752}{−24750} } - 0.5\bigg)}{\ln(\frac{1}{499})}\\
+\Large \le \frac{\ln\bigg(0.5\sqrt{\frac{−24752}{-24750} } - 0.5\bigg)}{\ln(\frac{1}{499})}\\
 \end{cases}\\
 
 \Large{r_e} &\begin{cases}
@@ -522,7 +489,7 @@ S_r &= (1 - 0.5)50500 + 0.5(1000) = 25750\\\\
 
 $$
 
-Our first half of the solved inequality is imaginary! In fact, given the our parameters' domains, the first case will always be imaginary. Therefore our only real parameterized constraint on \(\large r_e\) with these parameters is:
+Our first half of the solved inequality is imaginary! In fact, given our parameters' domains, the first case will always be imaginary. Therefore our only real parameterized constraint on \(\large r_e\) with these parameters is:
 
 $$
 \large r_e \lessapprox 1.739969987370849
@@ -632,4 +599,4 @@ $$
 R_c = \Set{r_c \in \R | 0 < r_c \le \frac{N_0^2 - 2N_0 + 1 - S_nN_0 + S_0N_0 + S_n - S_0}{-S_nN_0 + S_0N_0 + 2S_n - 2S_0} }\\
 $$
 
-So long as \(\large r_e\) is in \(E\), that implies that \(\large r_c\) is in \(\R_c\)! We've fully constrainted both \(\large r_c\) and \(\large r_e\). The scoring function \(S(p)\) can be varied for any valid inputs, and it will output a useful score that represents relative performance.
+So long as \(\large r_e\) is in \(E\), that implies that \(\large r_c\) is in \(R_c\)! We've fully constrainted both \(\large r_c\) and \(\large r_e\). The scoring function \(S(p)\) can be varied for any valid inputs, and it will output a useful score that represents relative performance.
