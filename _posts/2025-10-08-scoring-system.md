@@ -6,7 +6,7 @@ tags:   math
 published: false
 ---
 
-I've been working on a scoring system that assigns points to participants in a competition based on their final placement in the event.
+I've been working on a scoring system that assigns points to participants in a competition based on their final placement in the event. The goal is to stack participants over a number of events based on their performance relative to other participants.
 
 I want the system to be defined as a continuous increasing function such that each placement gains at least 1 point over the previous placement. So, 2nd-to-last place should gain at least 1 point over last place. Ideally, the system also rewards 1st place more than 2nd, 2nd more than 3rd, 3rd more than 4th, and so on until last place. The scoring function should be bounded between a minimum score and maximum score, and I should be able to vary the steepness of the curve.
 
@@ -58,8 +58,8 @@ And define the scoring functions:
 $$
 \large
 \begin{cases}
-T(p) & = \bigg(1 - \frac{p - 1}{N_0 - 1}\bigg) & \lbrace p \in \N \mid 1 \leq p \leq N_0 \rbrace \\
-S(p) & = B(S_0,\ S_n,\ S_r,\ T(p)) & \lbrace p \in \N \mid 1 \leq p \leq N_0 \rbrace
+T(p) & = \bigg(1 - \frac{p - 1}{N_0 - 1}\bigg) & \Set{ p \in \N | 1 \leq p \leq N_0 } \\
+S(p) & = B(S_0,\ S_n,\ S_r,\ T(p)) & \Set{ p \in \N | 1 \leq p \leq N_0 }
 \end{cases}
 $$
 
@@ -73,14 +73,14 @@ Depending on the values of our inputs, this function can provide a score for eve
 
 $$
 \Large
-\Delta S(p) = S(p) - S(p + 1) \text{ for all } \lbrace p \in \N \mid 1 \le p < N_0 \rbrace
+\Delta S(p) = S(p) - S(p + 1) \text{ for all } \Set{ p \in \N | 1 \le p < N_0 }
 $$
 
 For example: \(\Delta S(1)\) gives us the difference between 1st and 2nd place, and \(\Delta S(N_0-1)\) gives us the difference between second-to-last and last place. Given any parameterization of the inputs, we must ensure the following **Delta Constraint** is always true:
 
 $$
 \Large
-\Delta S(p) \ge 1 \text{ for all } \lbrace p \in \N \mid 1 \le p \le N_0 - 1 \rbrace
+\Delta S(p) \ge 1 \text{ for all } \\Set{ p \in \N | 1 \le p \le N_0 - 1 }
 $$
 
 Variations in $\large{r_c}$ can cause the Delta Constraint to fail given a small enough $N_0$, or small enough $S_n - S_0$. So, we should find that - for any given $N_0$, $S_0$, and $S_n$, our $\large{r_c}$ must be limited to ensure the Delta Constraint is true. We want to a solution for $\large{r_c}$ such that:
@@ -264,7 +264,7 @@ $$
 \begin{split}
 
 \large
-\bigg\lbrace r_c \in \R \mid 1 \le r_c \le \frac{N_0^2 - 2N_0 + 1 - S_nN_0 + S_0N_0 + S_n - S_0}{-S_nN_0 + S_0N_0 + 2S_n - 2S_0} \bigg\rbrace
+\Set{ r_c \in \R | 1 \le r_c \le \frac{N_0^2 - 2N_0 + 1 - S_nN_0 + S_0N_0 + S_n - S_0}{-S_nN_0 + S_0N_0 + 2S_n - 2S_0} }
 
 \end{split}
 \end{equation*}
@@ -278,7 +278,7 @@ Lets define a new input for our new exponent:
 
 $$
 \Large
-\lbrace r_e \in \R \mid 1 \le r_e \rbrace
+\Set{ r_e \in \R | 1 \le r_e }
 $$
 
 And redefine the score functions to include $r_e$:
@@ -286,10 +286,8 @@ And redefine the score functions to include $r_e$:
 $$
 \large
 \begin{cases}
-T(p) &= \bigg(1 - \frac{p - 1}{N_0 - 1}\bigg)^{r_e} & \lbrace p \in \N \mid 1 \leq p \leq N_0 \rbrace \\
-S(p) &= B(S_0,\ S_n,\ S_r,\ T(p)) & \lbrace p \in \N \mid 1 \leq p \leq N_0 \rbrace\\
-
-% S_n(p) = B(S_0,\ S_n,\ S_r,\ T(p)^{r_e}) \lbrace p \in \N \mid 1 \leq p \leq N_0 \rbrace
+T(p) &= \bigg(1 - \frac{p - 1}{N_0 - 1}\bigg)^{r_e} & \Set{ p \in \N | 1 \leq p \leq N_0 } \\
+S(p) &= B(S_0,\ S_n,\ S_r,\ T(p)) & \\Set{ p \in \N | 1 \leq p \leq N_0 }\\
 \end{cases}
 $$
 
@@ -298,34 +296,19 @@ Just as with our 2nd-order $S(p)$, the Delta Constraint should remain true:
 $$
 \large
 \begin{cases}
-\Delta S(p) = S(p) - S(p + 1) &\text{ for all } \lbrace p \in \N \mid 1 \le p < N_0 \rbrace\\
-\Delta S(p) \ge 1 &\text{ for all } \lbrace p \in \N \mid 1 \le p \le N_0 - 1 \rbrace\\
-\lim\limits_{p \longrightarrow N_0}{\Delta S(p) \ge 1}\\
+\Delta S(p) = S(p) - S(p + 1) &\text{ for all } \Set{ p \in \N | 1 \le p < N_0 }\\
+\Delta S(p) \ge 1 &\text{ for all } \Set{ p \in \N | 1 \le p \le N_0 - 1 }\\
 \end{cases}
 $$
 
-Depending on the values of our inputs, this function can provide a score for every placement. Lets define that difference between two places as $\Delta S(p)$:
-
-$$
-\Large
-\Delta S(p) = S(p) - S(p + 1) \text{ for all } \lbrace p \in \N \mid 1 \le p < N_0 \rbrace
-$$
-
-For example: \(\Delta S(1)\) gives us the difference between 1st and 2nd place, and \(\Delta S(N_0-1)\) gives us the difference between second-to-last and last place. Given any parameterization of the inputs, we must ensure the following **Delta Constraint** is always true:
-
-$$
-\Large
- \space \Delta S(p) \ge 1 \text{ for all } \lbrace p \in \N \mid 1 \le p \le N_0 - 1 \rbrace
-$$
-
-Unfourtunately, given the higher order $T(p)$ on $\large{r_e}$, small variations in $\large{r_e}$ can cause the Delta Constraint to fail given a small enough $N_0$, large enough $r_c$, or small enough $S_n - S_0$. So, we should find that - for any given $N_0$, $\large{r_c}$, $S_0$, and $S_n$, our $\large{r_e}$ must be limited to ensure the Delta Constraint is true. We want to a solution for $\large{r_e}$ such that:
+Unfourtunately, given the higher order $T(p)$, small variations in $\large{r_e}$ can cause the Delta Constraint to fail given a small enough $N_0$, large enough $r_c$, or small enough $S_n - S_0$. So, we should find that - for any given $N_0$, $\large{r_c}$, $S_0$, and $S_n$ - our $\large{r_e}$ must be limited to ensure the Delta Constraint is true. Just as with our 2nd order, we want to find a solution for $\large{r_e}$ such that:
 
 $$
 \Large
 \lim\limits_{p \longrightarrow N_0}{\Delta S(p) \ge 1}
 $$
 
-Expanding \(\Delta S(p)\) gives:
+We can reuse the original expansion of $\Delta S(p)$, because the $T(p)$ substitutions are unaltered in the simplified form of $\Delta S(p)$:
 
 $$
 \def\Tfirst{(1 - \frac{p - 1}{N_0 - 1})^{r_e}}
@@ -343,13 +326,7 @@ $$
 \begin{split}
 
 \Delta S(p) &= S(p) - S(p + 1) \\
-&= B(S_0,\ S_n,\ S_r,\ T_p) - B(S_0,\ S_n,\ S_r,\ T_{p + 1}) \\
-&= \bigg((1 - T_p)^{2}S_0 + 2(1 - T_p)T_pS_r + T_p^{2}S_n\bigg) - {}\\
-&\ \ \ \ \ \bigg((1 - T_{p + 1})^{2}S_0 + 2(1 - T_{p + 1})T_{p + 1}S_r + T_{p + 1}^{2}S_n\bigg) \\
-
-&= \bigg((1 - \Tfirst)^{2}S_0 + 2(1 - \Tfirst{})\Tfirst{}S_r + (\Tfirst{})^{2}S_n\bigg) - {}\\
-&\ \ \ \ \ \bigg((1 - \Tsecond{})^{2}S_0 + 2(1 - \Tsecond{})\Tsecond{}S_r + (\Tsecond{})^{2}S_n\bigg) \\
-
+&= B(S_0,\ S_n,\ S_r,\ T(p)) - B(S_0,\ S_n,\ S_r,\ T(p + 1)) \\
 &= -2S_r\Tsecond{} + 2S_r\Tfirst{} + 2S_r\Tseconds{} - 2S_r\Tfirsts{} + {}\\
 &\ \ \ \ \ \  2S_0\Tsecond{} - 2S_0\Tfirst{} - S_0\Tseconds{} + S_0\Tfirsts{} - {}\\
 &\ \ \ \ \ \  S_n\Tseconds{} + S_n\Tfirsts{}\\
@@ -393,7 +370,7 @@ $$
 \end{equation*}
 $$
 
-Now we can rephrase the quadratic interms of $N$, and arrange it as our desired inequality:
+Now we can rephrase the quadratic interms of $N$:
 
 $$
 
@@ -404,7 +381,6 @@ $$
 a &= S_0 + S_n - 2S_r \\
 b &= -2S_0 + 2S_r \\
 \Delta S(N_0 - 1) &= aN^2 +bN\\
-1 &\le aN^2 +bN\\
 
 \end{split}
 \end{equation*}
@@ -598,13 +574,34 @@ S_r &= (1 - r_c)S_m + r_cS_0 \\
 \end{equation*}
 $$
 
-Yippee!!! Given our constraints on the parameters, we can conclude that the generalized set of all valid $r_e$ looks like this:
+Yippee!!! Given our constraints on the parameters, lets define sets that describe the valid domain of $\large r_e$ such that the Delta Constraint is fullfilled:
 
 $$
 \large
-\bigg\lbrace r_e \in \R \mid 1 \le r_e \bigg\rbrace \land \begin{cases}
-\bigg\lbrace r_e \mid r_e \le \frac{\ln(\frac{1}{S_n - S_0})}{\ln(\frac{1}{N_0 - 1})} \bigg\rbrace &\text{if } r_c = 0\\
-\bigg\lbrace r_e \mid r_e \le \frac{\ln(\frac{1}{2r_c}(r_c\sqrt{\frac{S_0(r_c-1)^2-{r_c}^2S_n+2r_cS_n-4r_c-S_n}{{r_c}^2(S_0 - S_n)}} + r_c - 1))}{\ln(\frac{1}{N_0 - 1})} \bigg\rbrace &\text{if } r_c > 0
-\end{cases}
+\begin{equation*}
+\begin{split}
+
+R_c &= \Set{r_c \in \R | 0 < r_c \le 1}\\
+E_0 &= \Set{r_c = 0 | (\exists{r_e} \in \R)\Bigg[1 \le r_e \le \frac{\ln(\frac{1}{S_n - S_0})}{\ln(\frac{1}{N_0 - 1})}\Bigg]}\\
+E_r &= \Set{r_c \in R_c | (\exists{r_e} \in \R)\Bigg[1 \le r_e \le \frac{\ln(\frac{1}{2r_c}(r_c\sqrt{\frac{S_0(r_c-1)^2-{r_c}^2S_n+2r_cS_n-4r_c-S_n}{{r_c}^2(S_0 - S_n)}} + r_c - 1))}{\ln(\frac{1}{N_0 - 1})}\Bigg]}\\
+\end{split}
+\end{equation*}
 $$
 
+Then the set of all valid $\large r_e$ can be defined as:
+
+$$
+\large 
+E = E_0 \land E_r
+$$
+
+## Sum of the parts
+
+Earlier we created a constraint for $\large r_c$ for a 2nd-order $S(p)$. That constraint is still valid for nth-order $S(P)$ when $r_e = 1$. Even with our nth-order function, we still need to ensure we meet the constraint on $\large r_c$, otherwise $\Delta S(N_0 - 1)$ may become smaller than 1. So, we can redefine the set $R_c$ such that $\large r_c$ is always correctly constrained first:
+
+$$
+\large
+R_c = \Set{r_c \in \R | 0 < r_c \le \frac{N_0^2 - 2N_0 + 1 - S_nN_0 + S_0N_0 + S_n - S_0}{-S_nN_0 + S_0N_0 + 2S_n - 2S_0}}\\
+$$
+
+So long as $\large r_e$ is in $E$, that implies that $\large r_c$ is in $\R_c$! We've fully constrainted both $\large r_c$ and $\large r_e$. The scoring function $S(p)$ can be varied for any valid inputs, and it will output a useful score that represents relative performance.
