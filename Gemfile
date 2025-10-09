@@ -37,8 +37,3 @@ gem "http_parser.rb", "~> 0.6.0", :platforms => [:jruby]
 gem "webrick"
 gem "csv"
 gem "erb"
-
-# gem "kramdown"
-# gem "execjs"
-# gem "katex", "~> 0.10.0"
-# gem "kramdown-math-katex"

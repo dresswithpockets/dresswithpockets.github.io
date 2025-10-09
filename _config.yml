@@ -39,14 +39,6 @@ jektex:
   ignore: ["*.xml", "README.md", "_drafts/*" ]
   silent: false
 
-# markdown: kramdown
-# kramdown:
-  # math_engine: katex
-  # math_engine_opts: {
-  #   throw_on_error: true,
-  #   output: "html",
-  # }
-
 # Exclude from processing.
 # The following items will not be processed, by default.
 # Any item listed under the `exclude:` key here will be automatically added to
