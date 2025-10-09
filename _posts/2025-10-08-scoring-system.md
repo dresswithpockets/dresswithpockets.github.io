@@ -20,7 +20,7 @@ $$
 
 The quadratic bezier is a second-order interpolant. Its basically a fancy parabola, where the intermediate control value \(r\) varies the slope of the curve over \(t\). We can vary the inputs of B in order to shape the curve.
 
-**TODO: gif of a varied bezier in desmos**
+<video src="/assets/videos/scoring-system/simple.720p30.hevc.mp4" data-canonical-src="/assets/videos/scoring-system/simple.720p30.hevc.mp4" controls="controls" muted="muted" class="d-block rounded-bottom-2 border-top width-fit center-video" crossorigin="anonymous"></video>
 
 ## The score function
 
@@ -65,7 +65,7 @@ $$
 
 The scoring function so far is pretty simple. We can plot it and vary the inputs to get a curve with increasing steps between each place as \(p\) approaches 1.
 
-**TODO: gif of desmos plot of scoring function v1**
+<video src="/assets/videos/scoring-system/score1.720p30.hevc.mp4" data-canonical-src="/assets/videos/scoring-system/score1.720p30.hevc.mp4" controls="controls" muted="muted" class="d-block rounded-bottom-2 border-top width-fit center-video" crossorigin="anonymous"></video>
 
 ## Constraining the step size
 
