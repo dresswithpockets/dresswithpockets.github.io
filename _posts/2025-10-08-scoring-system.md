@@ -14,6 +14,7 @@ I want the system to be defined as a continuous increasing function such that ea
 The bezier curve!
 
 $$
+\Large
 B(a,b,r,t) = (1-t)^{2}a + 2(1 - t)tr + t^{2}b
 $$
 
