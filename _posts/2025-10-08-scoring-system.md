@@ -466,7 +466,7 @@ $$
 \large
 \begin{align*}
 
-\frac{\ln(\frac{1}{2} - \frac{1}{r_c} + \frac{\sqrt{(r_cS_0 - r_cS_N + S_n - S_0)^2 + 4r_c(S_n - S_0)}}{r_c(S_n - S_0)})}{\ln(\frac{1}{N_0 - 1})} \ge r_e &\ge \frac{\ln(\frac{1}{2} - \frac{1}{r_c} - \frac{\sqrt{(r_cS_0 - r_cS_N + S_n - S_0)^2 + 4r_c(S_n - S_0)}}{r_c(S_n - S_0)})}{\ln(\frac{1}{N_0 - 1})}\\
+\frac{\ln(\frac{1}{2} - \frac{1}{r_c} + \frac{\sqrt{(r_cS_0 - r_cS_n + S_n - S_0)^2 + 4r_c(S_n - S_0)}}{r_c(S_n - S_0)})}{\ln(\frac{1}{N_0 - 1})} \ge r_e &\ge \frac{\ln(\frac{1}{2} - \frac{1}{r_c} - \frac{\sqrt{(r_cS_0 - r_cS_n + S_n - S_0)^2 + 4r_c(S_n - S_0)}}{r_c(S_n - S_0)})}{\ln(\frac{1}{N_0 - 1})}\\
 
 \end{align*}
 $$
@@ -474,10 +474,56 @@ $$
 TODO: show guess-and-check solution, find that the right side is imaginary, and explain the range of the inside the numerator's interior.
 TODO: move this section to wherever makes more sense
 
+With my sample inputs, the right side of the inequality is imaginary, so its excluded when I define the bounds of \(r_e\) given these inputs. Its imaginary because the input to \(\ln\) is negative. Is the input always imaginary? What about the other side of the inequality? I need to determine the domain of the input into \(ln\); that is, the range the function \(f(r_c) = \large \frac{\sqrt{(r_cS_0 - r_cS_n + S_n - S_0)^2 + 4r_c(S_n - S_0)}}{r_c(S_n - S_0)} \normalsize\text{ for } 0 < r_c < 1 \text{ and } 1 < S_0 \text{ and } S_0 < S_n\).
+
+There are 6 unique operations used in the function \(f(r_c)\) - addition, substraction, multiplication, division, exponentiation, and the squre root. All of my inputs have continuous domains, so each operation has the following ranges:
+
+I'll apply the following axioms to determine the ranges:
 
 $$
 \large
 \begin{align*}
+
+% \text{ the continuous operand set } O = \Set{ (x, y) | a < x < b \text { and } c < y < d}\\
+\text{ a continuous positive operand set } O &= \Set{ (x, y) \in \R^2 \lor \N\times\R \lor \R\times\N | a < x < b \text { and } c < y < d \text { and } 0 <= a \text { and } 0 <= b }\\
+
+\text{for all values in } O \text{, the following are true: }\\
+
+x \cdot y \in D &= [\ \min \{a \cdot c, a \cdot d\} < x \cdot y < \max \{b \cdot c, b \cdot d\} \ ]\\
+\frac{x}{y} \in D &= \Bigg[\ \min \Set{\frac{a}{c}, \frac{a}{d}} < xy < \max \Set{\frac{b}{c}, \frac{b}{d}} \ \Bigg]\\
+x + y \in D &= [(a + c) < (x + y) < (b + d)]\\
+x - y \in D &= [(a - c) < (x - y) < (b - d)]\\
+
+&\Set{ (x,y) \in O | (\exists x \cdot y)[\ \min \{a \cdot c, a \cdot d\} < x \cdot y < \max \{b \cdot c, b \cdot d\} \ ]}\\
+&\Set{ (x,y) \in O | \bigg(\exists \frac{x}{y}\bigg)\Bigg[\ \min \Set{\frac{a}{c}, \frac{a}{d}} < xy < \max \Set{\frac{b}{c}, \frac{b}{d}} \ \Bigg]}
+
+% \text{ given the continous domains } xy \text { s.t. }\\
+% r_cS_0 \in (0, \infty) &\text{ for } 0 < r_c < 1 \text{ and } 1 \le S_0\\
+% r_cS_0 \in (0, \infty) &\text{ for } 0 < r_c < 1 \text{ and } 1 \le S_0 < S_n\\
+% S_n  - S_0\in (0, \infty) &\text{ for } 1 \le S_0 < S_n\\
+% x y \in D = (ac, bd)\Set{(x, y) | a < x < b \text{ and } c < y < d } \text{ then } \Set { x y | ad < xy < bc \land ac < xy < bd }\\
+% x/y \in D = \Set{(x, y) | a < x < b \text{ and } c < y < d } \text{ then } \Set { x y | ad < xy < bc \land ac < xy < bd }\\
+
+\end{align*}
+$$
+
+I'll start with the domain of \(r_c\) and move left to right inside to out, to determine the range of values of the function \(f(r_c) = \large \frac{\sqrt{(r_cS_0 - r_cS_n + S_n - S_0)^2 + 4r_c(S_n - S_0)}}{r_c(S_n - S_0)} \normalsize\text{ for } 0 < r_c < 1 \text{ and } 1 < S_0 \text{ and } S_0 < S_n\):
+
+\(f(r_c) = \large \frac{\sqrt{(r_c(S_0 - S_n) + (S_n - S_0))^2 + 4r_c(S_n - S_0)}}{r_c(S_n - S_0)} \normalsize\text{ for } 0 < r_c < 1 \text{ and } 1 < S_0 \text{ and } S_0 < S_n\)
+
+\(S_0 - S_n\) will always be negative, but \(S_n - S_0\) will always be positive. \(r_c\) is always a positive number in \((0, 1)\), so \(r_c(S_0 - S_n) + (S_n - S_0) > (S_n - S_0) > 0\).
+
+$$
+\large
+\begin{align*}
+
+r_c \in D = (0, 1)\\
+S_0 \in D = (1, \infty)\\
+S_n \in D = (S_0, \infty)\\
+r_cS_0 \in D = (0, \infty)\\
+r_cS_n \in D = (r_cS_0, \infty)\\
+r_cS_0 - r_cS_n \in D = (-\infty, -r_cS_0)\\
+r_cS_0 - r_cS_n + S_n \in D = 
 
 \end{align*}
 $$
