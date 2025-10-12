@@ -26,21 +26,13 @@ The quadratic bezier is a second-order interpolant. Its basically a fancy parabo
 
 We need to be able to set:
 
-- the number of participants - \(N_0\)
-- the lower score bound - \(S_0\)
-- the upper score bound - \(S_n\)
-- the curve's intemediate coefficient - \(r_c\)
-
-With some reasonable constraints on their domains:
-
 $$
-\large
-\begin{cases}
-r_c \in \R & \mid 0 \le r_c \le 1\\
-N_0 \in \N & \mid 2 \le N_0      \\
-S_0 \in \N & \mid 1 \le S_n      \\
-S_n \in \N & \mid S_0 \le S_n    \\
-\end{cases}
+\begin{align*}
+\text{the number of participants: } & N_0, \Set { N_0 \in \N | 2 \le N_0 } \\
+\text{the lower score bound: } & S_0, \Set { S_0 \in \N | 1 \le S_n } \\
+\text{the upper score bound: } & S_n, \Set { S_n \in \N | S_0 < S_n } \\
+\text{the control coefficient: } & r_c, \Set { r_c \in \R | 0 \le r_c \le 1 } \\
+\end{align*}
 $$
 
 We can calculate the intermediate control \(r\) as \(S_r\):
@@ -48,8 +40,8 @@ We can calculate the intermediate control \(r\) as \(S_r\):
 $$
 \large
 \begin{cases}
-S_m & =\LARGE{\frac{S_0 + S_n}{2} } \\
-S_r & =(1 - r_c)S_m + r_cS_0 \\
+S_m & = \LARGE{\frac{S_0 + S_n}{2} } \\
+S_r & = (1 - r_c)S_m + r_cS_0 \\
 \end{cases}
 $$
 
@@ -69,25 +61,25 @@ The scoring function so far is pretty simple. We can plot it and vary the inputs
 
 ## Constraining the step size
 
-Depending on the values of our inputs, this function can provide a score for every placement. Lets define that difference between two places as \(\Delta S(p)\):
+Depending on the values of our inputs, this function can provide a score for every placement. Lets define the differential score of two places as \(\Delta S(p)\):
 
 $$
 \Large
 \Delta S(p) = S(p) - S(p + 1) \text{ for all } \Set{ p \in \N | 1 \le p < N_0 }
 $$
 
-For example: \(\Delta S(1)\) gives us the difference between 1st and 2nd place, and \(\Delta S(N_0-1)\) gives us the difference between second-to-last and last place. Given any parameterization of the inputs, we must ensure the following **Delta Constraint** is always true:
+For example: \(\Delta S(1)\) gives us the 1st and 2nd place differential score, and \(\Delta S(N_0-1)\) gives us the differential score for second-to-last and last place. Given any parameterization of the inputs, we need to ensure that for all values of \(p\) in \(\mathbb N\), we must ensure the following **Differential Constraint** is always true:
 
 $$
 \Large
-\Delta S(p) \ge 1 \text{ for all } \Set{ p \in \N | 1 \le p \le N_0 - 1 }
+\Set{ p \in \N | 1 \le p \le N_0 - 1 \large{\text{ and }} \Large \Delta S(p) \ge 1 }
 $$
 
-Variations in \(\large{r_c}\) can cause the Delta Constraint to fail given a small enough \(N_0\), or small enough \(S_n - S_0\). So, we should find that - for any given \(N_0\), \(S_0\), and \(S_n\), our \(\large{r_c}\) must be limited to ensure the Delta Constraint is true. We want to a solution for \(\large{r_c}\) such that:
+Variations in \(\large r_c\) can cause the Differential Constraint to fail given a small enough \(N_0\), or small enough \(S_n - S_0\). So, we should find a set \(\large R_c\) of all \(\large r_c\) for which the Differential Constraint is true:
 
 $$
 \Large
-\lim\limits_{p \longrightarrow N_0}{\Delta S(p) \ge 1}
+R_c = \Set{ r_c \in \R | 0 \le r_c \le 1 \large{\text{ and }} \Large \Delta S(p) \ge 1 }
 $$
 
 Expanding \(\Delta S(p)\) gives:
@@ -221,16 +213,6 @@ r_c &\le \frac{−49151999}{−49302000}\\
 r_c &\le \frac{49151999}{49302000}\\
 r_c &\lessapprox 0.9969575067948562\\
 
-% r_c &\ge \frac{-100000(500) + 100000 - 2(1000) - 500^2 + (1000)(500) + 2(500) - 1}{100000(500) + 6(1000) - 3(1000)(500)}\\
-% r_c &\ge \frac{−49651001}{48506000}\\
-
-% r_c &\ge \frac{N_0^2 - 2N_0 - 3N_0S_0 + 3S_0 - N_0S_n + S_n + 1}{(N_0 - 2)(S_0 - S_n)}\\
-% r_c &\ge \frac{500^2 -2(500) - 3(500)(1000) + 3(1000) - 500(100000) + 100000 + 1}{(500 - 2)(1000 - 100000)}\\
-% r_c &\ge \frac{−51147999}{−49302000}\\
-% r_c &\gtrapprox 0.9969777899476695\\
-
-%0.99695750679484
-
 \end{split}
 \end{equation*}
 $$
@@ -257,29 +239,24 @@ $$
 
 Excellent (:
 
-Finally, we can guarantee that the Delta Constraint holds true so long as we pick an \(\large r_c\) in the set:
+Finally, we can define \(\large R_c\) in terms of our inequality on \(\large r_c\):
 
 $$
-\large
-\begin{equation*}
-\begin{split}
-
-\large
-\Set{ r_c \in \R | 1 \le r_c \le \frac{N_0^2 - 2N_0 + 1 - S_nN_0 + S_0N_0 + S_n - S_0}{-S_nN_0 + S_0N_0 + 2S_n - 2S_0} }
-
-\end{split}
-\end{equation*}
+\Large
+R_c = \Set{ r_c \in \R | 0 \le r_c \le \frac{N_0^2 - 2N_0 + 1 - S_nN_0 + S_0N_0 + S_n - S_0}{-S_nN_0 + S_0N_0 + 2S_n - 2S_0}}
 $$
+
+This set implies \(\Delta S(p) \ge 1 \) because \(r_c \le \large \frac{N_0^2 - 2N_0 + 1 - S_nN_0 + S_0N_0 + S_n - S_0}{-S_nN_0 + S_0N_0 + 2S_n - 2S_0}\) was solved from the inequality \(\Delta S(p) \ge 1 \).
 
 ## A better curve
 
 The curve created by \(S(p)\) does fulfill my original requirements, but I feel it should reward better placements more dramatically. I want to be able to control how dramaticaly the slope rises as \(p\) approaches \(1\) from \(N_0\). I'll try by createing an n-th order variant of our score function.
 
-Lets define a new input for our new exponent:
+Lets define a new input:
 
 $$
 \Large
-\Set{ r_e \in \R | 1 \le r_e }
+\text{the control exponent: } r_e, \Set{ r_e \in \R | 1 \le r_e }
 $$
 
 And redefine the score functions to include \(r_e\):
@@ -292,7 +269,7 @@ S(p) &= B(S_0,\ S_n,\ S_r,\ T(p)^{r_e}) & \Set{ p \in \N | 1 \leq p \leq N_0 }\\
 \end{cases}
 $$
 
-Just as with our 2nd-order \(S(p)\), the Delta Constraint should remain true:
+Just as with our 2nd-order \(S(p)\), the Differential Constraint should remain true:
 
 $$
 \large
@@ -302,26 +279,18 @@ $$
 \end{cases}
 $$
 
-Unfourtunately, given the higher order \(T(p)^{r_e}\), small variations in \(\large{r_e}\) can cause the Delta Constraint to fail given a small enough \(N_0\), large enough \(r_c\), or small enough \(S_n - S_0\). So, we should find that - for any given \(N_0\), \(\large{r_c}\), \(S_0\), and \(S_n\) - our \(\large{r_e}\) must be limited to ensure the Delta Constraint is true. Just as with our 2nd order, we want to find a solution for \(\large{r_e}\) such that:
+Unfourtunately, given the higher order \(T(p)^{r_e}\), small variations in \(\large{r_e}\) can cause the Differential Constraint to fail given a small enough \(N_0\), large enough \(r_c\), or small enough \(S_n - S_0\). So, we should find a set \(\large E\) of all \(\large r_e\) for which the Differential Constraint is true:
 
 $$
 \Large
-\lim\limits_{p \longrightarrow N_0}{\Delta S(p) \ge 1}
+% \lim\limits_{p \longrightarrow N_0}{\Delta S(p) \ge 1}
+
+E = \Set { r_e \in \R | 1 \le r_e \large{\text{ and }} \Large \Delta S(p) \ge 1 }
 $$
 
-We can reuse the original expansion of \(\Delta S(p)\), because the \(T(p)\) substitutions are unaltered in the simplified form of \(\Delta S(p)\):
+Just as with our 2nd order \(S(p)\), we're going to need to solve \(\Delta S(p)\) in terms of \(\large r_e\). We can reuse the original expansion of \(\Delta S(p)\), because the \(T(p)\) substitutions are unaltered in the simplified form of \(\Delta S(p)\):
 
 $$
-% \def\Tfirst{(1 - \frac{p - 1}{N_0 - 1})^{r_e} }
-% \def\Tsecond{(1 - \frac{p}{N_0 - 1})^{r_e} }
-% \def\Tfirsts{(1 - \frac{p - 1}{N_0 - 1})^{2r_e} }
-% \def\Tseconds{(1 - \frac{p}{N_0 - 1})^{2r_e} }
-
-% \def\Tfirstp#1{(1 - \frac{#1 - 1}{N_0 - 1})^{r_e} }
-% \def\Tsecondp#1{(1 - \frac{#1}{N_0 - 1})^{r_e} }
-% \def\Tfirstsp#1{(1 - \frac{#1 - 1}{N_0 - 1})^{2r_e} }
-% \def\Tsecondsp#1{(1 - \frac{#1}{N_0 - 1})^{2r_e} }
-
 \large
 \begin{equation*}
 \begin{split}
@@ -331,9 +300,6 @@ $$
 &= -2S_rT(p + 1)^{r_e} + 2S_rT(p)^{r_e} + 2S_rT(p + 1)^{2r_e} - 2S_rT(p)^{2r_e} + {}\\
 &\ \ \ \ \ \  2S_0T(p + 1)^{r_e} - 2S_0T(p)^{r_e} - S_0T(p + 1)^{2r_e} + S_0T(p)^{2r_e} - {}\\
 &\ \ \ \ \ \  S_nT(p + 1)^{2r_e} + S_nT(p)^{2r_e}\\
-% &= -2S_r\Tsecond{} + 2S_r\Tfirst{} + 2S_r\Tseconds{} - 2S_r\Tfirsts{} + {}\\
-% &\ \ \ \ \ \  2S_0\Tsecond{} - 2S_0\Tfirst{} - S_0\Tseconds{} + S_0\Tfirsts{} - {}\\
-% &\ \ \ \ \ \  S_n\Tseconds{} + S_n\Tfirsts{}\\
 \end{split}
 \end{equation*}
 $$
@@ -382,7 +348,24 @@ b &= -2S_0 + 2S_r \\
 \end{equation*}
 $$
 
-We can simplify \(a\) and \(b\) into the the simplest terms:
+<!-- 
+\(1 - r_c\) has the domain \([1, 0]\), \(S_n\) has the domain \([S_0 + 1, \infty)\).
+
+\(S_n(1 - r_c)\) has a the domain \([1, 0] \cdot [S_0 + 1, \infty) = [S_0 + 1,\) $\Set{S_n \in \N | S_n > S_0 > 1 } \cdot (1 - \Set{ r_c \in \R | 0 \le r_c \le 1 })$
+
+Since \(S_n > S_0\), we can infer that \(a > 0\) and \(b > 0\).
+
+0 = ar - a + b - rb
+a - ar = b - rb -->
+
+Once we solve for \(N\), we can then rearrange to solve for all values of \(r_e\) that fulfill our inequality, in terms of \(r_c, S_0, S_n, N_0\):
+
+$$
+\large
+1 \le aN^2 +bN\\
+$$
+
+Before solving the quadratic, lets consider the roots.  We can simplify \(a\) and \(b\) into the the simplest terms:
 
 $$
 \large
@@ -395,26 +378,182 @@ a &= S_0 + S_n - 2S_r \\
   &= S_0 + S_n - 2(\frac{S_0 + S_n - r_cS_0 - r_cS_n}{2} + r_cS_0)\\
   &= S_0 + S_n - S_0 - S_n + r_cS_0 + r_cS_n - 2r_cS_0\\
   &= r_cS_0 + r_cS_n - 2r_cS_0\\
-  &= r_cS_n - r_cS_0\\\\
+  &= r_cS_n - r_cS_0\\
 
 b &= -2S_0 + 2S_r \\
   &= -2S_0 + 2((1-r_c)S_m + r_cS_0) \\
   &= -2S_0 + S_0 + S_n - r_cS_0 - r_cS_n + 2r_cS_0\\
   &= -S_0 + S_n - r_cS_n + r_cS_0\\
-  &= (S_0 - 1)r_c + (1 - S_n)r_c\\
+  &= S_0(r_c - 1) + S_n(1 - r_c)\\
 
 \end{split}
 \end{equation*}
 $$
 
-Once we solve for \(N\), we can then rearrange to solve for all values of \(r_e\) that fulfill our inequality, in terms of \(r_c, S_0, S_n, N_0\):
+We can then clearly see that when \(\large r_c = 0, \ a = 0S_n - 0S_0 = 0\), and that when \(\large r_c = 1, \ b = S_0(1 - 1) + S_n(1-1) = 0\). Therefore, there are equations to consider:
+
+$$
+\large
+\begin{align*}
+1 &\le aN^2 + bN &\text{ when } &0 < r_c < 1 \\
+1 &\le bN &\text{ when } &r_c = 0  \\
+1 &\le aN^2 &\text{ when } &r_c = 1 \\
+\end{align*}
+$$
+
+Then we must solve for \(N\) in all three cases:
+
+$$
+\large
+\begin{align}
+\frac{-b + \sqrt{b^2 + 4a}}{2a} \le N &\le \frac{-b - \sqrt{b^2 + 4a}}{2a} &\text{ when } &0 < r_c < 1 \\
+\frac{1}{b} &\le N &\text{ when } &r_c = 0 \\
+\sqrt{\frac{1}{a}} &\le N &\text{ when } &r_c = 1 \\
+\end{align}
+
+% \begin{equation*}
+% \begin{split}
+
+% \frac{-b + \sqrt{b^2 + 4a}}{2a} \le N &\le \frac{-b - \sqrt{b^2 + 4a}}{2a}\\
+
+% \end{split}
+% \end{equation*}
+$$
+
+Lets start by substituting & simplifying the two simple cases:
+
+$$
+\large
+\begin{align*}
+\frac{1}{S_n - S_0} &\le N &\text{ when } &r_c = 0 \\
+\sqrt{\frac{1}{S_n - S_0}} &\le N &\text{ when } &r_c = 1 \\
+\end{align*}
+$$
+
+Now we can worry about the tougher one, substituting and simplifying both sides of the quadratic while making sure to retain the signed square root's side & inequality:
+
+$$
+\large
+\begin{align*}
+
+% the following needs to be simplified:
+
+& \frac{-(S_0(r_c - 1) + S_n(1 - r_c)) \pm \sqrt{(S_0(r_c - 1) + S_n(1 - r_c))^2 + 4(r_cS_n - r_cS_0)}}{2r_c(S_n - S_0)}\\
+& \frac{r_cS_n - r_cS_0 + S_0 - S_n \pm \sqrt{(r_cS_0 - r_cS_N + S_n - S_0)^2 + 4(r_cS_n - r_cS_0)}}{2r_c(S_n - S_0)}\\
+& \frac{1}{2}\bigg(\overbrace{\cancel{\frac{r_cS_n - r_cS_0}{r_cS_n - r_cS_0}}}^{1} + \frac{S_0 - S_n}{r_c(S_n - S_0)} \pm \frac{\sqrt{(r_cS_0 - r_cS_N + S_n - S_0)^2 + 4(r_cS_n - r_cS_0)}}{r_c(S_n - S_0)}\bigg)\\
+& \frac{1}{2}\bigg(1 - \frac{\cancel{S_n - S_0}}{r_c\cancel{(S_n - S_0)}} \pm \frac{\sqrt{(r_cS_0 - r_cS_N + S_n - S_0)^2 + 4(r_cS_n - r_cS_0)}}{r_c(S_n - S_0)}\bigg)\\
+& \frac{1}{2} - \frac{1}{r_c} \pm \frac{\sqrt{(r_cS_0 - r_cS_N + S_n - S_0)^2 + 4r_c(S_n - S_0)}}{r_c(S_n - S_0)}\\
+
+\end{align*}
+$$
+
+Fitting the simplified form back into the inequality with the appropriate signs & direction preserved, so that we can begin solving for \(r_e\)
+
+$$
+\large
+\begin{align*}
+
+\frac{1}{2} - \frac{1}{r_c} + \frac{\sqrt{(r_cS_0 - r_cS_N + S_n - S_0)^2 + 4r_c(S_n - S_0)}}{r_c(S_n - S_0)} \le N &\le \frac{1}{2} - \frac{1}{r_c} - \frac{\sqrt{(r_cS_0 - r_cS_N + S_n - S_0)^2 + 4r_c(S_n - S_0)}}{r_c(S_n - S_0)}\\
+
+\frac{1}{2} - \frac{1}{r_c} + \frac{\sqrt{(r_cS_0 - r_cS_N + S_n - S_0)^2 + 4r_c(S_n - S_0)}}{r_c(S_n - S_0)} \le \frac{1}{N_0 - 1}^{r_e} &\le \frac{1}{2} - \frac{1}{r_c} - \frac{\sqrt{(r_cS_0 - r_cS_N + S_n - S_0)^2 + 4r_c(S_n - S_0)}}{r_c(S_n - S_0)}\\
+
+\end{align*}
+$$
+
+We can perform a change of base to solve for \(r_e\). Note the direction of inequality has changed due to the division of the decreasing function \(ln(\frac{1}{N_0 - 1})\), which has the limit \(\lim\limits_{N_0\longrightarrow\infty} ln(\frac{1}{N_0 - 1}) = -\infty \text{ for all } \lbrace N_0 \in \mathbb{R} \mid N_0 > 1\rbrace\).
+
+$$
+\large
+\begin{align*}
+
+\frac{\ln(\frac{1}{2} - \frac{1}{r_c} + \frac{\sqrt{(r_cS_0 - r_cS_N + S_n - S_0)^2 + 4r_c(S_n - S_0)}}{r_c(S_n - S_0)})}{\ln(\frac{1}{N_0 - 1})} \ge r_e &\ge \frac{\ln(\frac{1}{2} - \frac{1}{r_c} - \frac{\sqrt{(r_cS_0 - r_cS_N + S_n - S_0)^2 + 4r_c(S_n - S_0)}}{r_c(S_n - S_0)})}{\ln(\frac{1}{N_0 - 1})}\\
+
+\end{align*}
+$$
+
+TODO: show guess-and-check solution, find that the right side is imaginary, and explain the range of the inside the numerator's interior.
+TODO: move this section to wherever makes more sense
+
+
+$$
+\large
+\begin{align*}
+
+\end{align*}
+$$
+
+I'm dealing with logarithms & square roots; there is a chance that one of the sides of this inequality aren't in the Reals, so I need to determine the domain of each side. I expect that at least one of these sides is in the Reals given that \(r_e\) should always a Real. So, I first look at the domain of \(\large \frac{\sqrt{(r_cS_0 - r_cS_N + S_n - S_0)^2 + 4r_c(S_n - S_0)}}{r_c(S_n - S_0)}\) since its common among the two sides.
+
+$$
+\large
+\begin{align*}
+\end{align*}
+$$
+
+$$
+\large
+\begin{align*}
+\end{align*}
+$$
+
+$$
+\large
+\begin{align*}
+
+% TODO: solve for r_e out of N
+% TODO: finish solving for r_e out of N
+
+\\\\
+r_c &= 0.5\\
+N_0 &= 500\\
+S_0 &= 1000\\
+S_n &= 100,000\\
+& \frac{1}{2} - \frac{1}{0.5} \pm \frac{\sqrt{(0.5(1000) - 0.5(100000) + 100000 - 1000)^2 + 4(0.5)(100000 - 1000)}}{0.5(100000 - 1000)}\\
+& \frac{1}{2} - 2 \pm \frac{\sqrt{2450448000}}{49500}\\
+
+
+
+\\\\
+
+% this is wrong:
+& \frac{-(r_c(S_0 - 1) + r_c(1 - S_n)) \pm \sqrt{((S_0 - 1)r_c + (1 - S_n)r_c)^2 + 4(r_cS_n - r_cS_0)}}{2(r_cS_n - r_cS_0)}\\
+& \frac{-r_cS_0 + \cancel{r_c} - \cancel{r_c} + r_cS_n \pm \sqrt{(r_cS_0 - r_c + r_c - r_cS_n)^2 + 4(r_cS_n - r_cS_0)}}{2(r_cS_n - r_cS_0)}\\
+& \frac{r_cS_n - r_cS_0 \pm \sqrt{(r_cS_0 - r_cS_n)^2 + 4(r_cS_n - r_cS_0)}}{2(r_cS_n - r_cS_0)}\\
+& \frac{r_cS_n - r_cS_0 \pm \sqrt{2r_cr_cS_0S_0 - 2r_cr_cS_nS_n + 4r_cS_n - 4r_cS_0}}{2(r_cS_n - r_cS_0)}\\
+& \frac{r_cS_n - r_cS_0 \pm \sqrt{2(r_cS_0(r_cS_0 - 2) + r_cS_n(2 - r_cS_n))}}{2(r_cS_n - r_cS_0)}\\
+& \frac{r_cS_n - r_cS_0 \pm \sqrt{2(r_cS_0 + r_cS_n)(r_cS_0 - r_cS_n)}}{2(r_cS_n - r_cS_0)}\\
+& \frac{\cancel{r_cS_n - r_cS_0}}{2\cancel{(r_cS_n - r_cS_0)}} \pm \frac{\sqrt{2}\sqrt{r_cS_0 + r_cS_n}\sqrt{-(r_cS_n - r_cS_0)}}{2(r_cS_n - r_cS_0)}\\
+& \frac{1}{2} \pm \frac{\sqrt{2}\overbrace{\sqrt{-1}}^{\clap{keep this in mind for later}}\sqrt{r_cS_0 + r_cS_n}\sqrt{r_cS_n - r_cS_0}}{2(r_cS_n - r_cS_0)}\\
+
+% & \frac{\cancel{r_cS_n - r_cS_0}}{2\cancel{(r_cS_n - r_cS_0)}} \pm \frac{\sqrt{(r_cS_0 - r_cS_n)^2 + 4(r_cS_n - r_cS_0)}}{2(r_cS_n - r_cS_0)}\\
+% & \frac{r_cS_n - r_cS_0}{2(r_cS_n - r_cS_0)} \pm \frac{\sqrt{(r_cS_0 - r_cS_n)^2 + 4(r_cS_n - r_cS_0)}}{2(r_cS_n - r_cS_0)}\\
+
+\\\\
+
+& \frac{1}{2r_c}(r_c\sqrt{\frac{S_0(r_c-1)^2-{r_c}^2S_n+2r_cS_n-4r_c-S_n}{ {r_c}^2(S_0 - S_n)} } + r_c - 1)
+
+\end{align*}
+$$
+
+We can solve for \(\large r_e\) on each side:
 
 $$
 \large
 \begin{equation*}
 \begin{split}
 
-1 &\le aN^2 +bN\\
+\frac{S_nr_c - S_0r_c - \sqrt{(S_0r_c - S_nr_c)^2 + 4(r_cS_n - r_cS_0)}}{2(r_cS_n - r_cS_0)} \le N & \le \frac{S_nr_c - S_0r_c + \sqrt{(S_0r_c - S_nr_c)^2 + 4(r_cS_n - r_cS_0)}}{2(r_cS_n - r_cS_0)}\\
+
+\frac{S_nr_c - S_0r_c - \sqrt{(S_0r_c - S_nr_c)^2 + 4(r_cS_n - r_cS_0)}}{2(r_cS_n - r_cS_0)} \le N & \le \frac{S_nr_c - S_0r_c + \sqrt{(S_0r_c - S_nr_c)^2 + 4(r_cS_n - r_cS_0)}}{2(r_cS_n - r_cS_0)}\\
+
+\end{split}
+\end{equation*}
+$$
+
+$$
+\large
+\begin{equation*}
+\begin{split}
 
 N &\begin{cases}
 \ge \frac{1}{S_n - S_0}, r_c = 0\\
@@ -570,7 +709,7 @@ S_r &= (1 - r_c)S_m + r_cS_0 \\
 \end{equation*}
 $$
 
-Yippee!!! Given our constraints on the parameters, lets define sets that describe the valid domain of \(\large r_e\) such that the Delta Constraint is fullfilled:
+Yippee!!! Given our constraints on the parameters, lets define sets that describe the valid domain of \(\large r_e\) such that the Differential Constraint is fullfilled:
 
 $$
 \large
@@ -593,7 +732,7 @@ $$
 
 ## Sum of the parts
 
-Earlier we created a constraint for \(\large r_c\) for a 2nd-order \(S(p)\). That constraint is still valid for nth-order \(S(P)\) when \(r_e = 1\). Even with our nth-order function, we still need to ensure we meet the constraint on \(\large r_c\), otherwise \(\Delta S(N_0 - 1)\) may become smaller than 1. So, we can redefine the set \(R_c\) such that \(\large r_c\) is always correctly constrained first:
+Earlier we created a constraint for \(\large r_c\) for a 2nd-order \(S(p)\). That constraint is still valid for nth-order \(S(p)\) when \(r_e = 1\). Even with our nth-order function, we still need to ensure we meet the constraint on \(\large r_c\), otherwise \(\Delta S(N_0 - 1)\) may become smaller than 1. So, we can redefine the set \(R_c\) such that \(\large r_c\) is always correctly constrained first:
 
 $$
 \large
