@@ -379,12 +379,14 @@ a &= S_0 + S_n - 2S_r \\
   &= S_0 + S_n - S_0 - S_n + r_cS_0 + r_cS_n - 2r_cS_0\\
   &= r_cS_0 + r_cS_n - 2r_cS_0\\
   &= r_cS_n - r_cS_0\\
+  &= r_c(S_n - S_0)\\\\
 
 b &= -2S_0 + 2S_r \\
   &= -2S_0 + 2((1-r_c)S_m + r_cS_0) \\
   &= -2S_0 + S_0 + S_n - r_cS_0 - r_cS_n + 2r_cS_0\\
   &= -S_0 + S_n - r_cS_n + r_cS_0\\
-  &= S_0(r_c - 1) + S_n(1 - r_c)\\
+  &= r_c(S_0 - S_n) - S_0 + S_n\\
+  &= (S_0 - S_n)(r_c - 1)\\
 
 \end{split}
 \end{equation*}
@@ -407,6 +409,7 @@ $$
 \large
 \begin{align}
 \frac{-b + \sqrt{b^2 + 4a}}{2a} \le N &\le \frac{-b - \sqrt{b^2 + 4a}}{2a} &\text{ when } &0 < r_c < 1 \\
+% \frac{1}{2}\bigg(\frac{\sqrt{b^2 - 4ac} - b}) \le N &\le &0 < r_c < 1\\
 \frac{1}{b} &\le N &\text{ when } &r_c = 0 \\
 \sqrt{\frac{1}{a}} &\le N &\text{ when } &r_c = 1 \\
 \end{align}
@@ -430,7 +433,7 @@ $$
 \end{align*}
 $$
 
-Now we can worry about the tougher one, substituting and simplifying both sides of the quadratic while making sure to retain the signed square root's side & inequality:
+Now I can worry about the tougher one, substituting and simplifying both sides of the quadratic while making sure to retain the signed square root's side & inequality:
 
 $$
 \large
@@ -438,24 +441,166 @@ $$
 
 % the following needs to be simplified:
 
-& \frac{-(S_0(r_c - 1) + S_n(1 - r_c)) \pm \sqrt{(S_0(r_c - 1) + S_n(1 - r_c))^2 + 4(r_cS_n - r_cS_0)}}{2r_c(S_n - S_0)}\\
-& \frac{r_cS_n - r_cS_0 + S_0 - S_n \pm \sqrt{(r_cS_0 - r_cS_N + S_n - S_0)^2 + 4(r_cS_n - r_cS_0)}}{2r_c(S_n - S_0)}\\
-& \frac{1}{2}\bigg(\overbrace{\cancel{\frac{r_cS_n - r_cS_0}{r_cS_n - r_cS_0}}}^{1} + \frac{S_0 - S_n}{r_c(S_n - S_0)} \pm \frac{\sqrt{(r_cS_0 - r_cS_N + S_n - S_0)^2 + 4(r_cS_n - r_cS_0)}}{r_c(S_n - S_0)}\bigg)\\
-& \frac{1}{2}\bigg(1 - \frac{\cancel{S_n - S_0}}{r_c\cancel{(S_n - S_0)}} \pm \frac{\sqrt{(r_cS_0 - r_cS_N + S_n - S_0)^2 + 4(r_cS_n - r_cS_0)}}{r_c(S_n - S_0)}\bigg)\\
-& \frac{1}{2} - \frac{1}{r_c} \pm \frac{\sqrt{(r_cS_0 - r_cS_N + S_n - S_0)^2 + 4r_c(S_n - S_0)}}{r_c(S_n - S_0)}\\
+& \frac{-(S_0 - S_n)(r_c - 1) \pm \sqrt{[(S_0 - S_n)(r_c - 1)]^2 + 4r_c(S_n - S_0)}}{2r_c(S_n - S_0)}\\
+& \frac{\cancel{(S_n - S_0)}(r_c - 1)}{2r_c\cancel{(S_n - S_0)}} \pm \sqrt{\frac{(S_0 - S_n)^2(r_c - 1)^2 + 4r_c(S_n - S_0)}{4r_c^2(S_n - S_0)^2}}\\
+& \frac{r_c - 1}{2r_c} \pm \sqrt{\frac{-\cancel{(S_n - S_0)}(S_0 - S_n)(r_c - 1)^2 + 4r_c\cancel{(S_n - S_0)}}{4r_c^2(S_n - S_0)^{\cancel{2}}}}\\
+& \frac{r_c - 1}{2r_c} \pm \sqrt{\frac{(S_n - S_0)(r_c - 1)^2 + 4r_c}{4r_c^2(S_n - S_0)}}\\
+
+& \frac{r_c - 1}{2r_c} \pm \sqrt{\frac{\cancel{(S_n - S_0)^2}(r_c - 1)^2}{4r_c^2\cancel{(S_n - S_0)^2}} + \frac{\cancel{4r_c(S_n - S_0)}}{\cancel{4}r_c^{\cancel{2}}(S_n - S_0)^{\cancel{2}}}}\\
+& \frac{r_c - 1}{2r_c} \pm \sqrt{\frac{(r_c - 1)^2}{4r_c^2} + \frac{1}{r_c(S_n - S_0)}}\\
+& \frac{r_c - 1}{2r_c} \pm \sqrt{\frac{r_c^2 - 2r_c + 1}{4r_c^2} + \frac{1}{r_c(S_n - S_0)}}\\
+& \frac{r_c - 1}{2r_c} \pm \sqrt{\frac{\cancel{r_c}(r_c - 2)}{4r_c^{\cancel{2}}} + \frac{1}{4r_c^2} + \frac{1}{r_c(S_n - S_0)}}\\
+& \frac{r_c - 1}{2r_c} \pm \sqrt{\frac{r_c - 2}{4r_c} + \frac{1}{4r_c^2} + \frac{1}{r_c(S_n - S_0)}}\\
+& \frac{r_c - 1}{2r_c} \pm \sqrt{\frac{1}{4} - \frac{1}{2r_c} + \frac{1}{4r_c^2} + \frac{1}{r_c(S_n - S_0)}}\\
+& \frac{r_c - 1}{2r_c} \pm \sqrt{\frac{r_c^2(S_n - S_0)}{4r_c^2(S_n - S_0)} - \frac{1}{2r_c} + \frac{1}{4r_c^2} + \frac{1}{r_c(S_n - S_0)}}\\
+
+\\\\
+& \frac{r_c(S_n - S_0) + S_0 - S_n \pm \sqrt{(r_c(S_0 - S_n) - S_0 + S_n)^2 + 4r_c(S_n - S_0)}}{2(r_cS_n - r_cS_0)}\\
+
+& \frac{S_0 - S_n - r_c(S_0 + S_n) \pm \sqrt{(r_cS_0 - S_0 + S_n - r_cS_n)^2 + 4r_c(S_n - S_0)}}{2(r_cS_n - r_cS_0)}\\
+
+& \frac{r_cS_n - r_cS_0 + S_0 - S_n \pm \sqrt{(r_cS_0 - r_cS_N + S_n - S_0)^2 - 4(r_cS_n - r_cS_0)}}{2r_c(S_n - S_0)}\\
+& \frac{1}{2}\bigg(\overbrace{\cancel{\frac{r_cS_n - r_cS_0}{r_cS_n - r_cS_0}}}^{1} + \frac{S_0 - S_n}{r_c(S_n - S_0)} \pm \frac{\sqrt{(r_cS_0 - r_cS_N + S_n - S_0)^2 - 4(r_cS_n - r_cS_0)}}{r_c(S_n - S_0)}\bigg)\\
+& \frac{1}{2}\bigg(1 - \frac{\cancel{S_n - S_0}}{r_c\cancel{(S_n - S_0)}} \pm \frac{\sqrt{(r_cS_0 - r_cS_N + S_n - S_0)^2 - 4(r_cS_n - r_cS_0)}}{r_c(S_n - S_0)}\bigg)\\
+& \frac{1}{2} - \frac{1}{r_c} \pm \frac{\sqrt{(r_cS_0 - r_cS_N + S_n - S_0)^2 - 4r_c(S_n - S_0)}}{r_c(S_n - S_0)}\\
 
 \end{align*}
 $$
 
-Fitting the simplified form back into the inequality with the appropriate signs & direction preserved, so that we can begin solving for \(r_e\)
+Fitting the simplified form back into the inequality with the appropriate signs & direction preserved, so that I can solve for \(r_e\)
 
 $$
 \large
 \begin{align*}
 
-\frac{1}{2} - \frac{1}{r_c} + \frac{\sqrt{(r_cS_0 - r_cS_N + S_n - S_0)^2 + 4r_c(S_n - S_0)}}{r_c(S_n - S_0)} \le N &\le \frac{1}{2} - \frac{1}{r_c} - \frac{\sqrt{(r_cS_0 - r_cS_N + S_n - S_0)^2 + 4r_c(S_n - S_0)}}{r_c(S_n - S_0)}\\
+\frac{1}{2} - \frac{1}{r_c} + \frac{\sqrt{(r_cS_0 - r_cS_N + S_n - S_0)^2 - 4r_c(S_n - S_0)}}{r_c(S_n - S_0)} \le N &\le \frac{1}{2} - \frac{1}{r_c} - \frac{\sqrt{(r_cS_0 - r_cS_N + S_n - S_0)^2 - 4r_c(S_n - S_0)}}{r_c(S_n - S_0)}\\
 
-\frac{1}{2} - \frac{1}{r_c} + \frac{\sqrt{(r_cS_0 - r_cS_N + S_n - S_0)^2 + 4r_c(S_n - S_0)}}{r_c(S_n - S_0)} \le \frac{1}{N_0 - 1}^{r_e} &\le \frac{1}{2} - \frac{1}{r_c} - \frac{\sqrt{(r_cS_0 - r_cS_N + S_n - S_0)^2 + 4r_c(S_n - S_0)}}{r_c(S_n - S_0)}\\
+\end{align*}
+$$
+
+### solving \(r_e\) when \(r_c = 0\)
+
+Substituting N:
+
+$$
+\large
+\begin{align*}
+N &\ge \frac{1}{S_n - S_0}\\
+\bigg(\frac{1}{N_0 - 1}\bigg)^{r_e} &\ge \frac{1}{S_n - S_0}\\
+\end{align*}
+$$
+
+Solving for \(r_e\) with change of base:
+
+$$
+\large
+\begin{align*}
+r_e \ln \frac{1}{N_0 - 1} &\ge \ln \frac{1}{S_n - S_0}\\
+r_e &\le \ln \frac{1}{S_n - S_0} \Bigg/ \ln \frac{1}{N_0 - 1}\\
+\end{align*}
+$$
+
+Solving for an example value to spot check with:
+
+$$
+\large
+
+\begin{align*}
+N_0 &= 200\\
+S_0 &= 1000\\
+S_n &= 100000\\
+
+r_e &\le \ln \frac{1}{100000 - 1000} \Bigg/ \ln \frac{1}{200 - 1}\\
+r_e &\le \ln \frac{1}{99000} \Bigg/ \ln \frac{1}{199}\\
+r_e &\lessapprox 2.173098944800602
+\end{align*}
+$$
+
+Plugging the value back in to \(\large \Delta S(p)\), which should get a value close to \(1\):
+
+$$
+\large
+
+\begin{align*}
+
+S_m &= \frac{1000 + 100000}{2} = 50500\\
+S_r &= (1 - 0)50500 + 0(1000) = 50500\\
+r_e &\approx 2.173098944800602\\
+
+T(199) &\approx \bigg(\frac{1}{199 - 1}\bigg)^{2.173098944800602} \approx 0.0000102121996910658 \\
+T(200) &\approx \bigg(\frac{1}{200 - 1}\bigg)^{2.173098944800602} \approx 0.00001010101010101007 \\
+
+S(199) &= B(1000, 100000, 50500, 0.0000102121996910658) \approx 1001\\
+S(200) &= B(1000, 100000, 50500, 0.00001010101010101007) \approx 1000\\
+
+\Delta S(199) &\approx 1001 - 1000 \approx 1
+\end{align*}
+$$
+
+Yippee!!!
+
+### solving \(r_e\) when \(r_c = 1\)
+
+I'll follow the same process. Subsituting for N and solving for \(r_e\) with change of base:
+
+$$
+\large
+\begin{align*}
+N &\ge \sqrt{\frac{1}{S_n - S_0}}\\
+\bigg(\frac{1}{N_0 - 1}\bigg)^{r_e} &\ge \sqrt{\frac{1}{S_n - S_0}}\\
+r_e \ln \frac{1}{N_0 - 1} &\ge \ln \sqrt{\frac{1}{S_n - S_0}}\\
+r_e &\le \ln \sqrt{\frac{1}{S_n - S_0}} \Bigg/ \ln \frac{1}{N_0 - 1}\\
+\end{align*}
+$$
+
+Solving for an example value to spot check with:
+
+$$
+\large
+
+\begin{align*}
+N_0 &= 200\\
+S_0 &= 1000\\
+S_n &= 100000\\
+
+r_e &\le \ln \sqrt{\frac{1}{100000 - 1000}} \Bigg/ \ln \frac{1}{200 - 1}\\
+r_e &\le \ln \sqrt{\frac{1}{99000}} \Bigg/ \ln \frac{1}{199}\\
+r_e &\lessapprox 1.086549472400301
+\end{align*}
+$$
+
+Plugging the value back in to \(\large \Delta S(p)\), which should get a value close to \(1\):
+
+$$
+\large
+
+\begin{align*}
+
+S_m &= \frac{1000 + 100000}{2} = 50500\\
+S_r &= (1 - 0)50500 + 0(1000) = 50500\\
+r_e &\approx 1.086549472400301\\
+
+T(199) &\approx \bigg(\frac{1}{199 - 1}\bigg)^{1.086549472400301} \approx 0.0000102121996910658 \\
+T(200) &\approx \bigg(\frac{1}{200 - 1}\bigg)^{1.086549472400301} \approx 0.00001010101010101007 \\
+
+S(199) &= B(1000, 100000, 50500, 0.0000102121996910658) \approx 1001\\
+S(200) &= B(1000, 100000, 50500, 0.00001010101010101007) \approx 1000\\
+
+\Delta S(199) &\approx 1001 - 1000 \approx 1
+\end{align*}
+$$
+
+Yayy!!!
+
+### solving \(r_e\) when \(0 < r_c < 1\)
+
+Expanding the quadratic case:
+
+$$
+\large
+\begin{align*}
+
+\frac{1}{2} - \frac{1}{r_c} + \frac{\sqrt{(r_cS_0 - r_cS_N + S_n - S_0)^2 - 4r_c(S_n - S_0)}}{r_c(S_n - S_0)} \le \frac{1}{N_0 - 1}^{r_e} &\le \frac{1}{2} - \frac{1}{r_c} - \frac{\sqrt{(r_cS_0 - r_cS_N + S_n - S_0)^2 - 4r_c(S_n - S_0)}}{r_c(S_n - S_0)}\\
 
 \end{align*}
 $$
@@ -466,7 +611,7 @@ $$
 \large
 \begin{align*}
 
-\frac{\ln(\frac{1}{2} - \frac{1}{r_c} + \frac{\sqrt{(r_cS_0 - r_cS_n + S_n - S_0)^2 + 4r_c(S_n - S_0)}}{r_c(S_n - S_0)})}{\ln(\frac{1}{N_0 - 1})} \ge r_e &\ge \frac{\ln(\frac{1}{2} - \frac{1}{r_c} - \frac{\sqrt{(r_cS_0 - r_cS_n + S_n - S_0)^2 + 4r_c(S_n - S_0)}}{r_c(S_n - S_0)})}{\ln(\frac{1}{N_0 - 1})} \text{, when } 0 < r_c < 1 \\
+\frac{\ln(\frac{1}{2} - \frac{1}{r_c} + \frac{\sqrt{(r_cS_0 - r_cS_n + S_n - S_0)^2 - 4r_c(S_n - S_0)}}{r_c(S_n - S_0)})}{\ln(\frac{1}{N_0 - 1})} \ge r_e &\ge \frac{\ln(\frac{1}{2} - \frac{1}{r_c} - \frac{\sqrt{(r_cS_0 - r_cS_n + S_n - S_0)^2 - 4r_c(S_n - S_0)}}{r_c(S_n - S_0)})}{\ln(\frac{1}{N_0 - 1})} \text{, when } 0 < r_c < 1 \\
 
 \end{align*}
 $$
@@ -475,106 +620,48 @@ I may have some cases where the solution to parts of this expression are imagina
 
 $$
 
-\sqrt{(r_cS_0 - r_cS_n + S_n - S_0)^2 + 4r_c(S_n - S_0)} \in \Complex \text{ when } (r_cS_0 - r_cS_n + S_n - S_0)^2 + 4r_c(S_n - S_0) < 0 \\
+\sqrt{(r_cS_0 - r_cS_n + S_n - S_0)^2 - 4r_c(S_n - S_0)} \in \Complex \text{ when } (r_cS_0 - r_cS_n + S_n - S_0)^2 - 4r_c(S_n - S_0) < 0 \\
 
 \text{ or }\\
 
-\ln(\frac{1}{2} - \frac{1}{r_c} - \frac{\sqrt{(r_cS_0 - r_cS_n + S_n - S_0)^2 + 4r_c(S_n - S_0)}}{r_c(S_n - S_0)}) \in \Complex \text{ when } \frac{1}{2} - \frac{1}{r_c} - 
-\frac{\sqrt{(r_cS_0 - r_cS_n + S_n - S_0)^2 + 4r_c(S_n - S_0)}}{r_c(S_n - S_0)} < 0 
+\ln(\frac{1}{2} - \frac{1}{r_c} - \frac{\sqrt{(r_cS_0 - r_cS_n + S_n - S_0)^2 - 4r_c(S_n - S_0)}}{r_c(S_n - S_0)}) \in \Complex \text{ when } \frac{1}{2} - \frac{1}{r_c} - 
+\frac{\sqrt{(r_cS_0 - r_cS_n + S_n - S_0)^2 - 4r_c(S_n - S_0)}}{r_c(S_n - S_0)} < 0 
 
 $$
 
-It turns out that \((r_cS_0 - r_cS_n + S_n - S_0)^2 - 4r_c(S_n - S_0) < 0\) is never true, because it implies \((r_cS_0 - r_cS_n + S_n - S_0) < \sqrt{-4r_c(S_n - S_0)}\). The right side of the inequality will always be imaginary because \(S_n - S_0 > 0\) and \(0 < r_c < 1\). The left side of the inequality will never be imaginary.
+It turns out that \((r_cS_0 - r_cS_n + S_n - S_0)^2 - 4r_c(S_n - S_0) < 0\) is never true, because it implies \((r_cS_0 - r_cS_n + S_n - S_0) < \sqrt{4r_c(S_n - S_0)}\). The right side of the inequality will always be imaginary because \(S_n - S_0 > 0\) and \(0 < r_c < 1\). The left side of the inequality will never be imaginary.
 
-However, because the root scales by \(S_n\) and \(S_0\), it will always be greater than \(\frac{1}{2} - \frac{1}{r_c}\); so the logarithm operand will be negative, and the result be imaginary. So, \(\large \frac{\ln(\frac{1}{2} - \frac{1}{r_c} - \frac{\sqrt{(r_cS_0 - r_cS_n + S_n - S_0)^2 + 4r_c(S_n - S_0)}}{r_c(S_n - S_0)})}{\ln(\frac{1}{N_0 - 1})}\) is always imaginary, and we can finally redefine \(E\):
+However, because the root scales by \(S_n\) and \(S_0\), it will always be greater than \(\frac{1}{2} - \frac{1}{r_c}\); so the logarithm operand will be negative, and the result be imaginary. So, \(\large \frac{\ln(\frac{1}{2} - \frac{1}{r_c} - \frac{\sqrt{(r_cS_0 - r_cS_n + S_n - S_0)^2 - 4r_c(S_n - S_0)}}{r_c(S_n - S_0)})}{\ln(\frac{1}{N_0 - 1})}\) is always imaginary, and we can finally redefine \(E\):
 
 $$
 \large
 
 E = \Set { r_e \in \R | 1 \le r_e \large{\text{ and }} \Large \Delta S(p) \ge 1 }\\
-E = \Set { r_e \in \R | 1 \le r_e \le \frac{\ln(\frac{1}{2} - \frac{1}{r_c} + \frac{\sqrt{(r_cS_0 - r_cS_n + S_n - S_0)^2 + 4r_c(S_n - S_0)}}{r_c(S_n - S_0)})}{\ln(\frac{1}{N_0 - 1})} } \because \Delta S(p) \ge 1 \impliedby \frac{\ln(\frac{1}{2} - \frac{1}{r_c} + \frac{\sqrt{(r_cS_0 - r_cS_n + S_n - S_0)^2 + 4r_c(S_n - S_0)}}{r_c(S_n - S_0)})}{\ln(\frac{1}{N_0 - 1})} \\
-
+E = \Set { r_e \in \R | 1 \le r_e \le \frac{\ln(\frac{1}{2} - \frac{1}{r_c} + \frac{\sqrt{(r_cS_0 - r_cS_n + S_n - S_0)^2 - 4r_c(S_n - S_0)}}{r_c(S_n - S_0)})}{\ln(\frac{1}{N_0 - 1})} } \because \Delta S(p) \ge 1 \impliedby \frac{\ln(\frac{1}{2} - \frac{1}{r_c} + \frac{\sqrt{(r_cS_0 - r_cS_n + S_n - S_0)^2 - 4r_c(S_n - S_0)}}{r_c(S_n - S_0)})}{\ln(\frac{1}{N_0 - 1})} \\
 $$
 
-$$
-(r_cS_0 - r_cS_n + S_n - S_0)^2 < 4r_c(S_n - S_0) \\
-
-\text{ for } r_c:
-
-0 > (r_cS_0 - r_cS_n + S_n - S_0)^2 + 4r_c(S_n - S_0) \\
-0 > r_c^2S_0^2 - s_0^2 - 2r_cS_0^2 + r_cS_n^2 - 2r_cS_n^2 - 2S_0S_n - 2r_c^2S_0S_n + 4r_cS_0S_n + S_n^2 + 4r_cS_n - 4r_cS_0
-0 > (S_0^2 - 2S_0S_n)r_c^2 + (-2S_0^2 - S_n^2 + 4S_0S_n + 4S_n - 4S_0)r_c - s_0^2 - 2S_0S_n + S_n^2
-$$
-
-TODO: show guess-and-check solution, find that the right side is imaginary, and explain the range of the inside the numerator's interior.
-TODO: move this section to wherever makes more sense
-
-With my sample inputs, the right side of the inequality is imaginary, so its excluded when I define the bounds of \(r_e\) given these inputs. Its imaginary because the input to \(\ln\) is negative. Is the input always imaginary? What about the other side of the inequality? I need to determine the domain of the input into \(ln\); that is, the range the function \(f(r_c) = \large \frac{\sqrt{(r_cS_0 - r_cS_n + S_n - S_0)^2 + 4r_c(S_n - S_0)}}{r_c(S_n - S_0)} \normalsize\text{ for } 0 < r_c < 1 \text{ and } 1 < S_0 \text{ and } S_0 < S_n\).
-
-There are 6 unique operations used in the function \(f(r_c)\) - addition, substraction, multiplication, division, exponentiation, and the squre root. All of my inputs have continuous domains, so each operation has the following ranges:
-
-I'll apply the following axioms to determine the ranges:
+Now I can verify by plugging in some values:
 
 $$
 \large
-\begin{align*}
+\begin{equation*}
+\begin{split}
 
-% \text{ the continuous operand set } O = \Set{ (x, y) | a < x < b \text { and } c < y < d}\\
-\text{ a continuous positive operand set } O &= \Set{ (x, y) \in \R^2 \lor \N\times\R \lor \R\times\N | a < x < b \text { and } c < y < d \text { and } 0 <= a \text { and } 0 <= b }\\
+r_c &= 0.5\\
+N_0 &= 500\\
+S_0 &= 1000\\
+S_n &= 100,000\\
 
-\text{for all values in } O \text{, the following are true: }\\
+& \frac{-(1000(0.5 - 1) + 100000(1 - 0.5)) \pm \sqrt{(1000(0.5 - 1) + 100000(1 - 0.5))^2 - 4(0.5(100000) - 0.5(1000))}}{2(0.5)(100000 - 1000)}\\
 
-x \cdot y \in D &= [\ \min \{a \cdot c, a \cdot d\} < x \cdot y < \max \{b \cdot c, b \cdot d\} \ ]\\
-\frac{x}{y} \in D &= \Bigg[\ \min \Set{\frac{a}{c}, \frac{a}{d}} < xy < \max \Set{\frac{b}{c}, \frac{b}{d}} \ \Bigg]\\
-x + y \in D &= [(a + c) < (x + y) < (b + d)]\\
-x - y \in D &= [(a - c) < (x - y) < (b - d)]\\
+& \frac{−49500 \pm \sqrt{2450052000}}{99000}\\
 
-&\Set{ (x,y) \in O | (\exists x \cdot y)[\ \min \{a \cdot c, a \cdot d\} < x \cdot y < \max \{b \cdot c, b \cdot d\} \ ]}\\
-&\Set{ (x,y) \in O | \bigg(\exists \frac{x}{y}\bigg)\Bigg[\ \min \Set{\frac{a}{c}, \frac{a}{d}} < xy < \max \Set{\frac{b}{c}, \frac{b}{d}} \ \Bigg]}
+1 \le r_e &\le \frac{\ln(\frac{1}{2} - \frac{1}{0.5} + \frac{\sqrt{(0.5(1000) - 0.5(100000) + 100000 - 1000)^2 - 4(0.5)(100000 - 1000)}}{0.5(100000 - 1000)})}{\ln(\frac{1}{500 - 1})}\\
 
-% \text{ given the continous domains } xy \text { s.t. }\\
-% r_cS_0 \in (0, \infty) &\text{ for } 0 < r_c < 1 \text{ and } 1 \le S_0\\
-% r_cS_0 \in (0, \infty) &\text{ for } 0 < r_c < 1 \text{ and } 1 \le S_0 < S_n\\
-% S_n  - S_0\in (0, \infty) &\text{ for } 1 \le S_0 < S_n\\
-% x y \in D = (ac, bd)\Set{(x, y) | a < x < b \text{ and } c < y < d } \text{ then } \Set { x y | ad < xy < bc \land ac < xy < bd }\\
-% x/y \in D = \Set{(x, y) | a < x < b \text{ and } c < y < d } \text{ then } \Set { x y | ad < xy < bc \land ac < xy < bd }\\
+1 \le r_e &\le \frac{\ln(-\frac{3}{2} + \frac{\sqrt{2450052000}}{49500})}{\ln(\frac{1}{500 - 1})}\\
 
-\end{align*}
-$$
-
-I'll start with the domain of \(r_c\) and move left to right inside to out, to determine the range of values of the function \(f(r_c) = \large \frac{\sqrt{(r_cS_0 - r_cS_n + S_n - S_0)^2 + 4r_c(S_n - S_0)}}{r_c(S_n - S_0)} \normalsize\text{ for } 0 < r_c < 1 \text{ and } 1 < S_0 \text{ and } S_0 < S_n\):
-
-\(f(r_c) = \large \frac{\sqrt{(r_c(S_0 - S_n) + (S_n - S_0))^2 + 4r_c(S_n - S_0)}}{r_c(S_n - S_0)} \normalsize\text{ for } 0 < r_c < 1 \text{ and } 1 < S_0 \text{ and } S_0 < S_n\)
-
-\(S_0 - S_n\) will always be negative, but \(S_n - S_0\) will always be positive. \(r_c\) is always a positive number in \((0, 1)\), so \(r_c(S_0 - S_n) + (S_n - S_0) > (S_n - S_0) > 0\).
-
-$$
-\large
-\begin{align*}
-
-r_c \in D = (0, 1)\\
-S_0 \in D = (1, \infty)\\
-S_n \in D = (S_0, \infty)\\
-r_cS_0 \in D = (0, \infty)\\
-r_cS_n \in D = (r_cS_0, \infty)\\
-r_cS_0 - r_cS_n \in D = (-\infty, -r_cS_0)\\
-r_cS_0 - r_cS_n + S_n \in D = 
-
-\end{align*}
-$$
-
-I'm dealing with logarithms & square roots; there is a chance that one of the sides of this inequality aren't in the Reals, so I need to determine the domain of each side. I expect that at least one of these sides is in the Reals given that \(r_e\) should always a Real. So, I first look at the domain of \(\large \frac{\sqrt{(r_cS_0 - r_cS_N + S_n - S_0)^2 + 4r_c(S_n - S_0)}}{r_c(S_n - S_0)}\) since its common among the two sides.
-
-$$
-\large
-\begin{align*}
-\end{align*}
-$$
-
-$$
-\large
-\begin{align*}
-\end{align*}
+\end{split}
+\end{equation*}
 $$
 
 $$
@@ -665,7 +752,9 @@ N &\begin{cases}
 
 $$
 
-> N.B. the direction of inequality swaps because \(ln(\frac{1}{N_0-1})\) is always negative for all \(N_0\) such that \(N_0 \ge 2\). The final inequality above gives us the domain of \(r_e\) such that \(\Delta S(N_0 - 1) \ge 1\) is true. Lets verify with some example values:
+> N.B. the direction of inequality swaps because \(ln(\frac{1}{N_0-1})\) is always negative for all \(N_0\) such that \(N_0 \ge 2\).
+
+The final inequality above gives us the domain of \(r_e\) such that \(\Delta S(N_0 - 1) \ge 1\) is true. Lets verify with some example values:
 
 $$
 \large
