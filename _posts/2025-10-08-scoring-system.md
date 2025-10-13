@@ -466,9 +466,44 @@ $$
 \large
 \begin{align*}
 
-\frac{\ln(\frac{1}{2} - \frac{1}{r_c} + \frac{\sqrt{(r_cS_0 - r_cS_n + S_n - S_0)^2 + 4r_c(S_n - S_0)}}{r_c(S_n - S_0)})}{\ln(\frac{1}{N_0 - 1})} \ge r_e &\ge \frac{\ln(\frac{1}{2} - \frac{1}{r_c} - \frac{\sqrt{(r_cS_0 - r_cS_n + S_n - S_0)^2 + 4r_c(S_n - S_0)}}{r_c(S_n - S_0)})}{\ln(\frac{1}{N_0 - 1})}\\
+\frac{\ln(\frac{1}{2} - \frac{1}{r_c} + \frac{\sqrt{(r_cS_0 - r_cS_n + S_n - S_0)^2 + 4r_c(S_n - S_0)}}{r_c(S_n - S_0)})}{\ln(\frac{1}{N_0 - 1})} \ge r_e &\ge \frac{\ln(\frac{1}{2} - \frac{1}{r_c} - \frac{\sqrt{(r_cS_0 - r_cS_n + S_n - S_0)^2 + 4r_c(S_n - S_0)}}{r_c(S_n - S_0)})}{\ln(\frac{1}{N_0 - 1})} \text{, when } 0 < r_c < 1 \\
 
 \end{align*}
+$$
+
+I may have some cases where the solution to parts of this expression are imaginary:
+
+$$
+
+\sqrt{(r_cS_0 - r_cS_n + S_n - S_0)^2 + 4r_c(S_n - S_0)} \in \Complex \text{ when } (r_cS_0 - r_cS_n + S_n - S_0)^2 + 4r_c(S_n - S_0) < 0 \\
+
+\text{ or }\\
+
+\ln(\frac{1}{2} - \frac{1}{r_c} - \frac{\sqrt{(r_cS_0 - r_cS_n + S_n - S_0)^2 + 4r_c(S_n - S_0)}}{r_c(S_n - S_0)}) \in \Complex \text{ when } \frac{1}{2} - \frac{1}{r_c} - 
+\frac{\sqrt{(r_cS_0 - r_cS_n + S_n - S_0)^2 + 4r_c(S_n - S_0)}}{r_c(S_n - S_0)} < 0 
+
+$$
+
+It turns out that \((r_cS_0 - r_cS_n + S_n - S_0)^2 - 4r_c(S_n - S_0) < 0\) is never true, because it implies \((r_cS_0 - r_cS_n + S_n - S_0) < \sqrt{-4r_c(S_n - S_0)}\). The right side of the inequality will always be imaginary because \(S_n - S_0 > 0\) and \(0 < r_c < 1\). The left side of the inequality will never be imaginary.
+
+However, because the root scales by \(S_n\) and \(S_0\), it will always be greater than \(\frac{1}{2} - \frac{1}{r_c}\); so the logarithm operand will be negative, and the result be imaginary. So, \(\large \frac{\ln(\frac{1}{2} - \frac{1}{r_c} - \frac{\sqrt{(r_cS_0 - r_cS_n + S_n - S_0)^2 + 4r_c(S_n - S_0)}}{r_c(S_n - S_0)})}{\ln(\frac{1}{N_0 - 1})}\) is always imaginary, and we can finally redefine \(E\):
+
+$$
+\large
+
+E = \Set { r_e \in \R | 1 \le r_e \large{\text{ and }} \Large \Delta S(p) \ge 1 }\\
+E = \Set { r_e \in \R | 1 \le r_e \le \frac{\ln(\frac{1}{2} - \frac{1}{r_c} + \frac{\sqrt{(r_cS_0 - r_cS_n + S_n - S_0)^2 + 4r_c(S_n - S_0)}}{r_c(S_n - S_0)})}{\ln(\frac{1}{N_0 - 1})} } \because \Delta S(p) \ge 1 \impliedby \frac{\ln(\frac{1}{2} - \frac{1}{r_c} + \frac{\sqrt{(r_cS_0 - r_cS_n + S_n - S_0)^2 + 4r_c(S_n - S_0)}}{r_c(S_n - S_0)})}{\ln(\frac{1}{N_0 - 1})} \\
+
+$$
+
+$$
+(r_cS_0 - r_cS_n + S_n - S_0)^2 < 4r_c(S_n - S_0) \\
+
+\text{ for } r_c:
+
+0 > (r_cS_0 - r_cS_n + S_n - S_0)^2 + 4r_c(S_n - S_0) \\
+0 > r_c^2S_0^2 - s_0^2 - 2r_cS_0^2 + r_cS_n^2 - 2r_cS_n^2 - 2S_0S_n - 2r_c^2S_0S_n + 4r_cS_0S_n + S_n^2 + 4r_cS_n - 4r_cS_0
+0 > (S_0^2 - 2S_0S_n)r_c^2 + (-2S_0^2 - S_n^2 + 4S_0S_n + 4S_n - 4S_0)r_c - s_0^2 - 2S_0S_n + S_n^2
 $$
 
 TODO: show guess-and-check solution, find that the right side is imaginary, and explain the range of the inside the numerator's interior.
