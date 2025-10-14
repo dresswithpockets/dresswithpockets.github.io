@@ -253,11 +253,11 @@ This set implies \(\Delta S(p) \ge 1 \) because \(r_c \le \large \frac{N_0^2 - 2
 
 The curve created by \(S(p)\) does fulfill my original requirements, but I feel it should reward better placements more dramatically. I want to be able to control how dramaticaly the slope rises as \(p\) approaches \(1\) from \(N_0\). I'll try by createing an n-th order variant of our score function.
 
-Lets define a new input:
+Lets define a new input - the control exponent \(\large r_e\):
 
 $$
 \Large
-\text{the control exponent: } r_e, \Set{ r_e \in \R | 1 \le r_e }
+\Set{ r_e \in \R | r_e \ge 1 }
 $$
 
 And redefine the score functions to include \(r_e\):
@@ -280,13 +280,11 @@ $$
 \end{cases}
 $$
 
-Unfourtunately, given the higher order \(T(p)^{r_e}\), small variations in \(\large{r_e}\) can cause the Differential Constraint to fail given a small enough \(N_0\), large enough \(r_c\), or small enough \(S_n - S_0\). So, we should find a set \(\large E\) of all \(\large r_e\) for which the Differential Constraint is true:
+Unfourtunately, given the higher order \(T(p)^{r_e}\), small variations in \(\large{r_e}\) can cause the Differential Constraint to fail given a small enough \(N_0\), large enough \(r_c\), or small enough \(S_n - S_0\). So, we should find a set \(\large E\) of all \(\large r_e\) and \(\large r_c\) for which the Differential Constraint is true:
 
 $$
 \Large
-% \lim\limits_{p \longrightarrow N_0}{\Delta S(p) \ge 1}
-
-E = \Set { r_e \in \R | 1 \le r_e \large{\text{ and }} \Large \Delta S(p) \ge 1 }
+E = \Set { (r_c, r_e) \in R_c \times \R | r_e \ge 1 \large{\text{ and }} \Large \Delta S(p) \ge 1 }\\
 $$
 
 Just as with our 2nd order \(S(p)\), we're going to need to solve \(\Delta S(p)\) in terms of \(\large r_e\). We can reuse the original expansion of \(\Delta S(p)\), because the \(T(p)\) substitutions are unaltered in the simplified form of \(\Delta S(p)\):
@@ -483,8 +481,8 @@ S_m &= \frac{1000 + 100000}{2} = 50500\\
 S_r &= (1 - 0)50500 + 0(1000) = 50500\\
 r_e &\approx 2.173098944800602\\
 
-T(199) &\approx \bigg(\frac{1}{199 - 1}\bigg)^{2.173098944800602} \approx 0.0000102121996910658 \\
-T(200) &\approx \bigg(\frac{1}{200 - 1}\bigg)^{2.173098944800602} \approx 0.00001010101010101007 \\
+T(199)^{r_e} &\approx \bigg(\frac{1}{199 - 1}\bigg)^{2.173098944800602} \approx 0.0000102121996910658 \\
+T(200)^{r_e} &\approx \bigg(\frac{1}{200 - 1}\bigg)^{2.173098944800602} \approx 0.00001010101010101007 \\
 
 S(199) &= B(1000, 100000, 50500, 0.0000102121996910658) \approx 1001\\
 S(200) &= B(1000, 100000, 50500, 0.00001010101010101007) \approx 1000\\
@@ -536,8 +534,8 @@ S_m &= \frac{1000 + 100000}{2} = 50500\\
 S_r &= (1 - 0)50500 + 0(1000) = 50500\\
 r_e &\approx 1.086549472400301\\
 
-T(199) &\approx \bigg(\frac{1}{199 - 1}\bigg)^{1.086549472400301} \approx 0.0000102121996910658 \\
-T(200) &\approx \bigg(\frac{1}{200 - 1}\bigg)^{1.086549472400301} \approx 0.00001010101010101007 \\
+T(199)^{r_e} &\approx \bigg(\frac{1}{199 - 1}\bigg)^{1.086549472400301} \approx 0.0000102121996910658 \\
+T(200)^{r_e} &\approx \bigg(\frac{1}{200 - 1}\bigg)^{1.086549472400301} \approx 0.00001010101010101007 \\
 
 S(199) &= B(1000, 100000, 50500, 0.0000102121996910658) \approx 1001\\
 S(200) &= B(1000, 100000, 50500, 0.00001010101010101007) \approx 1000\\
@@ -550,7 +548,7 @@ Yayy!!!
 
 ### solving \(r_e\) when \(0 < r_c < 1\)
 
-Now I can worry about the tougher one, substituting and simplifying both sides of the quadratic while making sure to retain the signed square root's side & inequality:
+Now I can worry about the tougher one. Lets substitute and simplify both sides of the quadratic while taking care to retain the root's sign & inequality:
 
 $$
 \large
@@ -658,8 +656,8 @@ S_m &= \frac{1000 + 100000}{2} = 50500\\
 S_r &= (1 - 0.5)50500 + 0.5(1000) = 25750\\
 r_e &\approx 1.73996998737\\
 
-T(499) &\approx \bigg(\frac{1}{499 - 1}\bigg)^{1.73996998737} \approx 0.00002027224725513445 \\
-T(500) &\approx \bigg(\frac{1}{500 - 1}\bigg)^{1.73996998737} \approx 0.00002020161209699543 \\
+T(499)^{r_e} &\approx \bigg(\frac{1}{499 - 1}\bigg)^{1.73996998737} \approx 0.00002027224725513445 \\
+T(500)^{r_e} &\approx \bigg(\frac{1}{500 - 1}\bigg)^{1.73996998737} \approx 0.00002020161209699543 \\
 
 S(499) &= B(1000, 100000, 25750, 0.00002027224725513445) \approx 1001\\
 S(500) &= B(1000, 100000, 25750, 0.00002020161209699543) \approx 1000\\
@@ -668,15 +666,16 @@ S(500) &= B(1000, 100000, 25750, 0.00002020161209699543) \approx 1000\\
 \end{align*}
 $$
 
-Yippee!!! Given our constraints on the parameters, lets define sets that describe the valid domain of \(\large r_e\) such that the Differential Constraint is fullfilled:
+Yippee!!!
+
+## Sum of the parts
+
+Given our constraints on the parameters, lets define sets that describe the valid domain of \(\large r_e\) such that the Differential Constraint is fullfilled:
 
 $$
 \large
 \begin{equation*}
 \begin{split}
-
-R_c &= \Set{r_c \in \R | 0 < r_c \le 1}\\
-R_c &= \Set{r_c \in \R | 0 \le r_c \le \frac{N_0^2 - 2N_0 + 1 - S_nN_0 + S_0N_0 + S_n - S_0}{-S_nN_0 + S_0N_0 + 2S_n - 2S_0}}\\
 E_0 &= \Set{(r_c, r_e) \in R_c \times \N | r_c = 0 \land 1 \le r_e \le \ln \frac{1}{S_n - S_0} \Bigg/ \ln \frac{1}{N_0 - 1}}\\
 E_1 &= \Set{(r_c, r_e) \in R_c \times \N | r_c = 1 \land 1 \le r_e \le \ln \sqrt{\frac{1}{S_n - S_0}} \Bigg/ \ln \frac{1}{N_0 - 1}}\\
 E_r &= \Set{(r_c, r_e) \in R_c \times \N | 0 < r_c < 1 \land 1 \le r_e \le \ln\bigg(\frac{r_c - 1}{2r_c} + \sqrt{\frac{(S_n - S_0)(r_c - 1)^2 + 4r_c}{4r_c^2(S_n - S_0)}}\bigg) \Bigg/ \ln\frac{1}{N_0 - 1}}\\
@@ -691,13 +690,6 @@ $$
 E = E_0 \land E_1 \land E_r
 $$
 
-## Sum of the parts
-
-Earlier we created a constraint for \(\large r_c\) for a 2nd-order \(S(p)\). That constraint is still valid for nth-order \(S(p)\) when \(r_e = 1\). Even with our nth-order function, we still need to ensure we meet the constraint on \(\large r_c\), otherwise \(\Delta S(N_0 - 1)\) may become smaller than 1. So, we can redefine the set \(R_c\) such that \(\large r_c\) is always correctly constrained first:
-
-$$
-\large
-R_c = \Set{r_c \in \R | 0 < r_c \le \frac{N_0^2 - 2N_0 + 1 - S_nN_0 + S_0N_0 + S_n - S_0}{-S_nN_0 + S_0N_0 + 2S_n - 2S_0} }
-$$
-
 So long as \(\large r_e\) is in \(E\), that implies that \(\large r_c\) is in \(R_c\)! We've fully constrainted both \(\large r_c\) and \(\large r_e\). The scoring function \(S(p)\) can be varied for any valid inputs, and it will output a useful score that represents relative performance.
+
+Thanks for reading my nerd post <3
