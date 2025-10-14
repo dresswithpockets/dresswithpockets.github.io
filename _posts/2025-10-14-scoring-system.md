@@ -283,7 +283,7 @@ Unfourtunately, given the higher order \(T(p)^{r_e}\), small variations in \(\la
 
 $$
 \Large
-E = \Set { (r_c, r_e) \in R_c \times \R | r_e \ge 1 \large{\text{ and }} \Large \Delta S(p) \ge 1 }\\
+E = \Set { (r_c, r_e) \in R_c \times \R | r_e \ge 1 \large{\text{ and }} \Large \Delta S(p) \ge 1 }
 $$
 
 Just as with our 2nd order \(S(p)\), we're going to need to solve \(\Delta S(p)\) in terms of \(\large r_e\). We can reuse the original expansion of \(\Delta S(p)\), because the \(T(p)\) substitutions are unaltered in the simplified form of \(\Delta S(p)\):
@@ -360,7 +360,7 @@ Once we solve for \(N\), we can then rearrange to solve for all values of \(r_e\
 
 $$
 \large
-1 \le aN^2 +bN\\
+1 \le aN^2 + bN
 $$
 
 Before solving the quadratic, lets consider the roots.  We can simplify \(a\) and \(b\) into the the simplest terms:
@@ -595,7 +595,7 @@ $$
 
 $$
 
-It turns out that \(\frac{(S_n - S_0)(r_c - 1)^2 + 4r_c}{4r_c^2(S_n - S_0)} < 0\) is never true, because it implies \((S_n - S_0)(r_c - 1)^2 + 4r_c < 0\). \(r_c - 1\) can be negative when \(r_c < 1\) - so always for \(0 < r_c < 1) - but that expression is squared, so the result will always be positive. Therefore, the inner square root will never be imaginary.
+It turns out that \(\frac{(S_n - S_0)(r_c - 1)^2 + 4r_c}{4r_c^2(S_n - S_0)} < 0\) is never true, because it implies \((S_n - S_0)(r_c - 1)^2 + 4r_c < 0\). \(r_c - 1\) can be negative when \(r_c < 1\) - so always for \(0 < r_c < 1\) - but that expression is squared, so the result will always be positive. Therefore, the inner square root will never be imaginary.
 
 However, the logarithm can be imaginary. The root scales by \(S_n\) and \(S_0\), and will always be greater than \(\frac{r_c - 1}{2r_c}\). Taking a look at the inequality:
 
