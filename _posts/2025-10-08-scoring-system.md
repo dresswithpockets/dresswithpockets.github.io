@@ -423,58 +423,13 @@ $$
 % \end{equation*}
 $$
 
-Lets start by substituting & simplifying the two simple cases:
+Lets start by substituting & solving the two simple cases:
 
 $$
 \large
 \begin{align*}
 \frac{1}{S_n - S_0} &\le N &\text{ when } &r_c = 0 \\
 \sqrt{\frac{1}{S_n - S_0}} &\le N &\text{ when } &r_c = 1 \\
-\end{align*}
-$$
-
-Now I can worry about the tougher one, substituting and simplifying both sides of the quadratic while making sure to retain the signed square root's side & inequality:
-
-$$
-\large
-\begin{align*}
-
-% the following needs to be simplified:
-
-& \frac{-(S_0 - S_n)(r_c - 1) \pm \sqrt{[(S_0 - S_n)(r_c - 1)]^2 + 4r_c(S_n - S_0)}}{2r_c(S_n - S_0)}\\
-& \frac{\cancel{(S_n - S_0)}(r_c - 1)}{2r_c\cancel{(S_n - S_0)}} \pm \sqrt{\frac{(S_0 - S_n)^2(r_c - 1)^2 + 4r_c(S_n - S_0)}{4r_c^2(S_n - S_0)^2}}\\
-& \frac{r_c - 1}{2r_c} \pm \sqrt{\frac{-\cancel{(S_n - S_0)}(S_0 - S_n)(r_c - 1)^2 + 4r_c\cancel{(S_n - S_0)}}{4r_c^2(S_n - S_0)^{\cancel{2}}}}\\
-& \frac{r_c - 1}{2r_c} \pm \sqrt{\frac{(S_n - S_0)(r_c - 1)^2 + 4r_c}{4r_c^2(S_n - S_0)}}\\
-
-& \frac{r_c - 1}{2r_c} \pm \sqrt{\frac{\cancel{(S_n - S_0)^2}(r_c - 1)^2}{4r_c^2\cancel{(S_n - S_0)^2}} + \frac{\cancel{4r_c(S_n - S_0)}}{\cancel{4}r_c^{\cancel{2}}(S_n - S_0)^{\cancel{2}}}}\\
-& \frac{r_c - 1}{2r_c} \pm \sqrt{\frac{(r_c - 1)^2}{4r_c^2} + \frac{1}{r_c(S_n - S_0)}}\\
-& \frac{r_c - 1}{2r_c} \pm \sqrt{\frac{r_c^2 - 2r_c + 1}{4r_c^2} + \frac{1}{r_c(S_n - S_0)}}\\
-& \frac{r_c - 1}{2r_c} \pm \sqrt{\frac{\cancel{r_c}(r_c - 2)}{4r_c^{\cancel{2}}} + \frac{1}{4r_c^2} + \frac{1}{r_c(S_n - S_0)}}\\
-& \frac{r_c - 1}{2r_c} \pm \sqrt{\frac{r_c - 2}{4r_c} + \frac{1}{4r_c^2} + \frac{1}{r_c(S_n - S_0)}}\\
-& \frac{r_c - 1}{2r_c} \pm \sqrt{\frac{1}{4} - \frac{1}{2r_c} + \frac{1}{4r_c^2} + \frac{1}{r_c(S_n - S_0)}}\\
-& \frac{r_c - 1}{2r_c} \pm \sqrt{\frac{r_c^2(S_n - S_0)}{4r_c^2(S_n - S_0)} - \frac{1}{2r_c} + \frac{1}{4r_c^2} + \frac{1}{r_c(S_n - S_0)}}\\
-
-\\\\
-& \frac{r_c(S_n - S_0) + S_0 - S_n \pm \sqrt{(r_c(S_0 - S_n) - S_0 + S_n)^2 + 4r_c(S_n - S_0)}}{2(r_cS_n - r_cS_0)}\\
-
-& \frac{S_0 - S_n - r_c(S_0 + S_n) \pm \sqrt{(r_cS_0 - S_0 + S_n - r_cS_n)^2 + 4r_c(S_n - S_0)}}{2(r_cS_n - r_cS_0)}\\
-
-& \frac{r_cS_n - r_cS_0 + S_0 - S_n \pm \sqrt{(r_cS_0 - r_cS_N + S_n - S_0)^2 - 4(r_cS_n - r_cS_0)}}{2r_c(S_n - S_0)}\\
-& \frac{1}{2}\bigg(\overbrace{\cancel{\frac{r_cS_n - r_cS_0}{r_cS_n - r_cS_0}}}^{1} + \frac{S_0 - S_n}{r_c(S_n - S_0)} \pm \frac{\sqrt{(r_cS_0 - r_cS_N + S_n - S_0)^2 - 4(r_cS_n - r_cS_0)}}{r_c(S_n - S_0)}\bigg)\\
-& \frac{1}{2}\bigg(1 - \frac{\cancel{S_n - S_0}}{r_c\cancel{(S_n - S_0)}} \pm \frac{\sqrt{(r_cS_0 - r_cS_N + S_n - S_0)^2 - 4(r_cS_n - r_cS_0)}}{r_c(S_n - S_0)}\bigg)\\
-& \frac{1}{2} - \frac{1}{r_c} \pm \frac{\sqrt{(r_cS_0 - r_cS_N + S_n - S_0)^2 - 4r_c(S_n - S_0)}}{r_c(S_n - S_0)}\\
-
-\end{align*}
-$$
-
-Fitting the simplified form back into the inequality with the appropriate signs & direction preserved, so that I can solve for \(r_e\)
-
-$$
-\large
-\begin{align*}
-
-\frac{1}{2} - \frac{1}{r_c} + \frac{\sqrt{(r_cS_0 - r_cS_N + S_n - S_0)^2 - 4r_c(S_n - S_0)}}{r_c(S_n - S_0)} \le N &\le \frac{1}{2} - \frac{1}{r_c} - \frac{\sqrt{(r_cS_0 - r_cS_N + S_n - S_0)^2 - 4r_c(S_n - S_0)}}{r_c(S_n - S_0)}\\
-
 \end{align*}
 $$
 
@@ -594,13 +549,27 @@ Yayy!!!
 
 ### solving \(r_e\) when \(0 < r_c < 1\)
 
-Expanding the quadratic case:
+Now I can worry about the tougher one, substituting and simplifying both sides of the quadratic while making sure to retain the signed square root's side & inequality:
 
 $$
 \large
 \begin{align*}
 
-\frac{1}{2} - \frac{1}{r_c} + \frac{\sqrt{(r_cS_0 - r_cS_N + S_n - S_0)^2 - 4r_c(S_n - S_0)}}{r_c(S_n - S_0)} \le \frac{1}{N_0 - 1}^{r_e} &\le \frac{1}{2} - \frac{1}{r_c} - \frac{\sqrt{(r_cS_0 - r_cS_N + S_n - S_0)^2 - 4r_c(S_n - S_0)}}{r_c(S_n - S_0)}\\
+& \frac{-(S_0 - S_n)(r_c - 1) \pm \sqrt{[(S_0 - S_n)(r_c - 1)]^2 + 4r_c(S_n - S_0)}}{2r_c(S_n - S_0)}\\
+& \frac{\cancel{(S_n - S_0)}(r_c - 1)}{2r_c\cancel{(S_n - S_0)}} \pm \sqrt{\frac{(S_0 - S_n)^2(r_c - 1)^2 + 4r_c(S_n - S_0)}{4r_c^2(S_n - S_0)^2}}\\
+& \frac{r_c - 1}{2r_c} \pm \sqrt{\frac{-\cancel{(S_n - S_0)}(S_0 - S_n)(r_c - 1)^2 + 4r_c\cancel{(S_n - S_0)}}{4r_c^2(S_n - S_0)^{\cancel{2}}}}\\
+& \frac{r_c - 1}{2r_c} \pm \sqrt{\frac{(S_n - S_0)(r_c - 1)^2 + 4r_c}{4r_c^2(S_n - S_0)}}\\
+
+\end{align*}
+$$
+
+Fitting the simplified form back into the inequality with the appropriate signs & direction preserved, so that I can solve for \(r_e\)
+
+$$
+\large
+\begin{align*}
+
+\frac{r_c - 1}{2r_c} + \sqrt{\frac{(S_n - S_0)(r_c - 1)^2 + 4r_c}{4r_c^2(S_n - S_0)}} \le N \le \frac{r_c - 1}{2r_c} - \sqrt{\frac{(S_n - S_0)(r_c - 1)^2 + 4r_c}{4r_c^2(S_n - S_0)}}\\
 
 \end{align*}
 $$
@@ -611,7 +580,7 @@ $$
 \large
 \begin{align*}
 
-\frac{\ln(\frac{1}{2} - \frac{1}{r_c} + \frac{\sqrt{(r_cS_0 - r_cS_n + S_n - S_0)^2 - 4r_c(S_n - S_0)}}{r_c(S_n - S_0)})}{\ln(\frac{1}{N_0 - 1})} \ge r_e &\ge \frac{\ln(\frac{1}{2} - \frac{1}{r_c} - \frac{\sqrt{(r_cS_0 - r_cS_n + S_n - S_0)^2 - 4r_c(S_n - S_0)}}{r_c(S_n - S_0)})}{\ln(\frac{1}{N_0 - 1})} \text{, when } 0 < r_c < 1 \\
+\frac{\ln(\frac{r_c - 1}{2r_c} + \sqrt{\frac{(S_n - S_0)(r_c - 1)^2 + 4r_c}{4r_c^2(S_n - S_0)}})}{\ln(\frac{1}{N_0 - 1})} \ge r_e &\ge \frac{\ln(\frac{r_c - 1}{2r_c} - \sqrt{\frac{(S_n - S_0)(r_c - 1)^2 + 4r_c}{4r_c^2(S_n - S_0)}})}{\ln(\frac{1}{N_0 - 1})} \\
 
 \end{align*}
 $$
@@ -620,24 +589,40 @@ I may have some cases where the solution to parts of this expression are imagina
 
 $$
 
-\sqrt{(r_cS_0 - r_cS_n + S_n - S_0)^2 - 4r_c(S_n - S_0)} \in \Complex \text{ when } (r_cS_0 - r_cS_n + S_n - S_0)^2 - 4r_c(S_n - S_0) < 0 \\
+\sqrt{\frac{(S_n - S_0)(r_c - 1)^2 + 4r_c}{4r_c^2(S_n - S_0)}} \in \Complex \text{ when } \frac{(S_n - S_0)(r_c - 1)^2 + 4r_c}{4r_c^2(S_n - S_0)} < 0 \\
 
 \text{ or }\\
 
-\ln(\frac{1}{2} - \frac{1}{r_c} - \frac{\sqrt{(r_cS_0 - r_cS_n + S_n - S_0)^2 - 4r_c(S_n - S_0)}}{r_c(S_n - S_0)}) \in \Complex \text{ when } \frac{1}{2} - \frac{1}{r_c} - 
-\frac{\sqrt{(r_cS_0 - r_cS_n + S_n - S_0)^2 - 4r_c(S_n - S_0)}}{r_c(S_n - S_0)} < 0 
+\ln(\frac{r_c - 1}{2r_c} \pm \sqrt{\frac{(S_n - S_0)(r_c - 1)^2 + 4r_c}{4r_c^2(S_n - S_0)}}) \in \Complex \text{ when } \frac{r_c - 1}{2r_c} \pm \sqrt{\frac{(S_n - S_0)(r_c - 1)^2 + 4r_c}{4r_c^2(S_n - S_0)}} < 0
 
 $$
 
-It turns out that \((r_cS_0 - r_cS_n + S_n - S_0)^2 - 4r_c(S_n - S_0) < 0\) is never true, because it implies \((r_cS_0 - r_cS_n + S_n - S_0) < \sqrt{4r_c(S_n - S_0)}\). The right side of the inequality will always be imaginary because \(S_n - S_0 > 0\) and \(0 < r_c < 1\). The left side of the inequality will never be imaginary.
+It turns out that \(\frac{(S_n - S_0)(r_c - 1)^2 + 4r_c}{4r_c^2(S_n - S_0)} < 0\) is never true, because it implies \((S_n - S_0)(r_c - 1)^2 + 4r_c < 0\). \(r_c - 1\) can be negative when \(r_c < 1\) - so always for \(0 < r_c < 1) - but that expression is squared, so the result will always be positive. Therefore, the inner square root will never be imaginary.
 
-However, because the root scales by \(S_n\) and \(S_0\), it will always be greater than \(\frac{1}{2} - \frac{1}{r_c}\); so the logarithm operand will be negative, and the result be imaginary. So, \(\large \frac{\ln(\frac{1}{2} - \frac{1}{r_c} - \frac{\sqrt{(r_cS_0 - r_cS_n + S_n - S_0)^2 - 4r_c(S_n - S_0)}}{r_c(S_n - S_0)})}{\ln(\frac{1}{N_0 - 1})}\) is always imaginary, and we can finally redefine \(E\):
+However, the logarithm can be imaginary. The root scales by \(S_n\) and \(S_0\), and will always be greater than \(\frac{r_c - 1}{2r_c}\). Taking a look at the inequality:
 
 $$
 \large
+\begin{align*}
 
-E = \Set { r_e \in \R | 1 \le r_e \large{\text{ and }} \Large \Delta S(p) \ge 1 }\\
-E = \Set { r_e \in \R | 1 \le r_e \le \frac{\ln(\frac{1}{2} - \frac{1}{r_c} + \frac{\sqrt{(r_cS_0 - r_cS_n + S_n - S_0)^2 - 4r_c(S_n - S_0)}}{r_c(S_n - S_0)})}{\ln(\frac{1}{N_0 - 1})} } \because \Delta S(p) \ge 1 \impliedby \frac{\ln(\frac{1}{2} - \frac{1}{r_c} + \frac{\sqrt{(r_cS_0 - r_cS_n + S_n - S_0)^2 - 4r_c(S_n - S_0)}}{r_c(S_n - S_0)})}{\ln(\frac{1}{N_0 - 1})} \\
+\frac{r_c - 1}{2r_c} \pm \sqrt{\frac{(S_n - S_0)(r_c - 1)^2 + 4r_c}{4r_c^2(S_n - S_0)}} &< 0\\
+\pm \frac{(S_n - S_0)(r_c - 1)^2 + 4r_c}{4r_c^2(S_n - S_0)} &< \frac{r_c - 1}{2r_c}^2\\
+\pm \frac{(S_n - S_0)(r_c - 1)^2 + 4r_c}{4r_c^2(S_n - S_0)} &< \frac{(r_c - 1)^2}{4r_c^2}\\
+\pm \frac{(S_n - S_0)(r_c - 1)^2 + 4r_c}{4r_c^2(S_n - S_0)} &< \frac{(S_n - S_0)(r_c - 1)^2}{4r_c^2(S_n - S_0)}\\
+
+\end{align*}
+$$
+
+Since the sides are equivalent other than the \(+ 4r_c\) in the numerator on the left side, which is always positive, this inequality has no real solutions with the positive root. In contrast this inequality is always true when the root is negative. Therefore, \(\ln(\frac{r_c - 1}{2r_c} - \sqrt{\frac{(S_n - S_0)(r_c - 1)^2 + 4r_c}{4r_c^2(S_n - S_0)}})\) is always imaginary, and \(\ln(\frac{r_c - 1}{2r_c} + \sqrt{\frac{(S_n - S_0)(r_c - 1)^2 + 4r_c}{4r_c^2(S_n - S_0)}})\) is never imaginary. I can finally redefine \(E\):
+
+$$
+\large
+\begin{align*}
+
+E &= \Set { r_e \in \R | 1 \le r_e \large{\text{ and }} \Large \Delta S(p) \ge 1 }\\
+E &= \Set { r_e \in \R | 1 \le r_e \le \frac{\ln(\frac{r_c - 1}{2r_c} + \sqrt{\frac{(S_n - S_0)(r_c - 1)^2 + 4r_c}{4r_c^2(S_n - S_0)}})}{\ln(\frac{1}{N_0 - 1})} } \because \Delta S(p) \ge 1 \impliedby \frac{\ln(\frac{r_c - 1}{2r_c} + \sqrt{\frac{(S_n - S_0)(r_c - 1)^2 + 4r_c}{4r_c^2(S_n - S_0)}})}{\ln(\frac{1}{N_0 - 1})} \\
+
+\end{align*}
 $$
 
 Now I can verify by plugging in some values:
