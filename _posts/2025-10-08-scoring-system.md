@@ -613,14 +613,15 @@ $$
 \end{align*}
 $$
 
-Since the sides are equivalent other than the \(+ 4r_c\) in the numerator on the left side, which is always positive, this inequality has no real solutions with the positive root. In contrast this inequality is always true when the root is negative. Therefore, \(\ln(\frac{r_c - 1}{2r_c} - \sqrt{\frac{(S_n - S_0)(r_c - 1)^2 + 4r_c}{4r_c^2(S_n - S_0)}})\) is always imaginary, and \(\ln(\frac{r_c - 1}{2r_c} + \sqrt{\frac{(S_n - S_0)(r_c - 1)^2 + 4r_c}{4r_c^2(S_n - S_0)}})\) is never imaginary. I can finally redefine \(E\):
+Since the sides are equivalent other than the \(+ 4r_c\) in the numerator on the left side, which is always positive, this inequality has no real solutions with the positive root. In contrast this inequality is always true when the root is negative. Therefore, \(\ln(\frac{r_c - 1}{2r_c} - \sqrt{\frac{(S_n - S_0)(r_c - 1)^2 + 4r_c}{4r_c^2(S_n - S_0)}})\) is always imaginary, and \(\ln(\frac{r_c - 1}{2r_c} + \sqrt{\frac{(S_n - S_0)(r_c - 1)^2 + 4r_c}{4r_c^2(S_n - S_0)}})\) is never imaginary. I'll define a set \(E_r\):
 
 $$
 \large
 \begin{align*}
 
-E &= \Set { r_e \in \R | 1 \le r_e \large{\text{ and }} \Large \Delta S(p) \ge 1 }\\
-E &= \Set { r_e \in \R | 1 \le r_e \le \frac{\ln(\frac{r_c - 1}{2r_c} + \sqrt{\frac{(S_n - S_0)(r_c - 1)^2 + 4r_c}{4r_c^2(S_n - S_0)}})}{\ln(\frac{1}{N_0 - 1})} } \because \Delta S(p) \ge 1 \impliedby \frac{\ln(\frac{r_c - 1}{2r_c} + \sqrt{\frac{(S_n - S_0)(r_c - 1)^2 + 4r_c}{4r_c^2(S_n - S_0)}})}{\ln(\frac{1}{N_0 - 1})} \\
+E_r &= \Set { r_c \in \R | 0 < r_c < 1 (\exists r_e \in \R)\Bigg[1 \le r_e \le \ln\bigg(\frac{r_c - 1}{2r_c} + \sqrt{\frac{(S_n - S_0)(r_c - 1)^2 + 4r_c}{4r_c^2(S_n - S_0)}}\bigg) \Bigg/ \ln(\frac{1}{N_0 - 1}) \Bigg]}\\
+
+&\because \Delta S(p) \ge 1 \impliedby \ln\bigg(\frac{r_c - 1}{2r_c} + \sqrt{\frac{(S_n - S_0)(r_c - 1)^2 + 4r_c}{4r_c^2(S_n - S_0)}}\bigg) \Bigg/ \ln(\frac{1}{N_0 - 1})\\
 
 \end{align*}
 $$
@@ -637,231 +638,33 @@ N_0 &= 500\\
 S_0 &= 1000\\
 S_n &= 100,000\\
 
-& \frac{-(1000(0.5 - 1) + 100000(1 - 0.5)) \pm \sqrt{(1000(0.5 - 1) + 100000(1 - 0.5))^2 - 4(0.5(100000) - 0.5(1000))}}{2(0.5)(100000 - 1000)}\\
-
-& \frac{−49500 \pm \sqrt{2450052000}}{99000}\\
-
-1 \le r_e &\le \frac{\ln(\frac{1}{2} - \frac{1}{0.5} + \frac{\sqrt{(0.5(1000) - 0.5(100000) + 100000 - 1000)^2 - 4(0.5)(100000 - 1000)}}{0.5(100000 - 1000)})}{\ln(\frac{1}{500 - 1})}\\
-
-1 \le r_e &\le \frac{\ln(-\frac{3}{2} + \frac{\sqrt{2450052000}}{49500})}{\ln(\frac{1}{500 - 1})}\\
+re &\le \frac{\ln(\frac{0.5 - 1}{2(0.5)} + \sqrt{\frac{(100000 - 1000)(0.5 - 1)^2 + 4(0.5)}{4(0.5)^2(100000 - 1000)}})}{\ln(\frac{1}{500 - 1})}\\
+re &\le \frac{\ln(-\frac{1}{2} + \sqrt{\frac{24752}{99000}})}{\ln(\frac{1}{499})}\\
+re &\lessapprox 1.73996998737\\
 
 \end{split}
 \end{equation*}
 $$
 
+Plugging the value back in to \(\large \Delta S(p)\), which should get a value close to \(1\):
+
 $$
 \large
+
 \begin{align*}
 
-% TODO: solve for r_e out of N
-% TODO: finish solving for r_e out of N
-
-\\\\
-r_c &= 0.5\\
-N_0 &= 500\\
-S_0 &= 1000\\
-S_n &= 100,000\\
-& \frac{1}{2} - \frac{1}{0.5} \pm \frac{\sqrt{(0.5(1000) - 0.5(100000) + 100000 - 1000)^2 + 4(0.5)(100000 - 1000)}}{0.5(100000 - 1000)}\\
-& \frac{1}{2} - 2 \pm \frac{\sqrt{2450448000}}{49500}\\
-
-
-
-\\\\
-
-% this is wrong:
-& \frac{-(r_c(S_0 - 1) + r_c(1 - S_n)) \pm \sqrt{((S_0 - 1)r_c + (1 - S_n)r_c)^2 + 4(r_cS_n - r_cS_0)}}{2(r_cS_n - r_cS_0)}\\
-& \frac{-r_cS_0 + \cancel{r_c} - \cancel{r_c} + r_cS_n \pm \sqrt{(r_cS_0 - r_c + r_c - r_cS_n)^2 + 4(r_cS_n - r_cS_0)}}{2(r_cS_n - r_cS_0)}\\
-& \frac{r_cS_n - r_cS_0 \pm \sqrt{(r_cS_0 - r_cS_n)^2 + 4(r_cS_n - r_cS_0)}}{2(r_cS_n - r_cS_0)}\\
-& \frac{r_cS_n - r_cS_0 \pm \sqrt{2r_cr_cS_0S_0 - 2r_cr_cS_nS_n + 4r_cS_n - 4r_cS_0}}{2(r_cS_n - r_cS_0)}\\
-& \frac{r_cS_n - r_cS_0 \pm \sqrt{2(r_cS_0(r_cS_0 - 2) + r_cS_n(2 - r_cS_n))}}{2(r_cS_n - r_cS_0)}\\
-& \frac{r_cS_n - r_cS_0 \pm \sqrt{2(r_cS_0 + r_cS_n)(r_cS_0 - r_cS_n)}}{2(r_cS_n - r_cS_0)}\\
-& \frac{\cancel{r_cS_n - r_cS_0}}{2\cancel{(r_cS_n - r_cS_0)}} \pm \frac{\sqrt{2}\sqrt{r_cS_0 + r_cS_n}\sqrt{-(r_cS_n - r_cS_0)}}{2(r_cS_n - r_cS_0)}\\
-& \frac{1}{2} \pm \frac{\sqrt{2}\overbrace{\sqrt{-1}}^{\clap{keep this in mind for later}}\sqrt{r_cS_0 + r_cS_n}\sqrt{r_cS_n - r_cS_0}}{2(r_cS_n - r_cS_0)}\\
-
-% & \frac{\cancel{r_cS_n - r_cS_0}}{2\cancel{(r_cS_n - r_cS_0)}} \pm \frac{\sqrt{(r_cS_0 - r_cS_n)^2 + 4(r_cS_n - r_cS_0)}}{2(r_cS_n - r_cS_0)}\\
-% & \frac{r_cS_n - r_cS_0}{2(r_cS_n - r_cS_0)} \pm \frac{\sqrt{(r_cS_0 - r_cS_n)^2 + 4(r_cS_n - r_cS_0)}}{2(r_cS_n - r_cS_0)}\\
-
-\\\\
-
-& \frac{1}{2r_c}(r_c\sqrt{\frac{S_0(r_c-1)^2-{r_c}^2S_n+2r_cS_n-4r_c-S_n}{ {r_c}^2(S_0 - S_n)} } + r_c - 1)
-
-\end{align*}
-$$
-
-We can solve for \(\large r_e\) on each side:
-
-$$
-\large
-\begin{equation*}
-\begin{split}
-
-\frac{S_nr_c - S_0r_c - \sqrt{(S_0r_c - S_nr_c)^2 + 4(r_cS_n - r_cS_0)}}{2(r_cS_n - r_cS_0)} \le N & \le \frac{S_nr_c - S_0r_c + \sqrt{(S_0r_c - S_nr_c)^2 + 4(r_cS_n - r_cS_0)}}{2(r_cS_n - r_cS_0)}\\
-
-\frac{S_nr_c - S_0r_c - \sqrt{(S_0r_c - S_nr_c)^2 + 4(r_cS_n - r_cS_0)}}{2(r_cS_n - r_cS_0)} \le N & \le \frac{S_nr_c - S_0r_c + \sqrt{(S_0r_c - S_nr_c)^2 + 4(r_cS_n - r_cS_0)}}{2(r_cS_n - r_cS_0)}\\
-
-\end{split}
-\end{equation*}
-$$
-
-$$
-\large
-\begin{equation*}
-\begin{split}
-
-N &\begin{cases}
-\ge \frac{1}{S_n - S_0}, r_c = 0\\
-\le \frac{1}{2r_c}(-r_c\sqrt{\frac{S_0(r_c-1)^2-{r_c}^2S_n+2r_cS_n-4r_c-S_n}{ {r_c}^2(S_0 - S_n)} } + r_c - 1), r_c > 0\\
-\ge \frac{1}{2r_c}(r_c\sqrt{\frac{S_0(r_c-1)^2-{r_c}^2S_n+2r_cS_n-4r_c-S_n}{ {r_c}^2(S_0 - S_n)} } + r_c - 1), r_c > 0\\
-\end{cases}\\
-
-\bigg(\frac{1}{N_0 - 1}\bigg)^{\large r_e} &\begin{cases}
-\ge \frac{1}{S_n - S_0}, r_c = 0\\
-\le \frac{1}{2r_c}(-r_c\sqrt{\frac{S_0(r_c-1)^2-{r_c}^2S_n+2r_cS_n-4r_c-S_n}{ {r_c}^2(S_0 - S_n)} } + r_c - 1), r_c > 0\\
-\ge \frac{1}{2r_c}(r_c\sqrt{\frac{S_0(r_c-1)^2-{r_c}^2S_n+2r_cS_n-4r_c-S_n}{ {r_c}^2(S_0 - S_n)} } + r_c - 1), r_c > 0\\
-\end{cases}\\
-
-\large{r_e}\ln\bigg(\frac{1}{N_0 - 1}\bigg) &\begin{cases}
-\ge \ln(\frac{1}{S_n - S_0}), r_c = 0\\
-\le \ln(\frac{1}{2r_c}(-r_c\sqrt{\frac{S_0(r_c-1)^2-{r_c}^2S_n+2r_cS_n-4r_c-S_n}{ {r_c}^2(S_0 - S_n)} } + r_c - 1)), r_c > 0\\
-\ge \ln(\frac{1}{2r_c}(r_c\sqrt{\frac{S_0(r_c-1)^2-{r_c}^2S_n+2r_cS_n-4r_c-S_n}{ {r_c}^2(S_0 - S_n)} } + r_c - 1)), r_c > 0\\
-\end{cases}\\
-
-\Large{r_e} &\begin{cases}
-\le \frac{\ln(\frac{1}{S_n - S_0})}{\ln(\frac{1}{N_0 - 1})}, r_c = 0\\
-\ge \frac{\ln(\frac{1}{2r_c}(-r_c\sqrt{\frac{S_0(r_c-1)^2-{r_c}^2S_n+2r_cS_n-4r_c-S_n}{ {r_c}^2(S_0 - S_n)} } + r_c - 1))}{\ln(\frac{1}{N_0 - 1})}, r_c > 0\\
-\le \frac{\ln(\frac{1}{2r_c}(r_c\sqrt{\frac{S_0(r_c-1)^2-{r_c}^2S_n+2r_cS_n-4r_c-S_n}{ {r_c}^2(S_0 - S_n)} } + r_c - 1))}{\ln(\frac{1}{N_0 - 1})}, r_c > 0\\
-\end{cases}\\
-
-\end{split}
-\end{equation*}
-
-$$
-
-> N.B. the direction of inequality swaps because \(ln(\frac{1}{N_0-1})\) is always negative for all \(N_0\) such that \(N_0 \ge 2\).
-
-The final inequality above gives us the domain of \(r_e\) such that \(\Delta S(N_0 - 1) \ge 1\) is true. Lets verify with some example values:
-
-$$
-\large
-\begin{equation*}
-\begin{split}
-
-r_c &= 0.5\\
-N_0 &= 500\\
-S_0 &= 1000\\
-S_n &= 100,000\\
 S_m &= \frac{1000 + 100000}{2} = 50500\\
-S_r &= (1 - 0.5)50500 + 0.5(1000) = 25750\\\\
+S_r &= (1 - 0.5)50500 + 0.5(1000) = 25750\\
+r_e &\approx 1.73996998737\\
 
-\Large{r_e} &\begin{cases}
-\Large \le \frac{\ln(\frac{1}{100000 - 1000})}{\ln(\frac{1}{500 - 1})}, 0.5 = 0\\
-\Large \ge \frac{\ln\Bigg(\frac{1}{2(0.5)}\bigg(-0.5\sqrt{\frac{1000(0.5-1)^2-{0.5}^2(100000)+2(0.5)100000-4(0.5)-100000}{ {0.5}^2(1000 - 100000)} } + 0.5 - 1\bigg)\Bigg)}{\ln(\frac{1}{500 - 1})}, 0.5 > 0\\
-\Large \le \frac{\ln\Bigg(\frac{1}{2(0.5)}\bigg(0.5\sqrt{\frac{1000(0.5-1)^2-{0.5}^2(100000)+2(0.5)100000-4(0.5)-100000}{ {0.5}^2(1000 - 100000)} } + 0.5 - 1\bigg)\Bigg)}{\ln(\frac{1}{500 - 1})}, 0.5 > 0\\
-\end{cases}\\
+T(499) &\approx \bigg(\frac{1}{499 - 1}\bigg)^{1.73996998737} \approx 0.00002027224725513445 \\
+T(500) &\approx \bigg(\frac{1}{500 - 1}\bigg)^{1.73996998737} \approx 0.00002020161209699543 \\
 
-\Large{r_e} &\begin{cases}
-\Large \ge \frac{\ln\Bigg(\frac{1}{2(0.5)}\bigg(-0.5\sqrt{\frac{1000(0.25)-0.25(100000)+2(0.5)100000-4(0.5)-100000}{0.25(1000 - 100000)} } + 0.5 - 1\bigg)\Bigg)}{\ln(\frac{1}{500 - 1})}\\
-\Large \le \frac{\ln\Bigg(\frac{1}{2(0.5)}\bigg(0.5\sqrt{\frac{1000(0.25)-0.25(100000)+2(0.5)100000-4(0.5)-100000}{0.25(1000 - 100000)} } + 0.5 - 1\bigg)\Bigg)}{\ln(\frac{1}{500 - 1})}\\
-\end{cases}\\
+S(499) &= B(1000, 100000, 25750, 0.00002027224725513445) \approx 1001\\
+S(500) &= B(1000, 100000, 25750, 0.00002020161209699543) \approx 1000\\
 
-\Large{r_e} &\begin{cases}
-\Large \ge \frac{\ln\frac{1}{1}\bigg(-0.5\sqrt{\frac{250-25000+100000-2-100000}{-24750} } - 0.5\bigg)}{\ln(\frac{1}{499})}\\
-\Large \le \frac{\ln\bigg(0.5\sqrt{\frac{250-25000+100000-2-100000}{-24750} } - 0.5\bigg)}{\ln(\frac{1}{499})}\\
-\end{cases}\\
-
-\Large{r_e} &\begin{cases}
-\Large \ge \frac{\ln\bigg(-0.5\sqrt{\frac{-24752}{−24750} } - 0.5\bigg)}{\ln(\frac{1}{499})}\\
-\Large \le \frac{\ln\bigg(0.5\sqrt{\frac{−24752}{-24750} } - 0.5\bigg)}{\ln(\frac{1}{499})}\\
-\end{cases}\\
-
-\Large{r_e} &\begin{cases}
-\Large \gtrapprox −3.251680170240637 \cdot 10^{-6} − 0.5056803224234942i\\
-\Large \lessapprox 1.739969987370849\\
-\end{cases}\\\\
-
-\end{split}
-\end{equation*}
-
-$$
-
-Our first half of the solved inequality is imaginary! In fact, given our parameters' domains, the first case will always be imaginary. Therefore our only real parameterized constraint on \(\large r_e\) with these parameters is:
-
-$$
-\large r_e \lessapprox 1.739969987370849
-$$
-
-Now if we set \(r_e = 1.739969987370849\), we should expect to see \(\Delta S(N_0 - 1) \approxeq 1\):
-
-$$
-\large
-\begin{equation*}
-\begin{split}
-
-S_m &= \frac{S_0 + S_n}{2} \\
-    &= \frac{1000 + 100000}{2}\\
-    &= 50500\\
-S_r &= (1 - r_c)S_m + r_cS_0 \\
-    &= (1 - 0.5)50500 + 0.5(1000) \\
-    &= 25750 \\
-
-\Delta S(N_0 - 1) &= 2S_r(\frac{1}{N_0-1})^{r_e} - 2S_r(\frac{1}{N_0-1})^{2r_e} - 2S_0(\frac{1}{N_0-1})^{r_e} + S_0(\frac{1}{N_0-1})^{2r_e} + S_n(\frac{1}{N_0-1})^{2r_e}\\
-
-&= 2(25750)(\frac{1}{499})^{1.739969987370849} - 2(25750)(\frac{1}{499})^{2(1.739969987370849)} - {}\\
-&\ \ \ \ \ 2(1000)(\frac{1}{499})^{1.739969987370849} + 1000(\frac{1}{499})^{2(1.739969987370849)} + 100000(\frac{1}{499})^{2(1.739969987370849)}\\
-
-&= 51500(2.020161209688887 \cdot 10^{-5}) - 51500(4.081051313131669 \cdot 10^{-10}) - {}\\
-&\ \ \ \ \ 2000(2.020161209688887 \cdot 10^{-5}) + 1000(4.081051313131669 \cdot 10^{-10}) + {}\\
-&\ \ \ \ \ 100000(4.081051313131669 \cdot 10^{-10})\\
-
-&\approxeq 0.9999999999999991
-
-\end{split}
-\end{equation*}
-$$
-
-Nice! But what about when \(r_c = 0\)? Earlier we determined that when \(r_c = 0\), \(r_e\) is constrainted differently. Lets evaluate:
-
-$$
-\large
-\begin{equation*}
-\begin{split}
-
-r_e &\le \frac{\ln(\frac{1}{100000 - 1000})}{\ln(\frac{1}{500 - 1})}\\
-&\lessapprox 1.851537817113973
-
-\end{split}
-\end{equation*}
-$$
-
-Now if we set \(r_c = 0, r_e = 1.851537817113973\), we should expect to see \(\Delta S(N_0 - 1) \approxeq 1\):
-
-$$
-\large
-\begin{equation*}
-\begin{split}
-
-S_m &= \frac{S_0 + S_n}{2} \\
-    &= \frac{1000 + 100000}{2}\\
-    &= 50500\\
-S_r &= (1 - r_c)S_m + r_cS_0 \\
-    &= (1 - 0)50500 + 0(1000) \\
-    &= 50500 \\
-
-\Delta S(N_0 - 1) &= 2S_r(\frac{1}{N_0-1})^{r_e} - 2S_r(\frac{1}{N_0-1})^{2r_e} - 2S_0(\frac{1}{N_0-1})^{r_e} + S_0(\frac{1}{N_0-1})^{2r_e} + S_n(\frac{1}{N_0-1})^{2r_e}\\
-
-&= 2(50500)(\frac{1}{499})^{r_e} - 2(50500)(\frac{1}{499})^{2r_e} - 2(1000)(\frac{1}{N_0-1})^{r_e} + 1000(\frac{1}{499})^{2r_e} + 100000(\frac{1}{499})^{2r_e}\\
-
-&= 2(50500)(\frac{1}{499})^{1.851537817113973} - 2(50500)(\frac{1}{499})^{2(1.851537817113973)} - {}\\
-&\ \ \ \ \ 2(1000)(\frac{1}{499})^{1.851537817113973} + 1000(\frac{1}{499})^{2(1.851537817113973)} + 100000(\frac{1}{499})^{2(1.851537817113973)}\\
-
-&= 101000(1.010101010101008 \cdot 10^{-5}) - 101000(1.020304050607076 \cdot 10^{-10}) - {}\\
-&\ \ \ \ \ 2000(1.010101010101008 \cdot 10^{-5}) + 1000(1.020304050607076 \cdot 10^{-10}) + {}\\
-&\ \ \ \ \ 100000(1.020304050607076 \cdot 10^{-10})\\
-
-&\approxeq 0.9999999999999979
-
-\end{split}
-\end{equation*}
+\Delta S(499) &\approx 1001 - 1000 \approx 1
+\end{align*}
 $$
 
 Yippee!!! Given our constraints on the parameters, lets define sets that describe the valid domain of \(\large r_e\) such that the Differential Constraint is fullfilled:
@@ -872,17 +675,19 @@ $$
 \begin{split}
 
 R_c &= \Set{r_c \in \R | 0 < r_c \le 1}\\
-E_0 &= \Set{r_c = 0 | (\exists{r_e} \in \R)\Bigg[1 \le r_e \le \frac{\ln(\frac{1}{S_n - S_0})}{\ln(\frac{1}{N_0 - 1})}\Bigg]}\\
-E_r &= \Set{r_c \in R_c | (\exists{r_e} \in \R)\Bigg[1 \le r_e \le \frac{\ln(\frac{1}{2r_c}(r_c\sqrt{\frac{S_0(r_c-1)^2-{r_c}^2S_n+2r_cS_n-4r_c-S_n}{ {r_c}^2(S_0 - S_n)} } + r_c - 1))}{\ln(\frac{1}{N_0 - 1})}\Bigg]}\\
+R_c &= \Set{r_c \in \R | 0 \le r_c \le \frac{N_0^2 - 2N_0 + 1 - S_nN_0 + S_0N_0 + S_n - S_0}{-S_nN_0 + S_0N_0 + 2S_n - 2S_0}}\\
+E_0 &= \Set{(r_c, r_e) \in R_c \times \N | r_c = 0 \land 1 \le r_e \le \ln \frac{1}{S_n - S_0} \Bigg/ \ln \frac{1}{N_0 - 1}}\\
+E_1 &= \Set{(r_c, r_e) \in R_c \times \N | r_c = 1 \land 1 \le r_e \le \ln \sqrt{\frac{1}{S_n - S_0}} \Bigg/ \ln \frac{1}{N_0 - 1}}\\
+E_r &= \Set{(r_c, r_e) \in R_c \times \N | 0 < r_c < 1 \land 1 \le r_e \le \ln\bigg(\frac{r_c - 1}{2r_c} + \sqrt{\frac{(S_n - S_0)(r_c - 1)^2 + 4r_c}{4r_c^2(S_n - S_0)}}\bigg) \Bigg/ \ln\frac{1}{N_0 - 1}}\\
 \end{split}
 \end{equation*}
 $$
 
-Then the set of all valid \(\large r_e\) can be defined as:
+Then the set of all valid \(\large r_e\) can be redefined as:
 
 $$
 \large 
-E = E_0 \land E_r
+E = E_0 \land E_1 \land E_r
 $$
 
 ## Sum of the parts
