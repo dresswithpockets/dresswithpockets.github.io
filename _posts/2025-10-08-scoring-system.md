@@ -3,6 +3,7 @@ layout: post
 title:  "Scoring competition participants on a curve (content warning: MATH 😱)"
 date:   2025-10-09 12:00:00 -0700
 tags:   math
+published: false
 ---
 
 I've been working on a scoring system that assigns points to participants in a competition based on their final placement in the event. The goal is to stack participants over a number of events based on their performance relative to other participants.
