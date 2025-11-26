@@ -185,7 +185,7 @@ Oh- thats almost double the amount of time... because `make` is running each job
 make -j24  0.52s user 0.20s system 445% cpu 0.162 total
 ```
 
-Way faster. As a little bonus, `make` will run commands in a rule's recipe as in a jobserver; `gcc`'s linker automatically detects when its ran in the jobserver and will perform Link Time Optimizations in parallel!
+Way faster. As a little bonus, `make` will run commands in a rule's recipe in a jobserver; `gcc`'s linker automatically detects when its ran in the jobserver and will perform Link Time Optimizations in parallel!
 
 `make` also only builds targets whose dependencies have changed. If I edit only `key_mapper.c`, then it will only build `key_mapper.o` and link it with the other object files that have already been built:
 
