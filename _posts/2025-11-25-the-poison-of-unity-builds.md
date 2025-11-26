@@ -60,7 +60,7 @@ So in that single gcc call there are at least 3 reads and 3 writes to disk, and 
 
 and I'm on a 32 bit computer running Windows XP, with a 5200RPM 128GB Hard Drive, a single 4 GB stick of DDR2, and a dual-core 2.3 Ghz CPU! Cutting edge, I know.
 
-Imagine making my harddrive seek to each of those files, loading as much of it into RAM as I can to compile, only to write each output object file out to disk. For projects with many source files, that HDD is going to do work, and I'll be able to hear it the entire time. Maybe theres a way I could reduce the number of read/writes happening going into the linker step?
+Imagine making my hard drive seek to each of those files, loading as much of it into RAM as I can to compile, only to write each output object file out to disk. For projects with many source files, that HDD is going to do work, and I'll be able to hear it the entire time. Maybe theres a way I could reduce the number of read/writes happening going into the linker step?
 
 ### the magic
 
