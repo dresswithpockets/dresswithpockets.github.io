@@ -82,7 +82,7 @@ The preprocessor still has to read every source file into memory, but it only ha
 
 So thats a lot less IO. That sounds pretty good - and, in the current year 2007 on my cutting edge hardware, it certainly was! In [OJ's OG rant on unity builds](https://web.archive.org/web/20120116121631/https://buffered.io/posts/the-magic-of-unity-builds/), he went from a 55 minute full build time to 6 minutes.
 
-> **N.B.** gcc had some flags which could, as far as I can tell, perform a unity build for you. See footnote([1](#1--pipe-and--combine)).
+> **N.B.** gcc had some flags which, as far as I can tell, could perform a unity build for you. See footnote([1](#1--pipe-and--combine)).
 
 ## the year is 2025
 
