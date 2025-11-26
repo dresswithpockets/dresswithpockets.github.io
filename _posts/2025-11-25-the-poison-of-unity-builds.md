@@ -5,8 +5,6 @@ date:   2025-11-26 15:45:00 -0700
 tags:   c gcc
 ---
 
-# The Poison of the Unity Build
-
 This article is on the technique of combining source files in C into a single translation unit, not about the Unity Game Engine - although that Unity is arguably far more poisonous lol.
 
 ## what does the C compiler do?
