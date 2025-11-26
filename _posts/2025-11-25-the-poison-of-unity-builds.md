@@ -221,7 +221,7 @@ Here are a few articles on using unity build to speed up non-incremental builds,
 
 I've heard some developers recommending unity builds to new developers, because it allows them to skirt around some quirks of the language - such as symbol linkage, one-definition rule, headers, and build tools.
 
-Not only are these concepts important to learn in C, they're also often trivial problems to solve. We're replacing trivial solutions to trivial problems with unity builds - which ultimately hinder the development experience in modern contexts.
+I'm editorializing a bit here: Not only are these concepts important to learn in C, they're also often trivial problems to solve. We're replacing trivial solutions to trivial problems with unity builds - which ultimately hinder the development experience in modern contexts.
 
 ### 
 
