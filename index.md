@@ -29,6 +29,9 @@ I've worked on a few games:
 And, I've made a few things:
 
 - [openstats](https://github.com/dresswithpockets/openstats) - personal game stats & achievment tracking
+- [libsteam](https://github.com/escrow-tf/steam) - a Go library for interfacing with various Steam services
+- [godot-sreplay](https://github.com/dresswithpockets/godot-sreplay) - an input replay addon for Godot
 - [odin-godot](https://github.com/dresswithpockets/odin-godot) - a Godot toolkit for Odin
 - [FakeS3](https://github.com/dresswithpockets/FakeS3) - in-memory and on-disk S3 provider for .NET
 - [Scenario](https://github.com/dresswithpockets/Scenario) - tool for prescribing tests in C#
+- [gungame](https://github.com/dresseswithpockets/gungame) - an experimental boomer shooter with seamless portals 
