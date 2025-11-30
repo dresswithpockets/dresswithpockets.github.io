@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Lil Bit Of Game Dev
+title: Among The Stars
 ---
 
 hi, i'm ashley. [they/she](https://en.pronouns.page/@dresswithpockets).
