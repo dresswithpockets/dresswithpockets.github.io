@@ -20,6 +20,7 @@ I've talked about some stuff:
 I've worked on a few games:
 
 - [The Pink Sea](https://steamcommunity.com/sharedfiles/filedetails/?id=3092347199)
+- [CAR CENTRIC SPINFRASTRUCTURE](https://dressesdigital.itch.io/car-centric-spinfrastructure)
 - [Little Leaf](https://dressesdigital.itch.io/little-leaf), for the [2022 Cozy Autumn Jam](https://itch.io/jam/mini-jam-77-courage/rate/981963)
 - [Stone Spire](https://dressesdigital.itch.io/stone-spire), for the [77th Mini Jam](https://itch.io/jam/mini-jam-77-courage/rate/981963)
 - [TrashRPG](https://dressesdigital.itch.io/trashrpg), for the [A2B2 Charity Jam](https://itch.io/jam/a2b2-game-jam)
